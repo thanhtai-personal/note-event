@@ -15,7 +15,7 @@ CREATE DATABASE "EventNote"
 
 -- DROP TABLE public.eventnote;
 
-CREATE TABLE public.eventnote
+CREATE TABLE IF NOT EXISTS public.eventnote
 (
     id uuid NOT NULL,
     "userId" uuid NOT NULL,
@@ -37,7 +37,7 @@ ALTER TABLE public.eventnote
 
 -- DROP TABLE public.googleaccount;
 
-CREATE TABLE public.googleaccount
+CREATE TABLE IF NOT EXISTS public.googleaccount
 (
     id uuid NOT NULL,
     email text COLLATE pg_catalog."default" NOT NULL,
@@ -60,7 +60,7 @@ ALTER TABLE public.googleaccount
 
 -- DROP TABLE public.resource;
 
-CREATE TABLE public.resource
+CREATE TABLE IF NOT EXISTS public.resource
 (
     id uuid NOT NULL,
     "userId" uuid NOT NULL,
@@ -85,7 +85,7 @@ ALTER TABLE public.resource
 
 -- DROP TABLE public."user";
 
-CREATE TABLE public."user"
+CREATE TABLE IF NOT EXISTS public."user"
 (
     id uuid NOT NULL,
     "googleId" character varying(128) COLLATE pg_catalog."default",
