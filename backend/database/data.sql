@@ -105,23 +105,27 @@ TABLESPACE pg_default;
 ALTER TABLE public."user"
     OWNER to postgres;
 
+ALTER TABLE public."resource"
+  CONSTRAINT fkey_resource_event_note FOREIGN KEY ("eventId")
+      REFERENCES public.eventnote (id) MATCH SIMPLE
+      ON UPDATE NO ACTION
+      ON DELETE NO ACTION,
+  CONSTRAINT fkey_resource_google_account FOREIGN KEY ("accountId")
+      REFERENCES public.googleaccount (id) MATCH SIMPLE
+      ON UPDATE NO ACTION
+      ON DELETE NO ACTION,
+  CONSTRAINT fkey_resource_user FOREIGN KEY ("userId")
+      REFERENCES public."user" (id) MATCH SIMPLE
+      ON UPDATE NO ACTION
+      ON DELETE NO ACTION
 
-CONSTRAINT fkey_resource_event_note FOREIGN KEY ("eventId")
-    REFERENCES public.eventnote (id) MATCH SIMPLE
-     ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-CONSTRAINT fkey_resource_google_account FOREIGN KEY ("accountId")
-    REFERENCES public.googleaccount (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-CONSTRAINT fkey_resource_user FOREIGN KEY ("userId")
-    REFERENCES public."user" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-CONSTRAINT fkey_google_account_user FOREIGN KEY ("userId")
-    REFERENCES public."user" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+ALTER TABLE public."googleaccount"
+  CONSTRAINT fkey_google_account_user FOREIGN KEY ("userId")
+      REFERENCES public."user" (id) MATCH SIMPLE
+      ON UPDATE NO ACTION
+      ON DELETE NO ACTION
+
+ALTER TABLE public."eventnote"
 CONSTRAINT eventnote_user_fkey FOREIGN KEY ("userId")
     REFERENCES public."user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
