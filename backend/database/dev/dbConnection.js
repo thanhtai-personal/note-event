@@ -8,7 +8,6 @@ pool.on('connect', () => {
  * Create User Table
  */
 const createUserTable = async (isEnd = false) => {
-  console.log('====createUserTable====')
   const userCreateQuery = `CREATE TABLE IF NOT EXISTS users
   (
       id uuid NOT NULL,
@@ -23,10 +22,8 @@ const createUserTable = async (isEnd = false) => {
   )`
   try {
     await pool.query(userCreateQuery)
-    console.log('success - isEnd', isEnd)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
@@ -35,7 +32,6 @@ const createUserTable = async (isEnd = false) => {
  * Create resource Table
  */
 const createResourceTable = async (isEnd = false) => {
-  console.log('====createResourceTable====')
   const resourceCreateQuery = `CREATE TABLE IF NOT EXISTS resource
   (
       id uuid NOT NULL,
@@ -51,10 +47,8 @@ const createResourceTable = async (isEnd = false) => {
   )`
   try {
     await pool.query(resourceCreateQuery)
-    console.log('success - isEnd', isEnd)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
@@ -63,7 +57,6 @@ const createResourceTable = async (isEnd = false) => {
  * Create Google Account Table
  */
 const createGoogleAccountTable = async (isEnd = false) => {
-  console.log('====createGoogleAccountTable====')
   const googleAccountCreateQuery = `CREATE TABLE IF NOT EXISTS googleaccount
   (
       id uuid NOT NULL,
@@ -77,10 +70,8 @@ const createGoogleAccountTable = async (isEnd = false) => {
   )`
   try {
     await pool.query(googleAccountCreateQuery)
-    console.log('success - isEnd', isEnd)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
@@ -89,7 +80,6 @@ const createGoogleAccountTable = async (isEnd = false) => {
  * Create Event Note Table
  */
 const createEventNoteTable = async (isEnd = false) => {
-  console.log('====createEventNoteTable====')
   const eventNoteCreateQuery = `CREATE TABLE IF NOT EXISTS eventnote
   (
       id uuid NOT NULL,
@@ -102,10 +92,8 @@ const createEventNoteTable = async (isEnd = false) => {
   )`
   try {
     await pool.query(eventNoteCreateQuery)
-    console.log('success - isEnd', isEnd)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
@@ -114,14 +102,11 @@ const createEventNoteTable = async (isEnd = false) => {
  * Drop User Table
  */
 const dropUserTable = async (isEnd = false) => {
-  console.log('====dropUserTable====')
   const usersDropQuery = `DROP TABLE IF EXISTS users`
   try {
     await pool.query(usersDropQuery)
-    console.log('success - isEnd', isEnd)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
@@ -131,14 +116,11 @@ const dropUserTable = async (isEnd = false) => {
  * Drop Resource Table
  */
 const dropResourceTable = async (isEnd = false) => {
-  console.log('====dropResourceTable====')
   const resourceDropQuery = `DROP TABLE IF EXISTS resource`
   try {
     await pool.query(resourceDropQuery)
-    console.log('success - isEnd', isEnd)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
@@ -147,14 +129,11 @@ const dropResourceTable = async (isEnd = false) => {
  * Drop Google account Table
  */
 const dropGoogleAccount = async (isEnd = false) => {
-  console.log('====dropGoogleAccount====')
   const googleAccountDropQuery = `DROP TABLE IF EXISTS googleaccount`
   try {
     await pool.query(googleAccountDropQuery)
-    console.log('success - isEnd', isEnd)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
@@ -163,63 +142,58 @@ const dropGoogleAccount = async (isEnd = false) => {
  * Drop Bus Table
  */
 const dropEventNoteingTable = async (isEnd = false) => {
-  console.log('====dropEventNoteingTable====')
   const eventNoteDropQuery = `DROP TABLE IF EXISTS eventnote`
   try {
     await pool.query(eventNoteDropQuery)
-    console.log('success - isEnd', isEnd)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
 
 const createReferenceKey = async (isEnd = false) => {
-  console.log('====createReferenceKey====')
-  const createReferenceKeyQuery = `ALTER TABLE resource ADD CONSTRAINT fkey_resource_event_note FOREIGN KEY ("eventId")
+  const createReferenceKeyQueryResource = `ALTER TABLE resource ADD CONSTRAINT fkey_resource_event_note FOREIGN KEY ("eventId")
     REFERENCES eventnote (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION,
-  ALTER TABLE resource ADD CONSTRAINT fkey_resource_google_account FOREIGN KEY ("accountId")
+  ADD CONSTRAINT fkey_resource_google_account FOREIGN KEY ("accountId")
     REFERENCES googleaccount (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION,
-  ALTER TABLE resource ADD CONSTRAINT fkey_resource_user FOREIGN KEY ("userId")
+  ADD CONSTRAINT fkey_resource_user FOREIGN KEY ("userId")
     REFERENCES "users" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION,
-  ALTER TABLE googleaccount ADD CONSTRAINT fkey_google_account_user FOREIGN KEY ("userId")
+    ON DELETE NO ACTION`
+  const createReferenceKeyQueryGoogleAccount = `ALTER TABLE googleaccount ADD CONSTRAINT fkey_googleaccount_user FOREIGN KEY ("userId")
     REFERENCES "users" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION,
-  ALTER TABLE eventnote ADD CONSTRAINT eventnote_user_fkey FOREIGN KEY ("userId")
+    ON DELETE NO ACTION`
+  const createReferenceKeyQueryEventNote = `ALTER TABLE eventnote ADD CONSTRAINT fkey_eventnote_user FOREIGN KEY ("userId")
     REFERENCES "users" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION,`
+    ON DELETE NO ACTION`
   try {
-    await pool.query(createReferenceKeyQuery)
-    console.log('success - isEnd', isEnd)
+    await pool.query(createReferenceKeyQueryResource)
+    await pool.query(createReferenceKeyQueryGoogleAccount)
+    await pool.query(createReferenceKeyQueryEventNote)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
 
 const dropReferenceKey = async (isEnd = false) => {
-  console.log('====dropReferenceKey====')
-  const createReferenceKeyQuery = `ALTER TABLE resource DROP CONSTRAINT IF EXISTS fkey_resource_event_note,
-  ALTER TABLE resource DROP CONSTRAINT IF EXISTS fkey_resource_google_account,
-  ALTER TABLE resource DROP CONSTRAINT IF EXISTS fkey_resource_user,
-  ALTER TABLE googleaccount DROP CONSTRAINT IF EXISTS fkey_google_account_user,
-  ALTER TABLE eventnote DROP CONSTRAINT IF EXISTS eventnote_user_fkey,`
+  const createReferenceKeyQueryResource = `ALTER TABLE resource DROP CONSTRAINT IF EXISTS fkey_resource_event_note,
+  DROP CONSTRAINT IF EXISTS fkey_resource_google_account,
+  DROP CONSTRAINT IF EXISTS fkey_resource_user`
+  const createReferenceKeyQueryGoogleAccount = `ALTER TABLE googleaccount DROP CONSTRAINT IF EXISTS fkey_googleaccount_user`
+  const createReferenceKeyQueryEventNote = `ALTER TABLE eventnote DROP CONSTRAINT IF EXISTS fkey_eventnote_user`
   try {
-    await pool.query(createReferenceKeyQuery)
-    console.log('success - isEnd', isEnd)
+    await pool.query(createReferenceKeyQueryResource)
+    await pool.query(createReferenceKeyQueryGoogleAccount)
+    await pool.query(createReferenceKeyQueryEventNote)
     isEnd && pool.end()
   } catch (error) {
-    console.log('isEnd', isEnd)
     isEnd && pool.end()
   }
 }
@@ -232,8 +206,8 @@ export const createAllTables = async () => {
   await createUserTable()
   await createResourceTable()
   await createGoogleAccountTable()
-  await createEventNoteTable(true)
-  // await createReferenceKey(true)
+  await createEventNoteTable()
+  await createReferenceKey(true)
 }
 
 
@@ -241,7 +215,7 @@ export const createAllTables = async () => {
  * Drop All Tables
  */
 export const dropAllTables = async () => {
-  // await dropReferenceKey()
+  await dropReferenceKey()
   await dropUserTable()
   await dropResourceTable()
   await dropGoogleAccount()
