@@ -1,0 +1,230 @@
+import pool from './pool'
+
+pool.on('connect', () => {
+  console.log('connected to the db')
+})
+
+/**
+ * Create User Table
+ */
+const createUserTable = async (isEnd = false) => {
+  const userCreateQuery = `CREATE TABLE IF NOT EXISTS users
+  (
+      id uuid NOT NULL,
+      "googleId" text COLLATE pg_catalog."default",
+      username text COLLATE pg_catalog."default" NOT NULL,
+      password text COLLATE pg_catalog."default" NOT NULL,
+      token text COLLATE pg_catalog."default",
+      "createdTime" timestamp without time zone,
+      "updatedTime" timestamp without time zone,
+      "lastLoginTime" timestamp without time zone,
+      CONSTRAINT user_pkey PRIMARY KEY (id)
+  )`
+  try {
+    await pool.query(userCreateQuery)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+/**
+ * Create resource Table
+ */
+const createResourceTable = async (isEnd = false) => {
+  const resourceCreateQuery = `CREATE TABLE IF NOT EXISTS resource
+  (
+      id uuid NOT NULL,
+      "userId" uuid NOT NULL,
+      name text COLLATE pg_catalog."default",
+      description text COLLATE pg_catalog."default",
+      url text COLLATE pg_catalog."default",
+      "accountId" uuid,
+      "createdTime" timestamp without time zone,
+      "updatedTime" timestamp without time zone,
+      "eventId" uuid,
+      CONSTRAINT resource_pkey PRIMARY KEY (id)
+  )`
+  try {
+    await pool.query(resourceCreateQuery)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+/**
+ * Create Google Account Table
+ */
+const createGoogleAccountTable = async (isEnd = false) => {
+  const googleAccountCreateQuery = `CREATE TABLE IF NOT EXISTS googleaccount
+  (
+      id uuid NOT NULL,
+      email text COLLATE pg_catalog."default" NOT NULL,
+      token text COLLATE pg_catalog."default",
+      "userId" uuid,
+      "createdTime" timestamp without time zone,
+      "updatedTime" timestamp without time zone,
+      "currentUsing" boolean DEFAULT false,
+      CONSTRAINT googleaccount_pkey PRIMARY KEY (id)
+  )`
+  try {
+    await pool.query(googleAccountCreateQuery)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+/**
+ * Create Event Note Table
+ */
+const createEventNoteTable = async (isEnd = false) => {
+  const eventNoteCreateQuery = `CREATE TABLE IF NOT EXISTS eventnote
+  (
+      id uuid NOT NULL,
+      "userId" uuid NOT NULL,
+      "contentText" text COLLATE pg_catalog."default",
+      "contentHtml" text COLLATE pg_catalog."default",
+      "createdTime" timestamp without time zone,
+      "updatedTime" timestamp without time zone,
+      CONSTRAINT eventnote_pkey PRIMARY KEY (id)
+  )`
+  try {
+    await pool.query(eventNoteCreateQuery)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+/**
+ * Drop User Table
+ */
+const dropUserTable = async (isEnd = false) => {
+  const usersDropQuery = `DROP TABLE IF EXISTS users`
+  try {
+    await pool.query(usersDropQuery)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+
+/**
+ * Drop Resource Table
+ */
+const dropResourceTable = async (isEnd = false) => {
+  const resourceDropQuery = `DROP TABLE IF EXISTS resource`
+  try {
+    await pool.query(resourceDropQuery)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+/**
+ * Drop Google account Table
+ */
+const dropGoogleAccount = async (isEnd = false) => {
+  const googleAccountDropQuery = `DROP TABLE IF EXISTS googleaccount`
+  try {
+    await pool.query(googleAccountDropQuery)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+/**
+ * Drop Bus Table
+ */
+const dropEventNoteingTable = async (isEnd = false) => {
+  const eventNoteDropQuery = `DROP TABLE IF EXISTS eventnote`
+  try {
+    await pool.query(eventNoteDropQuery)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+const createReferenceKey = async (isEnd = false) => {
+  const createReferenceKeyQueryResource = `ALTER TABLE resource ADD CONSTRAINT fkey_resource_event_note FOREIGN KEY ("eventId")
+    REFERENCES eventnote (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION,
+  ADD CONSTRAINT fkey_resource_google_account FOREIGN KEY ("accountId")
+    REFERENCES googleaccount (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION,
+  ADD CONSTRAINT fkey_resource_user FOREIGN KEY ("userId")
+    REFERENCES "users" (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION`
+  const createReferenceKeyQueryGoogleAccount = `ALTER TABLE googleaccount ADD CONSTRAINT fkey_googleaccount_user FOREIGN KEY ("userId")
+    REFERENCES "users" (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION`
+  const createReferenceKeyQueryEventNote = `ALTER TABLE eventnote ADD CONSTRAINT fkey_eventnote_user FOREIGN KEY ("userId")
+    REFERENCES "users" (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION`
+  try {
+    await pool.query(createReferenceKeyQueryResource)
+    await pool.query(createReferenceKeyQueryGoogleAccount)
+    await pool.query(createReferenceKeyQueryEventNote)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+const dropReferenceKey = async (isEnd = false) => {
+  const createReferenceKeyQueryResource = `ALTER TABLE resource DROP CONSTRAINT IF EXISTS fkey_resource_event_note,
+  DROP CONSTRAINT IF EXISTS fkey_resource_google_account,
+  DROP CONSTRAINT IF EXISTS fkey_resource_user`
+  const createReferenceKeyQueryGoogleAccount = `ALTER TABLE googleaccount DROP CONSTRAINT IF EXISTS fkey_googleaccount_user`
+  const createReferenceKeyQueryEventNote = `ALTER TABLE eventnote DROP CONSTRAINT IF EXISTS fkey_eventnote_user`
+  try {
+    await pool.query(createReferenceKeyQueryResource)
+    await pool.query(createReferenceKeyQueryGoogleAccount)
+    await pool.query(createReferenceKeyQueryEventNote)
+    isEnd && pool.end()
+  } catch (error) {
+    isEnd && pool.end()
+  }
+}
+
+
+/**
+ * Create All Tables
+ */
+export const createAllTables = async () => {
+  await createUserTable()
+  await createResourceTable()
+  await createGoogleAccountTable()
+  await createEventNoteTable()
+  await createReferenceKey(true)
+}
+
+
+/**
+ * Drop All Tables
+ */
+export const dropAllTables = async () => {
+  await dropReferenceKey()
+  await dropUserTable()
+  await dropResourceTable()
+  await dropGoogleAccount()
+  await dropEventNoteingTable(true)
+}
+
+pool.on('remove', () => {
+  console.log('client removed')
+  process.exit(0)
+})
+
+require('make-runnable')
