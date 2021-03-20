@@ -13,12 +13,11 @@
   },
   "scripts": {
     "test": "mocha --exit test/*.test.js",
-    "create-dev-tables": "set DEV_ENV=DEV1&& babel-node ./database/dbConnection createAllTables",
-    "drop-dev-tables": "set DEV_ENV=DEV1&& babel-node ./database/dbConnection dropAllTables",
-    "create-dev2-tables": "DEV_ENV=DEV2 babel-node ./database/dbConnection createAllTables",
-    "drop-dev2-tables": "DEV_ENV=DEV2 babel-node ./database/dbConnection dropAllTables",
+    "create-dev-tables": "babel-node ./database/dbConnection createAllTables",
+    "drop-dev-tables": "babel-node ./database/dbConnection dropAllTables",
     "start": "nodemon --watch . --exec babel-node -- index",
-    "setup": "npm-run-all -p create-dev-tables start"
+    "setup": "npm-run-all -p create-dev-tables start",
+    "setupdev2": "npm-run-all -p create-dev2-tables start"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",

@@ -1,19 +1,4 @@
-import pool1 from './dev/pool'
-import pool2 from './dev2/pool'
-
-let pool
-
-if (process.env.DEV_ENV === 'DEV2') {
-  console.log('you are on dev 2 chanel')
-  pool = pool2
-}
-if (process.env.DEV_ENV === 'DEV1') {
-  console.log('you are on dev 1 chanel')
-  pool = pool1
-}
-if (process.env.DEV_ENV === 'PRODUCTION') {
-  // pool = prdPool
-}
+import pool from './dev/pool'
 
 if (!pool) console.log('No pool!!!')
 
@@ -25,7 +10,7 @@ pool.on('connect', () => {
  * Create User Table
  */
 const createUserTable = async (isEnd = false) => {
-  console.log('query start')
+  console.log('createUserTable start')
   const userCreateQuery = `CREATE TABLE IF NOT EXISTS users
   (
       id uuid NOT NULL,
@@ -80,7 +65,7 @@ const createResourceTable = async (isEnd = false) => {
  * Create Google Account Table
  */
 const createGoogleAccountTable = async (isEnd = false) => {
-  console.log('query start')
+  console.log('createGoogleAccountTable start')
   const googleAccountCreateQuery = `CREATE TABLE IF NOT EXISTS googleaccount
   (
       id uuid NOT NULL,
@@ -106,7 +91,7 @@ const createGoogleAccountTable = async (isEnd = false) => {
  * Create Event Note Table
  */
 const createEventNoteTable = async (isEnd = false) => {
-  console.log('query start')
+  console.log('createEventNoteTable start')
   const eventNoteCreateQuery = `CREATE TABLE IF NOT EXISTS eventnote
   (
       id uuid NOT NULL,
@@ -131,7 +116,7 @@ const createEventNoteTable = async (isEnd = false) => {
  * Drop User Table
  */
 const dropUserTable = async (isEnd = false) => {
-  console.log('query start')
+  console.log('dropUserTable start')
   const usersDropQuery = `DROP TABLE IF EXISTS users`
   try {
     await pool.query(usersDropQuery)
@@ -148,7 +133,7 @@ const dropUserTable = async (isEnd = false) => {
  * Drop Resource Table
  */
 const dropResourceTable = async (isEnd = false) => {
-  console.log('query start')
+  console.log('dropResourceTable start')
   const resourceDropQuery = `DROP TABLE IF EXISTS resource`
   try {
     await pool.query(resourceDropQuery)
@@ -164,7 +149,7 @@ const dropResourceTable = async (isEnd = false) => {
  * Drop Google account Table
  */
 const dropGoogleAccount = async (isEnd = false) => {
-  console.log('query start')
+  console.log('dropGoogleAccount start')
   const googleAccountDropQuery = `DROP TABLE IF EXISTS googleaccount`
   try {
     await pool.query(googleAccountDropQuery)
@@ -180,7 +165,7 @@ const dropGoogleAccount = async (isEnd = false) => {
  * Drop Bus Table
  */
 const dropEventNoteingTable = async (isEnd = false) => {
-  console.log('query start')
+  console.log('dropEventNoteingTable start')
   const eventNoteDropQuery = `DROP TABLE IF EXISTS eventnote`
   try {
     await pool.query(eventNoteDropQuery)
@@ -193,7 +178,7 @@ const dropEventNoteingTable = async (isEnd = false) => {
 }
 
 const createReferenceKey = async (isEnd = false) => {
-  console.log('query start')
+  console.log('createReferenceKey start')
   const createReferenceKeyQueryResource = `ALTER TABLE resource ADD CONSTRAINT fkey_resource_event_note FOREIGN KEY ("eventId")
     REFERENCES eventnote (id) MATCH SIMPLE
     ON UPDATE NO ACTION
@@ -227,7 +212,7 @@ const createReferenceKey = async (isEnd = false) => {
 }
 
 const dropReferenceKey = async (isEnd = false) => {
-  console.log('query start')
+  console.log('dropReferenceKey start')
   const createReferenceKeyQueryResource = `ALTER TABLE resource DROP CONSTRAINT IF EXISTS fkey_resource_event_note,
   DROP CONSTRAINT IF EXISTS fkey_resource_google_account,
   DROP CONSTRAINT IF EXISTS fkey_resource_user`
@@ -250,14 +235,11 @@ const dropReferenceKey = async (isEnd = false) => {
  * Create All Tables
  */
 export const createAllTables = async () => {
-  const to = setTimeout(async () => {
-    await createUserTable()
-    await createResourceTable()
-    await createGoogleAccountTable()
-    await createEventNoteTable()
-    await createReferenceKey(true)
-    clearTimeout(to)
-  }, 3000)
+  await createUserTable()
+  await createResourceTable()
+  await createGoogleAccountTable()
+  await createEventNoteTable()
+  await createReferenceKey(true)
 }
 
 
