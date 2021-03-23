@@ -12,7 +12,7 @@ pool.on('connect', () => {
  */
 const createUserTable = async (isEnd = false) => {
   console.log('createUserTable start')
-  const userCreateQuery = `CREATE TABLE IF NOT EXISTS users
+  const userCreateQuery = `CREATE TABLE IF NOT EXISTS "user"
   (
       id uuid NOT NULL,
       "googleId" text COLLATE pg_catalog."default",
@@ -118,9 +118,9 @@ const createEventNoteTable = async (isEnd = false) => {
  */
 const dropUserTable = async (isEnd = false) => {
   console.log('dropUserTable start')
-  const usersDropQuery = `DROP TABLE IF EXISTS users`
+  const userDropQuery = `DROP TABLE IF EXISTS "user"`
   try {
-    await pool.query(usersDropQuery)
+    await pool.query(userDropQuery)
     console.log('querry success')
     isEnd && pool.end()
   } catch (error) {
@@ -135,7 +135,7 @@ const dropUserTable = async (isEnd = false) => {
  */
 const dropResourceTable = async (isEnd = false) => {
   console.log('dropResourceTable start')
-  const resourceDropQuery = `DROP TABLE IF EXISTS resource`
+  const resourceDropQuery = `DROP TABLE IF EXISTS "resource"`
   try {
     await pool.query(resourceDropQuery)
     console.log('querry success')
@@ -151,7 +151,7 @@ const dropResourceTable = async (isEnd = false) => {
  */
 const dropGoogleAccount = async (isEnd = false) => {
   console.log('dropGoogleAccount start')
-  const googleAccountDropQuery = `DROP TABLE IF EXISTS googleaccount`
+  const googleAccountDropQuery = `DROP TABLE IF EXISTS "googleaccount"`
   try {
     await pool.query(googleAccountDropQuery)
     console.log('querry success')
@@ -165,9 +165,9 @@ const dropGoogleAccount = async (isEnd = false) => {
 /**
  * Drop Bus Table
  */
-const dropEventNoteingTable = async (isEnd = false) => {
-  console.log('dropEventNoteingTable start')
-  const eventNoteDropQuery = `DROP TABLE IF EXISTS eventnote`
+const dropEventNoteTable = async (isEnd = false) => {
+  console.log('dropEventNoteTable start')
+  const eventNoteDropQuery = `DROP TABLE IF EXISTS "eventnote"`
   try {
     await pool.query(eventNoteDropQuery)
     console.log('querry success')
@@ -189,15 +189,15 @@ const createReferenceKey = async (isEnd = false) => {
     ON UPDATE NO ACTION
     ON DELETE NO ACTION,
   ADD CONSTRAINT fkey_resource_user FOREIGN KEY ("userId")
-    REFERENCES "users" (id) MATCH SIMPLE
+    REFERENCES "user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION`
   const createReferenceKeyQueryGoogleAccount = `ALTER TABLE googleaccount ADD CONSTRAINT fkey_googleaccount_user FOREIGN KEY ("userId")
-    REFERENCES "users" (id) MATCH SIMPLE
+    REFERENCES "user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION`
   const createReferenceKeyQueryEventNote = `ALTER TABLE eventnote ADD CONSTRAINT fkey_eventnote_user FOREIGN KEY ("userId")
-    REFERENCES "users" (id) MATCH SIMPLE
+    REFERENCES "user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION`
   try {
@@ -221,9 +221,9 @@ const dropReferenceKey = async (isEnd = false) => {
   const createReferenceKeyQueryEventNote = `ALTER TABLE eventnote DROP CONSTRAINT IF EXISTS fkey_eventnote_user`
   try {
     await pool.query(createReferenceKeyQueryResource)
-    console.log('querry success')
     await pool.query(createReferenceKeyQueryGoogleAccount)
     await pool.query(createReferenceKeyQueryEventNote)
+    console.log('querry success')
     isEnd && pool.end()
   } catch (error) {
     console.log('query error', error)
@@ -252,7 +252,7 @@ export const dropAllTables = async () => {
   await dropUserTable()
   await dropResourceTable()
   await dropGoogleAccount()
-  await dropEventNoteingTable(true)
+  await dropEventNoteTable(true)
 }
 
 /**

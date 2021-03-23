@@ -2,7 +2,7 @@ export default async (pool, isEnd = false) => {
   console.log('migrate 24-03-2021 start')
   const migrateQuery = `
     ALTER TABLE googleaccount ADD COLUMN IF NOT EXISTS isActive boolean DEFAULT true;
-    ALTER TABLE users ADD COLUMN IF NOT EXISTS isActive boolean DEFAULT true;
+    ALTER TABLE "user" ADD COLUMN IF NOT EXISTS isActive boolean DEFAULT true;
     ALTER TABLE resource ADD COLUMN IF NOT EXISTS isActive boolean DEFAULT true;
     ALTER TABLE eventnote ADD COLUMN IF NOT EXISTS isActive boolean DEFAULT true;
   `
