@@ -1,4 +1,5 @@
 import pool from './dev/pool'
+import migrate from './migrate'
 
 if (!pool) console.log('No pool!!!')
 
@@ -252,6 +253,13 @@ export const dropAllTables = async () => {
   await dropResourceTable()
   await dropGoogleAccount()
   await dropEventNoteingTable(true)
+}
+
+/**
+ * migrate
+ */
+export const migrateData = async () => {
+  await migrate.excute(pool)
 }
 
 pool.on('remove', () => {

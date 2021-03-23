@@ -15,6 +15,7 @@
     "test": "mocha --exit test/*.test.js",
     "create-dev-tables": "babel-node ./database/dbConnection createAllTables",
     "drop-dev-tables": "babel-node ./database/dbConnection dropAllTables",
+    "migrate-tables": "babel-node ./database/dbConnection migrateData",
     "start": "nodemon --watch . --exec babel-node -- index",
     "setup": "npm-run-all -p create-dev-tables start",
     "setupdev2": "npm-run-all -p create-dev2-tables start"
