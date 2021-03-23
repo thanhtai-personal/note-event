@@ -1,0 +1,12 @@
+https://itnext.io/building-restful-api-with-node-js-express-js-and-postgresql-the-right-way-b2e718ad1c66
+
+role "root" does not exist: https://www.revsys.com/writings/postgresql/errors.html
+
+--fix: permission denied, open '/Users/milinka/.babel.json'
+:) Get the same error and fixed it with below command
+sudo chmod 777 /Users/{{-username-}}/.babel.json
+or open new terminal hit below commnd
+ls -al
+check that file
+if you got then hit
+sudo chmod 777 .babel.json
