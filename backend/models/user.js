@@ -1,7 +1,9 @@
-import { DataTypes } from 'sequelize/types'
+import { DataTypes,  Model } from 'sequelize/types'
 import sequelize from './sequelize'
 
-const User = sequelize.define(`"user"`, {
+class User extends Model { }
+
+User.init({
   id: {
     type: DataTypes.UUID,
   },
@@ -35,6 +37,8 @@ const User = sequelize.define(`"user"`, {
   'updatedBy': {
     type: DataTypes.UUID
   }
+}, {
+  sequelize, modelName: 'user'
 })
 
 export default User

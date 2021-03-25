@@ -1,7 +1,9 @@
-import { DataTypes } from 'sequelize/types'
+import { DataTypes, Model } from 'sequelize/types'
 import sequelize from './sequelize'
 
-const EventNote = sequelize.define('eventnote', {
+class EventNote extends Model {}
+
+EventNote.init({
   id: {
     type: DataTypes.UUID,
   },
@@ -29,6 +31,6 @@ const EventNote = sequelize.define('eventnote', {
   'updatedBy': {
     type: DataTypes.UUID
   }
-})
+}, { sequelize, modelName: 'eventnote' })
 
 export default EventNote

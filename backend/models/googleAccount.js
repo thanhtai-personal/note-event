@@ -1,7 +1,9 @@
-import { DataTypes } from 'sequelize/types'
+import { DataTypes, Model } from 'sequelize/types'
 import sequelize from './sequelize'
 
-const GoogleAccount = sequelize.define('googleaccount', {
+class GoogleAccount extends Model { }
+
+GoogleAccount.init({
   id: {
     type: DataTypes.UUID,
   },
@@ -29,6 +31,7 @@ const GoogleAccount = sequelize.define('googleaccount', {
   'updatedBy': {
     type: DataTypes.UUID
   }
-})
+}, { sequelize, modelName: 'googleaccount' })
+
 
 export default GoogleAccount

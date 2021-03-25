@@ -1,7 +1,9 @@
-import { DataTypes } from 'sequelize/types'
+import { DataTypes,  Model } from 'sequelize/types'
 import sequelize from './sequelize'
 
-const Resource = sequelize.define('resource', {
+class Resource extends Model { }
+
+Resource.init({
   id: {
     type: DataTypes.UUID,
   },
@@ -38,6 +40,8 @@ const Resource = sequelize.define('resource', {
   'updatedBy': {
     type: DataTypes.UUID
   }
+}, {
+  sequelize, modelName: 'resource'
 })
 
 export default Resource
