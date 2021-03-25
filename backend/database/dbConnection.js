@@ -19,9 +19,9 @@ const createUserTable = async (isEnd = false) => {
       username text COLLATE pg_catalog."default" NOT NULL,
       password text COLLATE pg_catalog."default" NOT NULL,
       token text COLLATE pg_catalog."default",
-      "createdTime" timestamp without time zone,
-      "updatedTime" timestamp without time zone,
-      "lastLoginTime" timestamp without time zone,
+      "createdTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "updatedTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "lastLoginTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       CONSTRAINT user_pkey PRIMARY KEY (id)
   )`
   try {
@@ -47,8 +47,8 @@ const createResourceTable = async (isEnd = false) => {
       description text COLLATE pg_catalog."default",
       url text COLLATE pg_catalog."default",
       "accountId" uuid,
-      "createdTime" timestamp without time zone,
-      "updatedTime" timestamp without time zone,
+      "createdTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "updatedTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       "eventId" uuid,
       CONSTRAINT resource_pkey PRIMARY KEY (id)
   )`
@@ -73,8 +73,8 @@ const createGoogleAccountTable = async (isEnd = false) => {
       email text COLLATE pg_catalog."default" NOT NULL,
       token text COLLATE pg_catalog."default",
       "userId" uuid,
-      "createdTime" timestamp without time zone,
-      "updatedTime" timestamp without time zone,
+      "createdTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "updatedTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       "currentUsing" boolean DEFAULT false,
       CONSTRAINT googleaccount_pkey PRIMARY KEY (id)
   )`
@@ -99,8 +99,8 @@ const createEventNoteTable = async (isEnd = false) => {
       "userId" uuid NOT NULL,
       "contentText" text COLLATE pg_catalog."default",
       "contentHtml" text COLLATE pg_catalog."default",
-      "createdTime" timestamp without time zone,
-      "updatedTime" timestamp without time zone,
+      "createdTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "updatedTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       CONSTRAINT eventnote_pkey PRIMARY KEY (id)
   )`
   try {

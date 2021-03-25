@@ -1,4 +1,4 @@
-import pool from './pool';
+import pool from '../dev/pool';
 
 export default {
   /**
