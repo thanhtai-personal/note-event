@@ -1,4 +1,4 @@
-import dbConfig from './../../env'
+import dbConfig from '../env'
 import { Sequelize } from 'sequelize'
 
 const sequelize = new Sequelize(dbConfig.database_url)
