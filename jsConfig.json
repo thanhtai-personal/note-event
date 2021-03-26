@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "fe/*": ["frontend/src/*"],
+      "controller/*": ["backend/controller/*"],
+      "model/*": ["backend/domainModel/*"],
+      "modelService/*": ["backend/domainService/*"],
+      "database/*": ["backend/database/*"],
+      "service/*": ["backend/applicationService/*"],
+      "sequelize/*": ["backend/sequelize/*"],
+    },
+    "plugins": [
+      {
+        "afterDeclarations": true
+      }
+    ]
+  }
+}
