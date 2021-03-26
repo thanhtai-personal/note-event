@@ -4,33 +4,15 @@ import sequelize from './sequelize'
 class EventNote extends Model {}
 
 EventNote.init({
-  id: {
-    type: DataTypes.UUID,
-  },
-  'userId': {
-    type: DataTypes.UUID,
-  },
-  'contentText': {
-    type: DataTypes.TEXT
-  },
-  'contentHtml': {
-    type: DataTypes.TEXT
-  },
-  'createdTime': {
-    type: DataTypes.Time
-  },
-  'updatedTime': {
-    type: DataTypes.TIME
-  },
-  'isActive': {
-    type: DataTypes.BOOLEAN
-  },
-  'createdBy': {
-    type: DataTypes.UUID
-  },
-  'updatedBy': {
-    type: DataTypes.UUID
-  }
+  id: DataTypes.UUID,
+  'userId': DataTypes.UUID,
+  'contentText': DataTypes.TEXT,
+  'contentHtml': DataTypes.TEXT,
+  'createdTime': DataTypes.Time,
+  'updatedTime': DataTypes.TIME,
+  'isActive': DataTypes.BOOLEAN,
+  'createdBy': DataTypes.UUID,
+  'updatedBy': DataTypes.UUID
 }, { sequelize, modelName: 'eventnote' })
 
 export default EventNote

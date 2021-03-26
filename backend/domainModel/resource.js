@@ -4,42 +4,18 @@ import sequelize from './sequelize'
 class Resource extends Model { }
 
 Resource.init({
-  id: {
-    type: DataTypes.UUID,
-  },
-  'name': {
-    type: DataTypes.TEXT,
-  },
-  'userId': {
-    type: DataTypes.UUID
-  },
-  'accountId': {
-    type: DataTypes.UUID
-  },
-  'eventId': {
-    type: DataTypes.UUID
-  },
-  'description': {
-    type: DataTypes.TEXT
-  },
-  'url': {
-    type: DataTypes.TEXT
-  },
-  'createdTime': {
-    type: DataTypes.Time
-  },
-  'updatedTime': {
-    type: DataTypes.TIME
-  },
-  'isActive': {
-    type: DataTypes.BOOLEAN
-  },
-  'createdBy': {
-    type: DataTypes.UUID
-  },
-  'updatedBy': {
-    type: DataTypes.UUID
-  }
+  id: DataTypes.UUID,
+  'name': DataTypes.TEXT,
+  'userId': DataTypes.UUID,
+  'accountId': DataTypes.UUID,
+  'eventId': DataTypes.UUID,
+  'description': DataTypes.TEXT,
+  'url': DataTypes.TEXT,
+  'createdTime': DataTypes.Time,
+  'updatedTime': DataTypes.TIME,
+  'isActive': DataTypes.BOOLEAN,
+  'createdBy': DataTypes.UUID,
+  'updatedBy': DataTypes.UUID,
 }, {
   sequelize, modelName: 'resource'
 })

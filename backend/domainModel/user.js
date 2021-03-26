@@ -4,39 +4,17 @@ import sequelize from './sequelize'
 class User extends Model { }
 
 User.init({
-  id: {
-    type: DataTypes.UUID,
-  },
-  'username': {
-    type: DataTypes.TEXT,
-  },
-  'googleId': {
-    type: DataTypes.UUID
-  },
-  'password': {
-    type: DataTypes.TEXT
-  },
-  'token': {
-    type: DataTypes.TEXT
-  },
-  'lastLoginTime': {
-    type: DataTypes.Time
-  },
-  'createdTime': {
-    type: DataTypes.Time
-  },
-  'updatedTime': {
-    type: DataTypes.TIME
-  },
-  'isActive': {
-    type: DataTypes.BOOLEAN
-  },
-  'createdBy': {
-    type: DataTypes.UUID
-  },
-  'updatedBy': {
-    type: DataTypes.UUID
-  }
+  id: DataTypes.UUID,
+  'username': DataTypes.TEXT,
+  'googleId': DataTypes.UUID,
+  'password': DataTypes.TEXT,
+  'token': DataTypes.TEXT,
+  'lastLoginTime': DataTypes.Time,
+  'createdTime': DataTypes.Time,
+  'updatedTime': DataTypes.TIME,
+  'isActive': DataTypes.BOOLEAN,
+  'createdBy': DataTypes.UUID,
+  'updatedBy': DataTypes.UUID
 }, {
   sequelize, modelName: 'user'
 })
