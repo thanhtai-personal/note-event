@@ -1,22 +1,47 @@
-import { DataTypes,  Model } from 'sequelize/types'
-import sequelize from './sequelize'
+import { DataTypes, Model } from 'sequelize'
+import sequelize from './../sequelize'
 
 class User extends Model { }
 
 User.init({
-  id: DataTypes.UUID,
-  'username': DataTypes.TEXT,
-  'googleId': DataTypes.UUID,
-  'password': DataTypes.TEXT,
-  'token': DataTypes.TEXT,
-  'lastLoginTime': DataTypes.Time,
-  'createdTime': DataTypes.Time,
-  'updatedTime': DataTypes.TIME,
-  'isActive': DataTypes.BOOLEAN,
-  'createdBy': DataTypes.UUID,
-  'updatedBy': DataTypes.UUID
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true
+  },
+  'username': {
+    type: DataTypes.TEXT,
+  },
+  'googleId': {
+    type: DataTypes.UUID
+  },
+  'password': {
+    type: DataTypes.TEXT
+  },
+  'token': {
+    type: DataTypes.TEXT
+  },
+  'lastLoginTime': {
+    type: DataTypes.TIME
+  },
+  'createdTime': {
+    type: DataTypes.TIME
+  },
+  'updatedTime': {
+    type: DataTypes.TIME
+  },
+  'isActive': {
+    type: DataTypes.BOOLEAN
+  },
+  'createdBy': {
+    type: DataTypes.UUID
+  },
+  'updatedBy': {
+    type: DataTypes.UUID
+  }
 }, {
-  sequelize, modelName: 'user'
+  modelName: 'user',
+  tableName: 'user',
+  sequelize
 })
 
 export default User

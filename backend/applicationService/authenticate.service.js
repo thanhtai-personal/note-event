@@ -26,7 +26,7 @@ const register = (userService) => async (dataReq) => {
 // }
 
 // to apply dependency injection
-const authService = (userService, accountService) => ({
+const authService = (userService) => ({
   login: login(userService),
   register: register(userService)
 })

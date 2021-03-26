@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize'
 
 const sequelize = new Sequelize(dbConfig.database_url)
 
-export const testConnect = () => {
+export const testConnect = async () => {
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');

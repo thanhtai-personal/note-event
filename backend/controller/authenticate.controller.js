@@ -1,8 +1,12 @@
 import { routeType } from './../constants'
-import authService from '../applicationService/authenticate.service'
+import AuthService from '../applicationService/authenticate.service'
+import userService from '../domainService/user.service'
+
+const authService = AuthService(userService)
 
 const login = async (req, res) => {
   try {
+      let a = 0
       const { user, token } = await authService.login(req.body)
       res.status(200).send({ user, token })
   } catch (error) {
