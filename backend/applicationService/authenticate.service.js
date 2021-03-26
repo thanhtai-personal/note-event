@@ -1,9 +1,8 @@
-import userService from 'modelService/user.service'
 import { checkHashPassword, generateToken } from './utils'
 
-const login = async (dataReq) => {
+const login = (service) => async (dataReq) => {
   try {
-      const user = userService.getByEmail(dataReq.email)
+      const user = service.getByEmail(dataReq.email)
       const token = checkHashPassword(dataReq.password, user.password)
       return { user, token }
   } catch (error) {
@@ -11,9 +10,9 @@ const login = async (dataReq) => {
   }
 }
 
-const register = async (dataReq) => {
+const register = (service) => async (dataReq) => {
   try {
-      const user = userService.create(dataReq)
+      const user = service.create(dataReq)
       const token = generateToken(user.password)
       return { user, token }
   } catch (error) {
@@ -21,7 +20,15 @@ const register = async (dataReq) => {
   }
 }
 
-export default {
-  login,
-  register
-}
+// export default {
+//   login,
+//   register
+// }
+
+// to apply dependency injection
+const authService = (service) => ({
+  login: login(service),
+  register: register(service)
+})
+
+export default authService

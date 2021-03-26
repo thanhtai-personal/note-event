@@ -14,3 +14,5 @@ sudo chmod 777 .babel.json
 https://viblo.asia/p/jwt-authentication-authorization-in-nodejs-rest-api-WAyK8PXnKxX
 
 https://swagger.io/docs/open-source-tools/swagger-ui/usage/installation/
+
+https://viblo.asia/p/dependency-injection-la-gi-va-khi-nao-thi-nen-su-dung-no-LzD5d0d05jY
