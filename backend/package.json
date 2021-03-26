@@ -18,13 +18,16 @@
     "migrate-tables": "babel-node ./database/dbConnection migrateData",
     "start": "nodemon --watch . --exec babel-node -- index",
     "setup": "npm-run-all -p create-dev-tables start",
-    "setupdev2": "npm-run-all -p create-dev2-tables start"
+    "setupdev2": "npm-run-all -p create-dev2-tables start",
+    "startWithConfig": "env-cmd -f ./.env nodemon src/app.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cookie-parse": "^0.4.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "gcp-metadata": "^4.1.0",
@@ -34,7 +37,10 @@
     "moment": "^2.29.1",
     "npm-run-all": "^4.1.5",
     "pg": "^8.5.1",
-    "sequelize": "^6.6.2"
+    "sequelize": "^6.6.2",
+    "swagger-ui": "^3.45.1",
+    "swagger-ui-dist": "^3.45.1",
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -43,7 +49,9 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",
     "babel-watch": "^7.4.1",
+    "env-cmd": "^10.1.0",
     "mocha": "^8.0.0",
+    "nodemon": "^2.0.7",
     "supertest": "^6.0.0"
   }
 }

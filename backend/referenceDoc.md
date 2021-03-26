@@ -10,3 +10,7 @@ ls -al
 check that file
 if you got then hit
 sudo chmod 777 .babel.json
+
+https://viblo.asia/p/jwt-authentication-authorization-in-nodejs-rest-api-WAyK8PXnKxX
+
+https://swagger.io/docs/open-source-tools/swagger-ui/usage/installation/
