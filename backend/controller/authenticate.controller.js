@@ -1,12 +1,12 @@
 import { routeType } from './../constants'
-import authService from 'service/authenticate.service'
+import authService from '../applicationService/authenticate.service'
 
 const login = async (req, res) => {
   try {
       const { user, token } = await authService.login(req.body)
       res.status(200).send({ user, token })
   } catch (error) {
-      res.status(401).send(error)
+      res.status(500).send(error)
   }
 }
 
@@ -15,7 +15,7 @@ const signUp = async (req, res) => {
       const { user, token } = await authService.register(req.body)
       res.status(200).send({ user, token })
   } catch (error) {
-      res.status(401).send(error)
+      res.status(500).send(error)
   }
 }
 

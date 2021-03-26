@@ -3,6 +3,7 @@ import conbineController from './controller'
 import cookieParser from'cookie-parser'
 // import bodyParser from 'body-parser'
 import authController from './controller/authenticate.controller'
+import envConfig from './env'
 
 const app = express();
 const getApp = () => app
@@ -19,7 +20,7 @@ const controllerToBeCompined = [authController]
 controllerToBeCompined.forEach((controller) => conbineController(getApp, controller))
 
 // Start the server
-const PORT = process.env.PORT || 2021;
+const PORT = envConfig.port;
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
   console.log('Press Ctrl+C to quit.');
