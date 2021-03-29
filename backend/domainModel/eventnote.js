@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require('sequelize')
-const sequelize = require('./../sequelize')
+const { sequelize } = require('./../sequelize')
 
 class EventNote extends Model {}
 
@@ -17,10 +17,10 @@ EventNote.init({
   'contentHtml': {
     type: DataTypes.TEXT
   },
-  'createdTime': {
+  'createdAt': {
     type: DataTypes.TIME
   },
-  'updatedTime': {
+  'updatedAt': {
     type: DataTypes.TIME
   },
   'isActive': {

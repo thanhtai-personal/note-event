@@ -1,5 +1,5 @@
 const { DataTypes,  Model } = require('sequelize/types')
-const sequelize = require('./../sequelize')
+const { sequelize } = require('./../sequelize')
 
 class Resource extends Model { }
 
@@ -26,10 +26,10 @@ Resource.init({
   'url': {
     type: DataTypes.TEXT
   },
-  'createdTime': {
+  'createdAt': {
     type: DataTypes.TIME
   },
-  'updatedTime': {
+  'updatedAt': {
     type: DataTypes.TIME
   },
   'isActive': {

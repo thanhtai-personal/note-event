@@ -20,6 +20,6 @@ https://viblo.asia/p/dependency-injection-la-gi-va-khi-nao-thi-nen-su-dung-no-Lz
 kill port wind:
 - netstat -ano | findstr :<PORT>
 - tasklist /O
-- taskkill /pid PID
+- taskkill (/F) /pid PID
 - https://stackoverflow.com/questions/4075287/node-express-eaddrinuse-address-already-in-use-kill-server
 

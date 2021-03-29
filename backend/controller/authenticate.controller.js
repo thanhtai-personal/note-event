@@ -1,12 +1,12 @@
 const { routeType } = require('./../constants')
 const AuthService = require('../applicationService/authenticate.service')
 const userService = require('../domainService/user.service')
+const clientService = require('../domainService/client.service')
 
-const authService = AuthService(userService)
+const authService = AuthService(userService, clientService)
 
 const login = async (req, res) => {
   try {
-      let a = 0
       const { user, token } = await authService.login(req.body)
       res.status(200).send({ user, token })
   } catch (error) {
@@ -16,8 +16,8 @@ const login = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-      const { user, token } = await authService.register(req.body)
-      res.status(200).send({ user, token })
+      const authData = await authService.register(req.body)
+      res.status(200).send(authData)
   } catch (error) {
       res.status(500).send(error)
   }

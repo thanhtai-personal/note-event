@@ -18,9 +18,8 @@ const createUserTable = async (isEnd = false) => {
       "googleId" text COLLATE pg_catalog."default",
       username text COLLATE pg_catalog."default" NOT NULL,
       password text COLLATE pg_catalog."default" NOT NULL,
-      token text COLLATE pg_catalog."default",
-      "createdTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-      "updatedTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "createdAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "updatedAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       "lastLoginTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       CONSTRAINT user_pkey PRIMARY KEY (id)
   )`
@@ -47,8 +46,8 @@ const createResourceTable = async (isEnd = false) => {
       description text COLLATE pg_catalog."default",
       url text COLLATE pg_catalog."default",
       "accountId" uuid,
-      "createdTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-      "updatedTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "createdAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "updatedAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       "eventId" uuid,
       CONSTRAINT resource_pkey PRIMARY KEY (id)
   )`
@@ -73,8 +72,8 @@ const createGoogleAccountTable = async (isEnd = false) => {
       email text COLLATE pg_catalog."default" NOT NULL,
       token text COLLATE pg_catalog."default",
       "userId" uuid,
-      "createdTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-      "updatedTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "createdAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "updatedAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       "currentUsing" boolean DEFAULT false,
       CONSTRAINT googleaccount_pkey PRIMARY KEY (id)
   )`
@@ -99,8 +98,8 @@ const createEventNoteTable = async (isEnd = false) => {
       "userId" uuid NOT NULL,
       "contentText" text COLLATE pg_catalog."default",
       "contentHtml" text COLLATE pg_catalog."default",
-      "createdTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-      "updatedTime" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "createdAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "updatedAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       CONSTRAINT eventnote_pkey PRIMARY KEY (id)
   )`
   try {
@@ -163,11 +162,27 @@ const dropGoogleAccount = async (isEnd = false) => {
 }
 
 /**
- * Drop Bus Table
+ * Drop EventNote Table
  */
-const dropEventNoteTable = async (isEnd = false) => {
+ const dropEventNoteTable = async (isEnd = false) => {
   console.log('dropEventNoteTable start')
   const eventNoteDropQuery = `DROP TABLE IF EXISTS "eventnote"`
+  try {
+    await pool.query(eventNoteDropQuery)
+    console.log('querry success')
+    isEnd && pool.end()
+  } catch (error) {
+    console.log('query error', error)
+    isEnd && pool.end()
+  }
+}
+
+/**
+ * Drop Client Table
+ */
+const dropClientTable = async (isEnd = false) => {
+  console.log('Drop client table start')
+  const eventNoteDropQuery = `DROP TABLE IF EXISTS "client"`
   try {
     await pool.query(eventNoteDropQuery)
     console.log('querry success')
@@ -214,15 +229,17 @@ const createReferenceKey = async (isEnd = false) => {
 
 const dropReferenceKey = async (isEnd = false) => {
   console.log('dropReferenceKey start')
-  const createReferenceKeyQueryResource = `ALTER TABLE resource DROP CONSTRAINT IF EXISTS fkey_resource_event_note,
+  const dropReferenceKeyQueryResource = `ALTER TABLE resource DROP CONSTRAINT IF EXISTS fkey_resource_event_note,
   DROP CONSTRAINT IF EXISTS fkey_resource_google_account,
   DROP CONSTRAINT IF EXISTS fkey_resource_user`
-  const createReferenceKeyQueryGoogleAccount = `ALTER TABLE googleaccount DROP CONSTRAINT IF EXISTS fkey_googleaccount_user`
-  const createReferenceKeyQueryEventNote = `ALTER TABLE eventnote DROP CONSTRAINT IF EXISTS fkey_eventnote_user`
+  const dropReferenceKeyQueryGoogleAccount = `ALTER TABLE googleaccount DROP CONSTRAINT IF EXISTS fkey_googleaccount_user`
+  const dropReferenceKeyQueryEventNote = `ALTER TABLE eventnote DROP CONSTRAINT IF EXISTS fkey_eventnote_user`
+  const dropReferenceKeyQueryClient = `ALTER TABLE client DROP CONSTRAINT IF EXISTS fkey_client_user`
   try {
-    await pool.query(createReferenceKeyQueryResource)
-    await pool.query(createReferenceKeyQueryGoogleAccount)
-    await pool.query(createReferenceKeyQueryEventNote)
+    await pool.query(dropReferenceKeyQueryResource)
+    await pool.query(dropReferenceKeyQueryGoogleAccount)
+    await pool.query(dropReferenceKeyQueryEventNote)
+    await pool.query(dropReferenceKeyQueryClient)
     console.log('querry success')
     isEnd && pool.end()
   } catch (error) {
@@ -253,7 +270,8 @@ module.exports = {
     await dropUserTable()
     await dropResourceTable()
     await dropGoogleAccount()
-    await dropEventNoteTable(true)
+    await dropEventNoteTable()
+    await dropClientTable(true)
   },
 
   /**

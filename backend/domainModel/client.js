@@ -1,21 +1,18 @@
 const { DataTypes, Model } = require('sequelize')
 const { sequelize } = require('./../sequelize')
 
-class GoogleAccount extends Model { }
+class Client extends Model {}
 
-GoogleAccount.init({
+Client.init({
   id: {
     type: DataTypes.UUID,
     primaryKey: true
   },
-  'email': {
-    type: DataTypes.TEXT,
+  userAgent: {
+    type: DataTypes.TEXT
   },
-  'userId': {
+  userId: {
     type: DataTypes.UUID
-  },
-  'currentUsing': {
-    type: DataTypes.BOOLEAN
   },
   'createdAt': {
     type: DataTypes.TIME
@@ -32,7 +29,6 @@ GoogleAccount.init({
   'updatedBy': {
     type: DataTypes.UUID
   }
-}, { sequelize, modelName: 'googleAccount', tableName: 'googleaccount' })
+}, { sequelize, modelName: 'client', tableName: 'client' })
 
-
-module.exports =  GoogleAccount
+module.exports =  Client

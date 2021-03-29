@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS public.eventnote
     "userId" uuid NOT NULL,
     "contentText" text COLLATE pg_catalog."default",
     "contentHtml" text COLLATE pg_catalog."default",
-    "createdTime" timestamp without time zone,
-    "updatedTime" timestamp without time zone,
+    "createdAt" timestamp without time zone,
+    "updatedAt" timestamp without time zone,
     CONSTRAINT eventnote_pkey PRIMARY KEY (id)
 )
 WITH (
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS public.googleaccount
     email text COLLATE pg_catalog."default" NOT NULL,
     token text COLLATE pg_catalog."default",
     "userId" uuid,
-    "createdTime" timestamp without time zone,
-    "updatedTime" timestamp without time zone,
+    "createdAt" timestamp without time zone,
+    "updatedAt" timestamp without time zone,
     "currentUsing" boolean DEFAULT false,
     CONSTRAINT googleaccount_pkey PRIMARY KEY (id)
 )
@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS public.resource
     description text COLLATE pg_catalog."default",
     url text COLLATE pg_catalog."default",
     "accountId" uuid,
-    "createdTime" timestamp without time zone,
-    "updatedTime" timestamp without time zone,
+    "createdAt" timestamp without time zone,
+    "updatedAt" timestamp without time zone,
     "eventId" uuid,
     CONSTRAINT resource_pkey PRIMARY KEY (id)
 )
@@ -92,8 +92,8 @@ CREATE TABLE IF NOT EXISTS public."user"
     username character varying(128) COLLATE pg_catalog."default" NOT NULL,
     password character varying(256) COLLATE pg_catalog."default" NOT NULL,
     token text COLLATE pg_catalog."default",
-    "createdTime" timestamp without time zone,
-    "updatedTime" timestamp without time zone,
+    "createdAt" timestamp without time zone,
+    "updatedAt" timestamp without time zone,
     "lastLoginTime" timestamp without time zone,
     CONSTRAINT user_pkey PRIMARY KEY (id)
 )
