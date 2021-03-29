@@ -1,5 +1,5 @@
-import GoogleAccount from '../domainModel/googleAccount'
+const GoogleAccount = require('../domainModel/googleAccount')
 
 const googleAccount = new GoogleAccount()
 
-export default googleAccount
+module.exports =  googleAccount

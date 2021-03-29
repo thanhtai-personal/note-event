@@ -1,4 +1,4 @@
-import { routeType } from './../constants'
+const { routeType } = require('./../constants')
 
 const combineController = (getApp = () => { }, featureApis = []) => {
   const app = getApp() || {}
@@ -24,4 +24,4 @@ const combineController = (getApp = () => { }, featureApis = []) => {
   })
 }
 
-export default combineController
+module.exports =  combineController

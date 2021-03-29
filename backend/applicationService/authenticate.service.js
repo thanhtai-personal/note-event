@@ -1,4 +1,4 @@
-import { checkHashPassword, generateToken } from './utils'
+const { checkHashPassword, generateToken } = require('./utils')
 
 const login = (userService) => async (dataReq) => {
   try {
@@ -20,7 +20,7 @@ const register = (userService) => async (dataReq) => {
   }
 }
 
-// export default {
+// module.exports =  {
 //   login,
 //   register
 // }
@@ -31,4 +31,4 @@ const authService = (userService) => ({
   register: register(userService)
 })
 
-export default authService
+module.exports =  authService

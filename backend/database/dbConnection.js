@@ -1,5 +1,5 @@
-import pool from './dev/pool'
-import migrate from './migrate'
+const pool = require('./dev/pool')
+const migrate = require('./migrate')
 
 if (!pool) console.log('No pool!!!')
 
@@ -235,33 +235,34 @@ const dropReferenceKey = async (isEnd = false) => {
 /**
  * Create All Tables
  */
-export const createAllTables = async () => {
-  await createUserTable()
-  await createResourceTable()
-  await createGoogleAccountTable()
-  await createEventNoteTable()
-  await createReferenceKey(true)
+module.exports = {
+  createAllTables: async () => {
+    await createUserTable()
+    await createResourceTable()
+    await createGoogleAccountTable()
+    await createEventNoteTable()
+    await createReferenceKey(true)
+  }
+  ,
+
+  /**
+   * Drop All Tables
+   */
+  dropAllTables: async () => {
+    await dropReferenceKey()
+    await dropUserTable()
+    await dropResourceTable()
+    await dropGoogleAccount()
+    await dropEventNoteTable(true)
+  },
+
+  /**
+   * migrate
+   */
+  migrateData: async () => {
+    await migrate.excute(pool)
+  }
 }
-
-
-/**
- * Drop All Tables
- */
-export const dropAllTables = async () => {
-  await dropReferenceKey()
-  await dropUserTable()
-  await dropResourceTable()
-  await dropGoogleAccount()
-  await dropEventNoteTable(true)
-}
-
-/**
- * migrate
- */
-export const migrateData = async () => {
-  await migrate.excute(pool)
-}
-
 pool.on('remove', () => {
   console.log('client removed')
   process.exit(0)

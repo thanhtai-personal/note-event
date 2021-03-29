@@ -1,5 +1,5 @@
-import Resource from '../domainModel/resource'
+const Resource = require('../domainModel/resource')
 
 const resource = new Resource()
 
-export default resource
+module.exports =  resource

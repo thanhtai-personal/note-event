@@ -1,5 +1,5 @@
-import User from '../domainModel/user'
+const User = require('../domainModel/user')
 
 const user = new User()
 
-export default user
+module.exports =  user

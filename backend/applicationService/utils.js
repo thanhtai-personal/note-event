@@ -1,7 +1,8 @@
-export const checkHashPassword = () => {
+module.exports = {
+  checkHashPassword: () => {
 
-}
+  },
+  generateToken: () => {
 
-export const generateToken = () => {
-  
+  }
 }

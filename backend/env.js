@@ -1,8 +1,8 @@
-import dotenv from 'dotenv';
+const dotenv = require('dotenv')
 
 dotenv.config();
 
-export default {
+module.exports =  {
   database_url: process.env.DATABASE_URL,
   test_database_url: process.env.TEST_DATABASE_URL,
   secret: process.env.SECRET,

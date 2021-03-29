@@ -16,3 +16,10 @@ https://viblo.asia/p/jwt-authentication-authorization-in-nodejs-rest-api-WAyK8PX
 https://swagger.io/docs/open-source-tools/swagger-ui/usage/installation/
 
 https://viblo.asia/p/dependency-injection-la-gi-va-khi-nao-thi-nen-su-dung-no-LzD5d0d05jY
+
+kill port wind:
+- netstat -ano | findstr :<PORT>
+- tasklist /O
+- taskkill /pid PID
+- https://stackoverflow.com/questions/4075287/node-express-eaddrinuse-address-already-in-use-kill-server
+

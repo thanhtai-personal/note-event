@@ -1,5 +1,5 @@
-import EventNote from '../domainModel/eventnote'
+const EventNote = require('../domainModel/eventnote')
 
 const eventNote = new EventNote()
 
-export default eventNote
+module.exports =  eventNote

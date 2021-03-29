@@ -1,6 +1,6 @@
-import migrate240321 from './migrate240321'
-import migrate250321 from './migrate250321'
-export default {
+const migrate240321 = require('./migrate240321')
+const migrate250321 = require('./migrate250321')
+module.exports =  {
   excute: async (pool) => {
     await migrate240321(pool)
     await migrate250321(pool, true)

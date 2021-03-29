@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize'
-import sequelize from './../sequelize'
+const { DataTypes, Model } = require('sequelize')
+const sequelize = require('./../sequelize')
 
 class GoogleAccount extends Model { }
 
@@ -35,4 +35,4 @@ GoogleAccount.init({
 }, { sequelize, modelName: 'googleAccount', tableName: 'googleaccount' })
 
 
-export default GoogleAccount
+module.exports =  GoogleAccount

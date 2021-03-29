@@ -1,4 +1,4 @@
-export default async (pool, isEnd = false) => {
+module.exports =  async (pool, isEnd = false) => {
   console.log('migrate 24-03-2021 start')
   const migrateQuery = `
     ALTER TABLE googleaccount ADD COLUMN IF NOT EXISTS "isActive" boolean DEFAULT true;

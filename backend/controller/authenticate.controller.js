@@ -1,6 +1,6 @@
-import { routeType } from './../constants'
-import AuthService from '../applicationService/authenticate.service'
-import userService from '../domainService/user.service'
+const { routeType } = require('./../constants')
+const AuthService = require('../applicationService/authenticate.service')
+const userService = require('../domainService/user.service')
 
 const authService = AuthService(userService)
 
@@ -23,7 +23,7 @@ const signUp = async (req, res) => {
   }
 }
 
-export default [
+module.exports =  [
   {
     controllerExecution: login,
     path: '/login',

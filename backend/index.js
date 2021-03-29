@@ -1,9 +1,9 @@
-import express from 'express'
-import conbineController from './controller'
-import cookieParser from'cookie-parser'
-// import bodyParser from 'body-parser'
-import authController from './controller/authenticate.controller'
-import envConfig from './env'
+const express = require('express')
+const conbineController = require('./controller')
+const cookieParser = require('cookie-parser')
+// const bodyParser = require('body-parser')
+const authController = require('./controller/authenticate.controller')
+const envConfig = require('./env')
 
 const app = express();
 const getApp = () => app

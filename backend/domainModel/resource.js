@@ -1,5 +1,5 @@
-import { DataTypes,  Model } from 'sequelize/types'
-import sequelize from './../sequelize'
+const { DataTypes,  Model } = require('sequelize/types')
+const sequelize = require('./../sequelize')
 
 class Resource extends Model { }
 
@@ -45,4 +45,4 @@ Resource.init({
   sequelize, modelName: 'resource', tableName: 'resource'
 })
 
-export default Resource
+module.exports =  Resource

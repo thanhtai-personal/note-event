@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize'
-import sequelize from './../sequelize'
+const { DataTypes, Model } = require('sequelize')
+const sequelize = require('./../sequelize')
 
 class EventNote extends Model {}
 
@@ -34,4 +34,4 @@ EventNote.init({
   }
 }, { sequelize, modelName: 'eventNote', tableName: 'eventnote' })
 
-export default EventNote
+module.exports =  EventNote
