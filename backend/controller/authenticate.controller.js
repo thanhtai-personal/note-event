@@ -9,7 +9,7 @@ const login = async (req, res) => {
   try {
       let authData = null
       if (req.header.token) {
-        authData = await authService.getAuthDataByToken(req.header.token, req.header.refreshToken)
+        authData = await authService.getAuthDataByToken(req.header.token, req.header.refreshToken, req.body.clientInfo)
       } else {
         authData = await authService.login(req.body)
       }

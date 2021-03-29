@@ -54,7 +54,7 @@ const register = (userService, clientService) => async (dataReq) => {
   }
 }
 
-const getAuthDataByToken = (userService, clientService) => async (token, refreshToken) => {
+const getAuthDataByToken = (userService, clientService) => async (token, refreshToken, clientInfo) => {
   try {
     try {
       const decodedToken = await jwt.verify(token, jwtKey)
@@ -64,9 +64,17 @@ const getAuthDataByToken = (userService, clientService) => async (token, refresh
       if (decodedError.name === 'TokenExpiredError') {
         try {
           const decodedRefreshToken = await jwt.verify(refreshToken, jwtKey)
-          const user = await userService.getByUserId(decodedRefreshToken.userId)
-          const newToken = await generateToken(userData)
-          return { user, token: newToken, refreshToken }
+          const clientInfos = await clientService.getUserAgentByUserId(decodedRefreshToken.userId) || []
+          if (clientInfo.userAgent && clientInfos.includes(clientInfo.userAgent)) {
+            const user = await userService.getByUserId(decodedRefreshToken.userId)
+            const newToken = await generateToken(userData)
+            return { user, token: newToken, refreshToken }
+          } else {
+            throw({
+              code: 403,
+              message: 'This device was not saved. Relogin please.'
+            })
+          }
         } catch (error) {
           throw error
         }

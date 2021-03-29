@@ -11,4 +11,13 @@ ClientService.generateRefreshToken = (user, clientInfo, expiresIn) => {
   return token
 }
 
+ClientService.getUserAgentByUserId = (userId) => {
+  return Client.findAll({
+    attributes: 'userAgent',
+    where: {
+      userId
+    }
+  })
+}
+
 module.exports =  ClientService
