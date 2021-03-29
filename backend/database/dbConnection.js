@@ -229,12 +229,12 @@ const createReferenceKey = async (isEnd = false) => {
 
 const dropReferenceKey = async (isEnd = false) => {
   console.log('dropReferenceKey start')
-  const dropReferenceKeyQueryResource = `ALTER TABLE resource DROP CONSTRAINT IF EXISTS fkey_resource_event_note,
+  const dropReferenceKeyQueryResource = `ALTER TABLE IF EXISTS resource DROP CONSTRAINT IF EXISTS fkey_resource_event_note,
   DROP CONSTRAINT IF EXISTS fkey_resource_google_account,
   DROP CONSTRAINT IF EXISTS fkey_resource_user`
-  const dropReferenceKeyQueryGoogleAccount = `ALTER TABLE googleaccount DROP CONSTRAINT IF EXISTS fkey_googleaccount_user`
-  const dropReferenceKeyQueryEventNote = `ALTER TABLE eventnote DROP CONSTRAINT IF EXISTS fkey_eventnote_user`
-  const dropReferenceKeyQueryClient = `ALTER TABLE client DROP CONSTRAINT IF EXISTS fkey_client_user`
+  const dropReferenceKeyQueryGoogleAccount = `ALTER TABLE IF EXISTS googleaccount DROP CONSTRAINT IF EXISTS fkey_googleaccount_user`
+  const dropReferenceKeyQueryEventNote = `ALTER TABLE IF EXISTS eventnote DROP CONSTRAINT IF EXISTS fkey_eventnote_user`
+  const dropReferenceKeyQueryClient = `ALTER TABLE IF EXISTS client DROP CONSTRAINT IF EXISTS fkey_client_user`
   try {
     await pool.query(dropReferenceKeyQueryResource)
     await pool.query(dropReferenceKeyQueryGoogleAccount)
