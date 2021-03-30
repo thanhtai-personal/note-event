@@ -8,10 +8,14 @@ const authService = AuthService(userService, clientService)
 const login = async (req, res) => {
   try {
       let authData = null
-      if (req.header.token) {
-        authData = await authService.getAuthDataByToken(req.header.token, req.header.refreshToken, req.body.clientInfo)
+      if (req.headers.token) {
+        authData = await authService.getAuthDataByToken(req.headers.token, req.headers.refreshToken, req.headers.userAgent)
       } else {
-        authData = await authService.login(req.body)
+        const dataReq = {
+          ...req.body,
+          userAgent: req.headers.userAgent
+        }
+        authData = await authService.login(dataReq)
       }
       if (!authData) {
         res.status(500).send({ message: 'get auth data failed!' })
@@ -24,7 +28,11 @@ const login = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-      const authData = await authService.register(req.body)
+      const reqData = {
+        ...req.body,
+        userAgent: req.headers.userAgent
+      }
+      const authData = await authService.register(reqData)
       res.status(200).send(authData)
   } catch (error) {
       res.status(500).send(error)

@@ -25,14 +25,3 @@ app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
   console.log('Press Ctrl+C to quit.');
 });
-
-/**
- * 
- const crypto = require('crypto');
-
-  const getHashedPassword = (password) => {
-      const sha256 = crypto.createHash('sha256');
-      const hash = sha256.update(password).digest('base64');
-      return hash;
-  }
- */

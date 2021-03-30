@@ -4,20 +4,20 @@ const jwt = require('jsonwebtoken')
 
 class ClientService extends Client {}
 
-ClientService.generateRefreshToken = (user, clientInfo, expiresIn) => {
+ClientService.generateRefreshToken = async (user, userAgent, expiresIn) => {
   const { id } = user
-  const { userAgent } = clientInfo
-  const token = jwt.sign({ userId: id, userAgent }, jwtKey, { expiresIn })
+  const token = await jwt.sign({ userId: id, userAgent }, jwtKey, { expiresIn })
   return token
 }
 
-ClientService.getUserAgentByUserId = (userId) => {
-  return Client.findAll({
-    attributes: 'userAgent',
+ClientService.getUserAgentByUserId = async (userId) => {
+  const clients = await Client.findAll({
+    attributes: ['userAgent'],
     where: {
       userId
     }
   })
+  return clients.dataValues
 }
 
 module.exports =  ClientService
