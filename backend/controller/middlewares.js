@@ -1,20 +1,25 @@
-const publicRoute = [ 'login', 'register' ]
-const { jwtKey } = require('./../env')
-const jwt = require('jsonwebtoken')
+const publicRoute = ['login', 'register']
+const authenService = require('./../applicationService/authenticate.service')
 
-const checkValidateToken = (token) => {
+const checkValidateToken = (token, refreshToken) => {
   try {
-    const decoded = jwt.verify(token, jwtKey)
-    return decoded
+    const authData = authenService.getAuthDataByToken(token, refreshToken, userAgent)
+    return authData || {}
   } catch (error) {
     return false
   }
 }
 
 const useAuth = (req, res, next) => {
-  if (publicRoute.includes(req?.url)) return next() //validate token info
-  else if (checkValidateToken(req.headers.token)) return next()
-  else return '403 error'
+  if (publicRoute.includes(req.url)) return next() //validate token info
+  else {
+    const validateToken = checkValidateToken(req.headers.token, req.headers.refreshToken, req.headers.userAgent)
+    if (validateToken) {
+      req.authData = validateToken.user
+      if (validateToken.token) req.headers.token = validateToken.token
+      return next()
+    } else return '403 error'
+  } 
 }
 
 module.exports = {
