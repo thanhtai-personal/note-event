@@ -12,11 +12,11 @@ const login = async (req, res) => {
   try {
       let authData = null
       if (req.headers.token) {
-        authData = await authService.getAuthDataByToken(req.headers.token, req.headers.refreshToken, req.headers.userAgent)
+        authData = await authService.getAuthDataByToken(req.headers.token, req.headers.refreshtoken, req.headers['user-agent'])
       } else {
         const dataReq = {
           ...req.body,
-          userAgent: req.headers.userAgent
+          userAgent: req.headers['user-agent']
         }
         authData = await authService.login(dataReq)
       }
@@ -33,7 +33,7 @@ const signUp = async (req, res) => {
   try {
       const reqData = {
         ...req.body,
-        userAgent: req.headers.userAgent
+        userAgent: req.headers['user-agent']
       }
       const authData = await authService.register(reqData)
       res.status(200).send(authData)

@@ -1,26 +1,36 @@
 const { LOGIN, REGISTER } = require('./../controller/routePaths')
 const publicRoute = [LOGIN, REGISTER]
-const authenService = require('./../applicationService/authenticate.service')
+const AuthenService = require('./../applicationService/authenticate.service')
+const userService = require('./../domainService/user.service')
+const clientService = require('./../domainService/client.service')
 
-const checkValidateToken = (token, refreshToken) => {
+const authenService = AuthenService(userService, clientService)
+
+const checkValidateToken = async (token, refreshToken, userAgent) => {
   try {
-    const authData = authenService.getAuthDataByToken(token, refreshToken, userAgent)
+    const authData = await authenService.getAuthDataByToken(token, refreshToken, userAgent)
     return authData || {}
   } catch (error) {
     return false
   }
 }
 
-const useAuth = (req, res, next) => {
-  if (publicRoute.includes(req.url)) return next() //validate token info
-  else {
-    const validateToken = checkValidateToken(req.headers.token, req.headers.refreshToken, req.headers.userAgent)
-    if (validateToken) {
-      req.authData = validateToken.user
-      if (validateToken.token) req.headers.token = validateToken.token
-      return next()
-    } else return '403 error'
-  } 
+const useAuth = async (req, res, next) => {
+  try {
+    if (publicRoute.includes(req.url)) return next() //validate token info
+    else {
+      const validateToken = await checkValidateToken(req.headers.token, req.headers.refreshtoken, req.headers['user-agent'])
+      if (validateToken) {
+        req.authData = validateToken.user
+        if (validateToken.token) req.headers.token = validateToken.token
+        return next()
+      } else return res.status(403).send({
+        message: 'you have not permission to do something here'
+      })
+    }
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {

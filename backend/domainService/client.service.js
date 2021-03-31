@@ -14,7 +14,8 @@ ClientService.getUserAgentByUserId = async (userId) => {
   const clients = await Client.findAll({
     attributes: ['userAgent'],
     where: {
-      userId
+      userId,
+      isActive: true
     }
   })
   return clients.dataValues

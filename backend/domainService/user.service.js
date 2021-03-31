@@ -6,7 +6,8 @@ User.getByUserName = async (userName, getPassword) => {
       exclude: getPassword ? [] : ['password']
     },
     where: {
-      username: userName
+      username: userName,
+      isActive: true
     }
   })
   return user.dataValues
