@@ -31,7 +31,7 @@ const login = (userService, clientService) => async (dataReq) => {
       if (isValidPass) {
         const token = await generateToken(user)
         const refreshToken = await clientService.generateRefreshToken(user, dataReq.userAgent, REFRESH_TOKEN_EXPIRED_TIME)
-        return { userView, token, refreshToken }
+        return { user: userView, token, refreshToken }
       } else return {
         message: 'invalid password!'
       }

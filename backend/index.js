@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser')
 // const bodyParser = require('body-parser')
 const authController = require('./controller/authenticate.controller')
 const envConfig = require('./env')
+const { useAuth } = require('./middlewares')
 
 const app = express();
 const getApp = () => app
@@ -12,7 +13,8 @@ const middleWares = [
   express.urlencoded({ extended: true }),
   express.json(),
   // bodyParser.urlencoded({ extended: true }),
-  cookieParser()
+  cookieParser(),
+  useAuth
 ]
 middleWares.forEach((middleWare) => app.use(middleWare))
 

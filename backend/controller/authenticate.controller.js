@@ -2,6 +2,9 @@ const { routeType } = require('./../constants')
 const AuthService = require('../applicationService/authenticate.service')
 const userService = require('../domainService/user.service')
 const clientService = require('../domainService/client.service')
+const {
+  LOGIN, REGISTER
+} = require('./routePaths')
 
 const authService = AuthService(userService, clientService)
 
@@ -42,12 +45,12 @@ const signUp = async (req, res) => {
 module.exports =  [
   {
     controllerExecution: login,
-    path: '/login',
+    path: LOGIN,
     method: routeType.POST
   },
   {
     controllerExecution: signUp,
-    path: '/register',
+    path: REGISTER,
     method: routeType.POST
   }
 ]
