@@ -19,7 +19,7 @@
     "jsx": "react",
     "baseUrl": "./",
     "paths": {
-      "fe/*": ["frontend/src/*"],
+      "root/*": ["frontend/src/*"],
       "controller/*": ["backend/controller/*"],
       "model/*": ["backend/domainModel/*"],
       "modelService/*": ["backend/domainService/*"],
