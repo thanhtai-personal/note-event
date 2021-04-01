@@ -19,7 +19,7 @@ const generateToken = async (user) => {
 
 const login = (userService, clientService) => async (dataReq) => {
   try {
-    const user = await userService.getByUserName(dataReq.username, true)
+    const user = await userService.getByUserName(dataReq.userName, true)
     if (!user) return {
       message: 'invalid user name!'
     }
@@ -42,17 +42,32 @@ const login = (userService, clientService) => async (dataReq) => {
 
 const register = (userService, clientService) => async (dataReq) => {
   try {
-    let {
-      clientInfo
-      , ...userData
-    } = dataReq
-    const user = await userService.create(userData) || null
+    const checkExistUser = await userService.getByUserName(dataReq.userName || '')
+    let user
+    if (checkExistUser) {
+      let userUpdated = await userService.update(dataReq, {
+        where: {
+          id: checkExistUser.id
+        },
+        returning: true
+      })
+      let [ rowsUpdate, [updatedUser] ] = userUpdated
+      user = updatedUser.dataValues
+    } else {
+      user = await userService.create(dataReq) || null
+    }
     if (!user) return {
       message: 'invalid user data!'
     }
-    const token = await generateToken(userData)
-    const refreshToken = await clientService.generateRefreshToken(user, clientInfo, REFRESH_TOKEN_EXPIRED_TIME)
-    return { user, token, refreshToken }
+    const tokenData = {
+      userName: user.username,
+      id: user.id,
+      lastLogin: user.lastLoginTime,
+      googleId: user.googleId
+    }
+    const token = await generateToken(tokenData)
+    const refreshToken = await clientService.generateRefreshToken(tokenData, dataReq.userAgent, REFRESH_TOKEN_EXPIRED_TIME)
+    return { tokenData, token, refreshToken }
   } catch (error) {
     throw error
   }

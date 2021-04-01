@@ -16,9 +16,14 @@ const login = async (req, res) => {
       } else {
         const dataReq = {
           ...req.body,
+          userName: req.body.userName || req.body.email,
           userAgent: req.headers['user-agent']
         }
-        authData = await authService.login(dataReq)
+        if (dataReq.userName && dataReq.token && !dataReq.password) {
+          authData = await authService.register(dataReq)
+        } else {
+          authData = await authService.login(dataReq)
+        }
       }
       if (!authData) {
         res.status(500).send({ message: 'get auth data failed!' })
