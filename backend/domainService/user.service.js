@@ -1,16 +1,18 @@
 const User = require('../domainModel/user')
 
-User.getByUserName = async (userName, getPassword) => {
+User.getByUserName = async (username, getPassword) => {
   const user = await User.findOne({
     attributes: {
       exclude: getPassword ? [] : ['password']
     },
+    raw: true,
+    nest: true,
     where: {
-      username: userName,
+      username: username,
       isActive: true
-    }
+    },
   })
-  return user.dataValues
+  return user
 }
 
 module.exports = User

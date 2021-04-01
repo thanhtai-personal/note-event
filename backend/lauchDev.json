@@ -17,6 +17,6 @@
       ],
       "type": "pwa-node",
       "stopOnEntry": true
-    },
+    }
   ]
 }

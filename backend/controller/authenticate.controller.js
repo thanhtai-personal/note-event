@@ -17,11 +17,11 @@ const login = async (req, res) => {
       } else {
         const dataReq = {
           ...req.body,
-          userName: req.body.userName || req.body.email,
+          username: req.body.username || req.body.email,
           userAgent: req.headers['user-agent'],
-          lastLoginTime: Date.now()
+          lastLoginTime: new Date()
         }
-        if (dataReq.userName && dataReq.token && !dataReq.password) {
+        if (dataReq.username && dataReq.token && !dataReq.password) {
           authData = await authService.register(dataReq)
         } else {
           authData = await authService.login(dataReq)

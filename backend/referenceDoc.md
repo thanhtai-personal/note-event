@@ -23,3 +23,6 @@ kill port wind:
 - taskkill (/F) /pid PID
 - https://stackoverflow.com/questions/4075287/node-express-eaddrinuse-address-already-in-use-kill-server
 
+killport Mac: sudo lsof -i -P | grep LISTEN
+https://stackoverflow.com/questions/4421633/who-is-listening-on-a-given-tcp-port-on-mac-os-x
+

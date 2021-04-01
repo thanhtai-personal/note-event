@@ -19,7 +19,7 @@ const generateToken = async (user) => {
 
 const login = (userService, clientService) => async (dataReq) => {
   try {
-    const user = await userService.getByUserName(dataReq.userName, true)
+    const user = await userService.getByUserName(dataReq.username, true)
     if (!user) return {
       message: 'invalid user name!'
     }
@@ -42,25 +42,27 @@ const login = (userService, clientService) => async (dataReq) => {
 
 const register = (userService, clientService) => async (dataReq) => {
   try {
-    const checkExistUser = await userService.getByUserName(dataReq.userName || '')
+    const checkExistUser = await userService.getByUserName(dataReq.username || '')
     let user
     if (checkExistUser) {
       let userUpdated = await userService.update(dataReq, {
         where: {
           id: checkExistUser.id
         },
-        returning: true
+        returning: true,
+        raw: true,
+        nest: true,
       })
       let [ rowsUpdate, [updatedUser] ] = userUpdated
-      user = updatedUser.dataValues
+      user = updatedUser
     } else {
-      user = await userService.create(dataReq) || null
+      user = await userService.create(dataReq, { raw: true, nest: true }) || null
     }
     if (!user) return {
       message: 'invalid user data!'
     }
     const tokenData = {
-      userName: user.username,
+      username: user.username,
       id: user.id,
       lastLogin: user.lastLoginTime,
       googleId: user.googleId
@@ -105,12 +107,14 @@ const getAuthDataByToken = (userService, clientService) => async (token, refresh
 const updateLastLogin = (userService) => async (authData) => {
   try {
     await userService.update({
-      lastLoginTime: Date.now()
+      lastLoginTime: new Date()
     }, {
       where: {
         id: authData.id
       },
-      returning: false
+      returning: false,
+      raw: true,
+      nest: true,
     })
   } catch (error) {
     throw error

@@ -16,9 +16,11 @@ ClientService.getUserAgentByUserId = async (userId) => {
     where: {
       userId,
       isActive: true
-    }
+    },
+    raw: true,
+    nest: true,
   })
-  return clients.dataValues
+  return clients
 }
 
 module.exports =  ClientService

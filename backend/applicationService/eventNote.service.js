@@ -8,7 +8,9 @@ const getAllEventNote = (eventNoteService) => async (dataReq) => {
         isActive: true
       },
       limit: dataReq.take || 50,
-      offset: dataReq.skip
+      offset: dataReq.skip,
+      raw: true,
+      nest: true,
     })
     return eventNotes
   } catch (error) {

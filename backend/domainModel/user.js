@@ -44,10 +44,10 @@ User.init({
   hooks: {
     beforeCreate: async (user, options) => {
       const salt = bcrypt.genSaltSync(saltPrefix);
-      if (user.password) {
+      if (user.get('password')) {
         user.password = await bcrypt.hashSync(user.password, salt)
       } else {
-        user.password = await bcrypt.hashSync(user.token, salt)
+        user.password = ''
       }
       if (!uuidValidate(user.id)) {
         user.id = uuidv4()
