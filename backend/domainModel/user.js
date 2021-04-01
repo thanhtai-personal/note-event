@@ -51,8 +51,12 @@ User.init({
       }
       if (!uuidValidate(user.id)) {
         user.id = uuidv4()
-        user.createdBy = user.id
-        user.updatedBy = user.id
+        if (!uuidValidate(user.createdBy)) {
+          user.createdBy = user.id
+        }
+        if (!uuidValidate(user.updatedBy)) {
+          user.updatedBy = user.id
+        }
       }
     },
     beforeUpdate: async (user, options) => {

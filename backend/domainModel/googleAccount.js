@@ -1,4 +1,5 @@
 const { DataTypes, Model } = require('sequelize')
+const { v4: uuidv4, validate: uuidValidate } = require('uuid')
 const { sequelize } = require('./../sequelize')
 
 class GoogleAccount extends Model { }
@@ -9,6 +10,9 @@ GoogleAccount.init({
     primaryKey: true
   },
   'email': {
+    type: DataTypes.TEXT,
+  },
+  'token': {
     type: DataTypes.TEXT,
   },
   'userId': {
@@ -32,7 +36,16 @@ GoogleAccount.init({
   'updatedBy': {
     type: DataTypes.UUID
   }
-}, { sequelize, modelName: 'googleAccount', tableName: 'googleaccount' })
+}, {
+  hooks: {
+    beforeCreate: (instant, options) => {
+      if (!uuidValidate(instant.get('id'))) {
+        instant.id = uuidv4()
+      }
+    }
+  },
+  sequelize, modelName: 'googleAccount', tableName: 'googleaccount'
+})
 
 
-module.exports =  GoogleAccount
+module.exports = GoogleAccount

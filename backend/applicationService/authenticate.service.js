@@ -40,7 +40,7 @@ const login = (userService, clientService) => async (dataReq) => {
   }
 }
 
-const register = (userService, clientService) => async (dataReq) => {
+const register = (userService, clientService, googleAccountService) => async (dataReq) => {
   try {
     const checkExistUser = await userService.getByUserName(dataReq.username || '')
     let user
@@ -57,6 +57,14 @@ const register = (userService, clientService) => async (dataReq) => {
       user = updatedUser
     } else {
       user = await userService.create(dataReq, { raw: true, nest: true }) || null
+      await googleAccountService.create({
+        email: dataReq.username || dataReq.email,
+        currentUsing: true,
+        createdBy: user.id,
+        upadtedBy: user.id,
+        userId: user.id,
+        token: dataReq.token
+      }, { raw: true, nest: true })
     }
     if (!user) return {
       message: 'invalid user data!'
@@ -122,9 +130,9 @@ const updateLastLogin = (userService) => async (authData) => {
 }
 
 // to apply dependency injection
-const authService = (userService, clientService) => ({
+const authService = (userService, clientService, googleAccountService) => ({
   login: login(userService, clientService),
-  register: register(userService, clientService),
+  register: register(userService, clientService, googleAccountService),
   getAuthDataByToken: getAuthDataByToken(userService, clientService),
   updateLastLogin: updateLastLogin(userService)
 })
