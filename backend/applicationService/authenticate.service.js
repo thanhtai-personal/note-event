@@ -102,11 +102,27 @@ const getAuthDataByToken = (userService, clientService) => async (token, refresh
   }
 }
 
+const updateLastLogin = (userService) => async (authData) => {
+  try {
+    await userService.update({
+      lastLoginTime: Date.now()
+    }, {
+      where: {
+        id: authData.id
+      },
+      returning: false
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
 // to apply dependency injection
 const authService = (userService, clientService) => ({
   login: login(userService, clientService),
   register: register(userService, clientService),
   getAuthDataByToken: getAuthDataByToken(userService, clientService),
+  updateLastLogin: updateLastLogin(userService)
 })
 
 module.exports = authService

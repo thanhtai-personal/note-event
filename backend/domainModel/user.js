@@ -44,15 +44,23 @@ User.init({
   hooks: {
     beforeCreate: async (user, options) => {
       const salt = bcrypt.genSaltSync(saltPrefix);
-      const hashedPassword = await bcrypt.hashSync(user.password, salt)
-      user.password = hashedPassword
+      if (user.password) {
+        user.password = await bcrypt.hashSync(user.password, salt)
+      } else {
+        user.password = await bcrypt.hashSync(user.token, salt)
+      }
       if (!uuidValidate(user.id)) {
         user.id = uuidv4()
         user.createdBy = user.id
         user.updatedBy = user.id
       }
+    },
+    beforeUpdate: async (user, options) => {
+      if (uuidValidate(user.id)) {
+        user.updatedBy = user.id
+      }
+    },
 
-    }
   },
   sequelize
 })

@@ -13,11 +13,13 @@ const login = async (req, res) => {
       let authData = null
       if (req.headers.token) {
         authData = await authService.getAuthDataByToken(req.headers.token, req.headers.refreshtoken, req.headers['user-agent'])
+        await authService.updateLastLogin(authData)
       } else {
         const dataReq = {
           ...req.body,
           userName: req.body.userName || req.body.email,
-          userAgent: req.headers['user-agent']
+          userAgent: req.headers['user-agent'],
+          lastLoginTime: Date.now()
         }
         if (dataReq.userName && dataReq.token && !dataReq.password) {
           authData = await authService.register(dataReq)
