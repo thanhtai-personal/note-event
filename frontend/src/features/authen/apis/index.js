@@ -3,17 +3,13 @@ export const authenApiNames = {
   signup: 'signup'
 }
 
-const authenApis = [
-  {
+export const authenApis = {
+  [authenApiNames.login]: {
     method: 'post',
-    name: authenApiNames.login,
     path: '/login',
   },
-  {
+  [authenApiNames.signup]: {
     method: 'post',
-    name: authenApiNames.signup,
     path: '/register',
   }
-]
-
-export default authenApis
+}

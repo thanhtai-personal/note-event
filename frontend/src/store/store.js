@@ -34,7 +34,7 @@ export default function configureStore(initialState, history) {
     store.replaceReducer(store.reducerManager.reduce)
   }
   store.updateSagas = () => {
-    sagaMiddleware.run(sagasManager.reduce)
+    sagaMiddleware.run(store.sagasManager.reduce)
   }
 
   // if (process.env.NODE_ENV !== 'production' && module.hot) {

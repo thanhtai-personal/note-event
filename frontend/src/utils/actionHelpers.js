@@ -1,4 +1,3 @@
-
 const makeSagasActionType = (actionType) => {
   return {
     SUCCESS: `${actionType}_SUCCESS`,
@@ -6,10 +5,8 @@ const makeSagasActionType = (actionType) => {
   }
 }
 
-export const ADD_NEW_FEATURE = 'add-new-feature'
-
-const actionHelper = {
+const actionHelpers = {
   makeSagasActionType
 }
 
-export default actionHelper
+export default actionHelpers

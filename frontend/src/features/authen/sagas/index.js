@@ -8,26 +8,36 @@ import {
 
 import {
   LOGIN,
-  SIGNUP
+  SIGNUP,
+  GOOGLE_LOGIN
 } from './../actions/types'
-import { authenApiNames } from './../apis'
-import apiManagerInstant from 'root/managers/api/instant'
-
-const apiManager = apiManagerInstant()
+import { authenApiNames, authenApis } from './../apis'
+import apiExecutor from 'root/api'
 
 function* loginSagas(action = {}) {
-  const defaultRes = yield apiManager.call(authenApiNames.login, action.payload || {}).then(response => response)
-  yield put({ type: Utils.makeSagasActionType(LOGIN).SUCCESS, payload: defaultRes || {} })
+  try {
+    const { method, path } = authenApis[authenApiNames.login]
+    const responseData = yield apiExecutor[method](path, action.payload || {}).then(response => response)
+    yield put({ type: Utils.makeSagasActionType(LOGIN).SUCCESS, payload: responseData || {} })
+  } catch (error) {
+    yield put({ type: Utils.makeSagasActionType(LOGIN).FAILED, payload: error || {} })
+  }
 }
 
 function* signupSagas(action = {}) {
-  const defaultRes = yield apiManager.call(authenApiNames.signup, action.payload || {}).then(response => response)
-  yield put({ type: Utils.makeSagasActionType(LOGIN).SUCCESS, payload: defaultRes || {} })
+  try {
+    const { method, path } = authenApis[authenApiNames.signup]
+    const responseData = yield apiExecutor[method](path, action.payload || {}).then(response => response)
+    yield put({ type: Utils.makeSagasActionType(SIGNUP).SUCCESS, payload: responseData || {} })
+  } catch (error) {
+    yield put({ type: Utils.makeSagasActionType(SIGNUP).FAILED, payload: error || {} })
+  }
 }
 
-export default function* defaultWatcher() {
+export default function* authWatchers() {
   yield all([
     takeLatest(LOGIN, loginSagas),
-    takeLatest(SIGNUP, signupSagas)
+    takeLatest(SIGNUP, signupSagas),
+    takeLatest(GOOGLE_LOGIN, loginSagas)
   ])
 }

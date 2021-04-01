@@ -1,2 +1,8 @@
 export const LOGIN = 'LOGIN'
 export const SIGNUP = 'SIGNUP'
+export const FEATURE_AUTH = 'FEATURE_AUTH'
+export const FORM_LOGIN = 'FORM_LOGIN'
+export const UPDATEINPUT = 'UPDATEINPUT'
+export const GOOGLE_LOGIN = 'GOOGLE_LOGIN'
+export const GETAUTH = 'GETAUTH'
+export const FORM_REGISTER = 'FORM_REGISTER'

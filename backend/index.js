@@ -6,6 +6,7 @@ const authController = require('./controller/authenticate.controller')
 const eventNoteController = require('./controller/eventNote.controller')
 const envConfig = require('./env')
 const { useAuth } = require('./middlewares')
+const cors = require('cors')
 
 const app = express();
 const getApp = () => app
@@ -15,6 +16,7 @@ const middleWares = [
   express.json(),
   // bodyParser.urlencoded({ extended: true }),
   cookieParser(),
+  cors(),
   useAuth
 ]
 middleWares.forEach((middleWare) => app.use(middleWare))
