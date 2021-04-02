@@ -1,5 +1,5 @@
 const { TOKEN_EXPIRED_TIME,
-  REFRESH_TOKEN_EXPIRED_TIME } = require('./../globalData/constants') //90 days
+  REFRESH_TOKEN_EXPIRED_TIME } = require('./../globalData/constants')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const { jwtKey } = require('./../env')
