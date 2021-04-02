@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import LoadingComponent from 'root/components/loading'
 
-const DashboardComponent = React.lazy(() => import('../components/dashboard'))
+const DashboardComponent = React.lazy(() => import('../components/adminBoard'))
 
 const DashboardContainer = (props) => {
   return (

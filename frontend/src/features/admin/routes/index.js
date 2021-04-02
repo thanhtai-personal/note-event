@@ -1,4 +1,4 @@
-import DashboardContainer from '../containers/dashboard'
+import DashboardContainer from '../containers/admin'
 import setUpFeature from '../setup'
 
 const adminRoutes = [
@@ -9,6 +9,14 @@ const adminRoutes = [
   {
     key: 'homeAdmin',
     path: '/admin',
+    isExact: true,
+    component: DashboardContainer,
+    hocs: [],
+    setUpStore: setUpFeature
+  },
+  {
+    key: 'default',
+    path: '/',
     isExact: true,
     component: DashboardContainer,
     hocs: [],
