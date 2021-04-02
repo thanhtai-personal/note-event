@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LeftSideBar from 'root/templates/sideBar/temp1'
 import AppBar from 'root/templates/navBar/temp1'
+import Table from 'root/templates/tables/temp1'
+import TableGrid from 'root/templates/tables/temp2'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  section: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3)
+  }
 }));
 
 export default function MiniDrawer() {
@@ -40,7 +46,13 @@ export default function MiniDrawer() {
       <AppBar open={open} handleDrawerOpen={handleDrawerOpen}/>
       <LeftSideBar open={open} handleDrawerClose={handleDrawerClose}/>
       <main className={classes.content}>
-        <div className={classes.toolbar} />
+        <div className={classes.toolbar}/>
+        <div className={classes.section}>
+          <Table />
+        </div>
+        <div className={classes.section}>
+          <TableGrid />
+        </div>
       </main>
     </div>
   );
