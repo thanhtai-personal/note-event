@@ -18,7 +18,7 @@ import {
   updateInputData,
   login,
   updateGoogleLoginData
-} from './../../actions'
+} from '../../../admin/actions'
 import { withValidateForm, withValidateField } from 'root/components/validateForm'
 import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'

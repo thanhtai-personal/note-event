@@ -1,18 +1,18 @@
 import StoreSingleton from 'root/store/instant'
-import authenReducer from './reducers/authen.reducer'
-import authenSagas from './sagas'
-import { FEATURE_AUTH } from 'root/actions/types'
+// import menuReducer from './reducers/sideMenu.reducer'
+// import adminSagas from './sagas'
+import { FEATURE_ADMIN } from 'root/actions/types'
 
 const setupFeature = () => {
   const store = StoreSingleton.getInstance().store
   let mapObject = store.reducerManager.getReducerMap()
-  if (!Object.keys(mapObject).includes(FEATURE_AUTH)) {
-    store.reducerManager.add(FEATURE_AUTH, authenReducer)
-    store.sagasManager.add(FEATURE_AUTH, authenSagas)
+  if (!Object.keys(mapObject).includes(FEATURE_ADMIN)) {
+    // store.reducerManager.add(FEATURE_ADMIN, menuReducer)
+    // store.sagasManager.add(FEATURE_ADMIN, adminSagas)
     store.updateReducer()
     store.updateSagas()
 }
-  console.log('++++++++++++END SETUP AUTHENTICATION+++++++++++++')
+  console.log('++++++++++++END SETUP ADMIN+++++++++++++')
 }
 
 export default setupFeature

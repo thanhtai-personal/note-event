@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -11,7 +11,7 @@ import Footer from "root/templates/creativeTim/components/Footer/Footer.js";
 import Sidebar from "root/templates/creativeTim/components/Sidebar/Sidebar.js";
 import FixedPlugin from "root/templates/creativeTim/components/FixedPlugin/FixedPlugin.js";
 
-import routes from "routes.js";
+import routes from "root/templates/creativeTim/routes";
 
 import styles from "root/templates/styles/creativeTim/layouts/adminStyle.js";
 
@@ -20,23 +20,18 @@ import logo from "root/templates/images/creativeTim/reactlogo.png";
 
 let ps;
 
-const switchRoutes = (
-  <Switch>
-    {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
-      return null;
-    })}
-    <Redirect from="/admin" to="/admin/dashboard" />
-  </Switch>
-);
+const switchRoutes = routes.map((prop, key) => {
+  if (prop.layout === "/admin") {
+    return (
+      <Route
+        path={prop.layout + prop.path}
+        component={prop.component}
+        key={key}
+      />
+    );
+  }
+  return null;
+});
 
 const useStyles = makeStyles(styles);
 

@@ -1,4 +1,5 @@
-import DashboardContainer from '../containers/dashboard'
+import LoginContainer from '../containers/login'
+import RegisterContainer from '../containers/register'
 import setUpFeature from '../setup'
 
 const defaultRoutes = [
@@ -7,18 +8,18 @@ const defaultRoutes = [
    * Mean is data of route(reducer, api, sagas) in store will be loaded from building time.
    */
   {
-    key: 'homeAdmin',
-    path: '/admin',
+    key: 'login',
+    path: '/login',
     isExact: true,
-    component: DashboardContainer,
+    component: LoginContainer,
     hocs: [],
     setUpStore: setUpFeature
   },
   {
-    key: 'dashboard',
-    path: '/dashboard',
+    key: 'signup',
+    path: '/signup',
     isExact: true,
-    component: DashboardContainer,
+    component: RegisterContainer,
     hocs: [],
     setUpStore: setUpFeature
   },

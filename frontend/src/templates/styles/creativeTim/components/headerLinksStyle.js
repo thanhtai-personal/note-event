@@ -4,7 +4,6 @@ import {
   whiteColor
 } from "root/templates/styles/creativeTim/material-dashboard-react";
 
-import dropdownStyle from "root/templates/styles/creativeTim/dropdownStyle.js";
 import dropdownStyle from "root/templates/styles/creativeTim/dropdownStyle";
 
 const headerLinksStyle = theme => ({
