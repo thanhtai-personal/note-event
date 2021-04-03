@@ -4,3 +4,4 @@ export const FORM_LOGIN = 'FORM_LOGIN'
 export const FEATURE_AUTH = 'FEATURE_AUTH'
 
 export const FEATURE_ADMIN = 'FEATURE_ADMIN'
+export const DASH_BOARD_REDUCER = 'DASH_BOARD_REDUCER'

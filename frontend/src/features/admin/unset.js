@@ -1,13 +1,13 @@
 import StoreSingleton from 'root/store/instant'
 import dashboardReducer from './reducers/dashboard.reducer'
 import adminSagas from './sagas'
-import { FEATURE_ADMIN } from 'root/actions/types'
+import { FEATURE_ADMIN, DASH_BOARD_REDUCER } from 'root/actions/types'
 
 const unsetFeature = () => {
   const store = StoreSingleton.getInstance().store
-  let mapObject = store.reducerManager.getReducerMap()
+  let mapObject = store.sagasManager.getSagasMap()
   if (!Object.keys(mapObject).includes(FEATURE_ADMIN)) {
-    store.reducerManager.remove(FEATURE_ADMIN, dashboardReducer)
+    store.reducerManager.remove(DASH_BOARD_REDUCER, dashboardReducer)
     store.sagasManager.remove(FEATURE_ADMIN, adminSagas)
     store.updateReducer()
     store.updateSagas()

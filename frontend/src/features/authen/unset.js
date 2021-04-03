@@ -5,7 +5,7 @@ import { FEATURE_AUTH } from 'root/actions/types'
 
 const unsetFeature = () => {
   const store = StoreSingleton.getInstance().store
-  let mapObject = store.reducerManager.getReducerMap()
+  let mapObject = store.sagasManager.getSagasMap()
   if (!Object.keys(mapObject).includes(FEATURE_AUTH)) {
     store.reducerManager.remove(FEATURE_AUTH, authenReducer)
     store.sagasManager.remove(FEATURE_AUTH, authenSagas)

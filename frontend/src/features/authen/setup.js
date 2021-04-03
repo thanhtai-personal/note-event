@@ -5,7 +5,7 @@ import { FEATURE_AUTH } from 'root/actions/types'
 
 const setupFeature = () => {
   const store = StoreSingleton.getInstance().store
-  let mapObject = store.reducerManager.getReducerMap()
+  let mapObject = store.sagasManager.getSagasMap()
   if (!Object.keys(mapObject).includes(FEATURE_AUTH)) {
     store.reducerManager.add(FEATURE_AUTH, authenReducer)
     store.sagasManager.add(FEATURE_AUTH, authenSagas)

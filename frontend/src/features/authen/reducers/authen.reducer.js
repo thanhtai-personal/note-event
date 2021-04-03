@@ -103,6 +103,7 @@ const authReducer = (state = initalState, { type, payload }) => {
         }
       }
     case makeSagasActionType(LOGIN).SUCCESS:
+      window.localStorage.setItem('token', payload.token)
       return {
         ...state,
         [FORM_LOGIN]: {

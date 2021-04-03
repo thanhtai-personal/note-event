@@ -18,7 +18,7 @@ function* loginSagas(action = {}) {
   try {
     const { method, path } = authenApis[authenApiNames.login]
     const responseData = yield apiExecutor[method](path, action.payload || {}).then(response => response)
-    yield put({ type: Utils.makeSagasActionType(LOGIN).SUCCESS, payload: responseData || {} })
+    yield put({ type: Utils.makeSagasActionType(LOGIN).SUCCESS, payload: responseData?.data || {} })
   } catch (error) {
     yield put({ type: Utils.makeSagasActionType(LOGIN).FAILED, payload: error || {} })
   }
@@ -28,7 +28,7 @@ function* signupSagas(action = {}) {
   try {
     const { method, path } = authenApis[authenApiNames.signup]
     const responseData = yield apiExecutor[method](path, action.payload || {}).then(response => response)
-    yield put({ type: Utils.makeSagasActionType(SIGNUP).SUCCESS, payload: responseData || {} })
+    yield put({ type: Utils.makeSagasActionType(SIGNUP).SUCCESS, payload: responseData?.data || {} })
   } catch (error) {
     yield put({ type: Utils.makeSagasActionType(SIGNUP).FAILED, payload: error || {} })
   }

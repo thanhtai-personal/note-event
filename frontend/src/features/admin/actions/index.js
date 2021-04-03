@@ -1,11 +1,11 @@
-// import {
-//   GETAUTH
-// } from './types'
+import {
+  SEARCH_USER
+} from './types'
 
-// export const getAuth = (token) => {
-//   return {
-//     type: GETAUTH,
-//     payload: token,
-//   }
-// }
+export const searchUser = (payload) => {
+  return {
+    type: SEARCH_USER,
+    payload
+  }
+}
 

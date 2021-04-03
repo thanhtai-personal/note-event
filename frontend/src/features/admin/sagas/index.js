@@ -15,8 +15,12 @@ import apiExecutor from 'root/api'
 function* searchUser(action = {}) {
   try {
     const { method, path } = adminApis[adminApisName.getUsers]
-    const responseData = yield apiExecutor[method](path, action.payload || {}).then(response => response)
-    yield put({ type: Utils.makeSagasActionType(SEARCH_USER).SUCCESS, payload: responseData || {} })
+    const responseData = yield apiExecutor[method](path, action.payload || {}, {
+      headers: {
+        token: window.localStorage.getItem('token')
+      }
+    }).then(response => response)
+    yield put({ type: Utils.makeSagasActionType(SEARCH_USER).SUCCESS, payload: responseData?.data || {} })
   } catch (error) {
     yield put({ type: Utils.makeSagasActionType(SEARCH_USER).FAILED, payload: error || {} })
   }
