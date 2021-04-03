@@ -1,43 +1,29 @@
-// import Utils from 'root/utils'
-// import {
-//   //put
-//   takeLatest
-//   , all
-//   , put
-// } from 'redux-saga/effects'
+import Utils from 'root/utils'
+import {
+  //put
+  takeLatest
+  , all
+  , put
+} from 'redux-saga/effects'
 
-// import {
-//   LOGIN,
-//   SIGNUP,
-//   GOOGLE_LOGIN
-// } from './../actions/types'
-// import { authenApiNames, authenApis } from './../apis'
-// import apiExecutor from 'root/api'
+import {
+  SEARCH_USER
+} from './../actions/types'
+import { adminApisName, adminApis } from './../apis'
+import apiExecutor from 'root/api'
 
-// function* loginSagas(action = {}) {
-//   try {
-//     const { method, path } = authenApis[authenApiNames.login]
-//     const responseData = yield apiExecutor[method](path, action.payload || {}).then(response => response)
-//     yield put({ type: Utils.makeSagasActionType(LOGIN).SUCCESS, payload: responseData || {} })
-//   } catch (error) {
-//     yield put({ type: Utils.makeSagasActionType(LOGIN).FAILED, payload: error || {} })
-//   }
-// }
+function* searchUser(action = {}) {
+  try {
+    const { method, path } = adminApis[adminApisName.getUsers]
+    const responseData = yield apiExecutor[method](path, action.payload || {}).then(response => response)
+    yield put({ type: Utils.makeSagasActionType(SEARCH_USER).SUCCESS, payload: responseData || {} })
+  } catch (error) {
+    yield put({ type: Utils.makeSagasActionType(SEARCH_USER).FAILED, payload: error || {} })
+  }
+}
 
-// function* signupSagas(action = {}) {
-//   try {
-//     const { method, path } = authenApis[authenApiNames.signup]
-//     const responseData = yield apiExecutor[method](path, action.payload || {}).then(response => response)
-//     yield put({ type: Utils.makeSagasActionType(SIGNUP).SUCCESS, payload: responseData || {} })
-//   } catch (error) {
-//     yield put({ type: Utils.makeSagasActionType(SIGNUP).FAILED, payload: error || {} })
-//   }
-// }
-
-// export default function* authWatchers() {
-//   yield all([
-//     takeLatest(LOGIN, loginSagas),
-//     takeLatest(SIGNUP, signupSagas),
-//     takeLatest(GOOGLE_LOGIN, loginSagas)
-//   ])
-// }
+export default function* adminWatchers() {
+  yield all([
+    takeLatest(SEARCH_USER, searchUser),
+  ])
+}

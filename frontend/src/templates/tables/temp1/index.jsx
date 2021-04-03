@@ -7,11 +7,16 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  title: {
+    marginTop: '1em',
+    marginBottom: '2em',
+  }
 });
 
 const columns = [
@@ -48,12 +53,17 @@ const rows = [
 ];
 
 export default function BasicTable(props) {
-  const { tableConfig = {}, tableData = rows } = props
+  const { tableConfig = {}, tableData = rows,
+    text = {
+      title: 'USER TABLE'
+    }
+  } = props
   const { cols = columns } = tableConfig
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
+      <Typography className={classes.title} align={'center'}>{text.title}</Typography>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>

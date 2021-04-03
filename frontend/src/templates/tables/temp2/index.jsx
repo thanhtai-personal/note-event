@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+import { Typography } from '@material-ui/core'
 
 const columnsDemo = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -37,9 +38,13 @@ const rowsDemo = [
 export default function DataTable(props) {
   const { columns = columnsDemo, rows = rowsDemo
     , style, pageSize = 5, isCheckboxSelection = true
+    , text = {
+      title: 'USER TABLE'
+    }
   } = props
   return (
-    <div style={style || { height: 400, width: '100%' }}>
+    <div style={ style || { height: 400, width: '100%' }}>
+      <Typography style={{ marginTop: '1em', marginBottom: '2em' }} align={'center'}>{text.title}</Typography>
       <DataGrid rows={rows} columns={columns} pageSize={pageSize} checkboxSelection={isCheckboxSelection} />
     </div>
   );

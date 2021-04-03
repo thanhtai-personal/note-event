@@ -11,11 +11,11 @@ export const withValidateField = (WrappedField, formInfo = {}) => {
   const validatedDataPath = `${formInfo.feature}.${formInfo.form}.validatedData`
 
   const WithValidateFieldComponent = (props) => {
-    const { formData
+    const { formData = {}
       , useFirstUpdate
       , onChange
       , validatedName
-      , validatedData
+      , validatedData = {}
       , updateValidateData
       , ...nestedProps
     } = props

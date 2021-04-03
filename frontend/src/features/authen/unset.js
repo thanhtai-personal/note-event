@@ -3,16 +3,16 @@ import authenReducer from './reducers/authen.reducer'
 import authenSagas from './sagas'
 import { FEATURE_AUTH } from 'root/actions/types'
 
-const setupFeature = () => {
+const unsetFeature = () => {
   const store = StoreSingleton.getInstance().store
   let mapObject = store.reducerManager.getReducerMap()
   if (!Object.keys(mapObject).includes(FEATURE_AUTH)) {
-    store.reducerManager.add(FEATURE_AUTH, authenReducer)
-    store.sagasManager.add(FEATURE_AUTH, authenSagas)
+    store.reducerManager.remove(FEATURE_AUTH, authenReducer)
+    store.sagasManager.remove(FEATURE_AUTH, authenSagas)
     store.updateReducer()
     store.updateSagas()
 }
-  console.log('++++++++++++END SETUP AUTHENTICATION+++++++++++++', store?.getState())
+  console.log('++++++++++++END UNSET AUTHENTICATION+++++++++++++', store?.getState())
 }
 
-export default setupFeature
+export default unsetFeature

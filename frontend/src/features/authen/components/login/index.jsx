@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
+import Util from 'root/utils'
 import { connect } from 'react-redux'
 import {
   Avatar,
@@ -18,7 +19,7 @@ import {
   updateInputData,
   login,
   updateGoogleLoginData
-} from '../../../admin/actions'
+} from './../../actions'
 import { withValidateForm, withValidateField } from 'root/components/validateForm'
 import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
@@ -58,7 +59,7 @@ const LoginComponent = (props) => {
     forgot: 'Forgot password?',
   }
     , updateGoogleLoginData
-    , login, updateInputData, inputData, isFormValidated } = props
+    , login, updateInputData, inputData = {}, isFormValidated } = props
   const { email, password } = inputData
 
   const submitLogin = (event) => {
@@ -66,15 +67,15 @@ const LoginComponent = (props) => {
     typeof login === 'function' && login({ email, password })
   }
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = useCallback((e) => {
     typeof updateInputData === 'function' && updateInputData(FORM_LOGIN, 'email', e?.currentTarget?.value)
-  }
+  }, [updateInputData])
 
-  const onChangePassword = (e) => {
+  const onChangePassword = useCallback((e) => {
     typeof updateInputData === 'function' && updateInputData(FORM_LOGIN, 'password', e?.currentTarget?.value)
-  }
+  }, [updateInputData])
 
-  const onGGLoginSuccess = (googleUser) => {
+  const onGGLoginSuccess = useCallback((googleUser) => {
     const googleProfile = googleUser.getBasicProfile()
     const profile = {
       fullName: googleProfile.getName(),
@@ -86,10 +87,10 @@ const LoginComponent = (props) => {
       token: googleUser.getAuthResponse().id_token
     }
     updateGoogleLoginData(profile)
-  }
+  }, [updateGoogleLoginData])
 
-  const onGGLoginFailure = (googleUser) => {
-  }
+  const onGGLoginFailure = useCallback((googleUser) => {
+  }, [])
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -169,16 +170,18 @@ const LoginComponent = (props) => {
 }
 
 const mapState = (state) => ({
-  inputData: state[FEATURE_AUTH][FORM_LOGIN]?.data
+  inputData: Util.get(state, `${FEATURE_AUTH}.${FORM_LOGIN}.data`)
 })
 
-const mapDispatch = {
-  updateInputData,
-  login,
-  updateGoogleLoginData
+const mapDispatch = () => {
+  return ({
+    updateInputData,
+    login,
+    updateGoogleLoginData
+  })
 }
 
-export default withValidateForm(connect(mapState, mapDispatch)(LoginComponent), {
+export default withValidateForm(connect(mapState, mapDispatch())(LoginComponent), {
   feature: FEATURE_AUTH,
   form: FORM_LOGIN,
   useFirstUpdate: true

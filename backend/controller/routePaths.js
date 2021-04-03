@@ -7,5 +7,6 @@ module.exports = {
   GET_EVENT_NOTE_DETAIL: '/eventnote/detail',
   CREATE_EVENT_NOTE: '/eventnote/create',
   UPDATE_EVENT_NOTE: '/eventnote/update',
-  DELETE_EVENT_NOTE: '/eventnote/delete/'
+  DELETE_EVENT_NOTE: '/eventnote/delete/',
+  SEARCH_USER: '/user/search'
 }

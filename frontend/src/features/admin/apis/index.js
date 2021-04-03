@@ -1,15 +1,10 @@
-// export const authenApiNames = {
-//   login: 'login',
-//   signup: 'signup'
-// }
+export const adminApisName = {
+  getUsers: 'getUser',
+}
 
-// export const authenApis = {
-//   [authenApiNames.login]: {
-//     method: 'post',
-//     path: '/login',
-//   },
-//   [authenApiNames.signup]: {
-//     method: 'post',
-//     path: '/register',
-//   }
-// }
+export const adminApis = {
+  [adminApisName.getUsers]: {
+    method: 'post',
+    path: '/user/search',
+  }
+}

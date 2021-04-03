@@ -1,6 +1,7 @@
 import LoginContainer from '../containers/login'
 import RegisterContainer from '../containers/register'
 import setUpFeature from '../setup'
+import unsetFeature from '../unset'
 
 const defaultRoutes = [
   /**
@@ -13,7 +14,8 @@ const defaultRoutes = [
     isExact: true,
     component: LoginContainer,
     hocs: [],
-    setUpStore: setUpFeature
+    setUpStore: setUpFeature,
+    unsetFeature: unsetFeature,
   },
   {
     key: 'signup',
@@ -21,7 +23,8 @@ const defaultRoutes = [
     isExact: true,
     component: RegisterContainer,
     hocs: [],
-    setUpStore: setUpFeature
+    setUpStore: setUpFeature,
+    unsetFeature: unsetFeature,
   },
 ]
 

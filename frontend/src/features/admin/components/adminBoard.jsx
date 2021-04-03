@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { userEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LeftSideBar from 'root/templates/sideBar/temp1'
 import AppBar from 'root/templates/navBar/temp1'
 import Table from 'root/templates/tables/temp1'
 import TableGrid from 'root/templates/tables/temp2'
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,17 +29,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function MiniDrawer() {
+export default function AdminBoard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
+  const handleDrawerOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, [setOpen])
 
-  const handleDrawerClose = () => {
+  const handleDrawerClose = useCallback(() => {
     setOpen(false);
-  };
+  }, [setOpen])
 
   return (
     <div className={classes.root}>

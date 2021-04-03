@@ -1,5 +1,6 @@
 import DashboardContainer from '../containers/admin'
 import setUpFeature from '../setup'
+import unsetFeature from '../unset'
 
 const adminRoutes = [
   /**
@@ -12,7 +13,8 @@ const adminRoutes = [
     isExact: true,
     component: DashboardContainer,
     hocs: [],
-    setUpStore: setUpFeature
+    setUpStore: setUpFeature,
+    unsetFeature: unsetFeature,
   },
   {
     key: 'default',
@@ -20,7 +22,8 @@ const adminRoutes = [
     isExact: true,
     component: DashboardContainer,
     hocs: [],
-    setUpStore: setUpFeature
+    setUpStore: setUpFeature,
+    unsetFeature: unsetFeature,
   },
 ]
 

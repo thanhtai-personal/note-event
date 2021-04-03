@@ -12,8 +12,10 @@ const combineRoute = (appRoutes) => {
     }
   })
   return routesList.map((route = {}) => {
-    route.setUpStore && typeof route.setUpStore === 'function' && route.setUpStore()
     let resultComponent = route.component
+    if (route.setUpStore && typeof route.setUpStore === 'function'){ 
+      resultComponent = (props) => (<route.component {...props} setup={route.setUpStore} />)
+    }
     if (Array.isArray(route.hocs)) {
       route.hocs.forEach((hoc) => {
         if (typeof hoc === 'string') resultComponent = hocInstant.call(hoc, resultComponent)
