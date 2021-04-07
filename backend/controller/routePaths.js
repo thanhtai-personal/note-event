@@ -8,5 +8,8 @@ module.exports = {
   CREATE_EVENT_NOTE: '/eventnote/create',
   UPDATE_EVENT_NOTE: '/eventnote/update',
   DELETE_EVENT_NOTE: '/eventnote/delete/',
-  SEARCH_USER: '/user/search'
+  //admin
+  SEARCH_USER: '/user/search',
+  SEARCH_ROLE: '/role/search',
+  SEARCH_PERMISSION: '/permission/search'
 }

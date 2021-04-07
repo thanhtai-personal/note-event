@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TemporaryDrawer(props) {
+export default function LeftSideBar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const { handleDrawerClose, open, text={

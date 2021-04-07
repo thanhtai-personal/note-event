@@ -1,13 +1,14 @@
 const { routeType } = require('./../constants')
 const AuthService = require('../applicationService/authenticate.service')
 const userService = require('../domainService/user.service')
+const roleService = require('../domainService/role.service')
 const clientService = require('../domainService/client.service')
 const googleAccountService = require('../domainService/googleAccount.service')
 const {
   LOGIN, REGISTER
 } = require('./routePaths')
 
-const authService = AuthService(userService, clientService, googleAccountService)
+const authService = AuthService(userService, clientService, googleAccountService, roleService)
 
 const login = async (req, res) => {
   try {

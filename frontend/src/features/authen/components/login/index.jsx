@@ -59,13 +59,20 @@ const LoginComponent = (props) => {
     forgot: 'Forgot password?',
   }
     , updateGoogleLoginData
-    , login, updateInputData, inputData = {}, isFormValidated } = props
+    , login, updateInputData, inputData = {}
+    , isFormValidated, authData, history } = props
   const { email, password } = inputData
 
-  const submitLogin = (event) => {
+  useEffect(() => {
+    if(authData && (authData.role || '').includes('admin')) {
+      window.location.replace('/admin')
+    }
+  }, [authData])
+
+  const submitLogin = useCallback((event) => {
     event.preventDefault()
     typeof login === 'function' && login({ email, password })
-  }
+  }, [login, inputData])
 
   const onChangeEmail = useCallback((e) => {
     typeof updateInputData === 'function' && updateInputData(FORM_LOGIN, 'email', e?.currentTarget?.value)
@@ -139,17 +146,17 @@ const LoginComponent = (props) => {
             variant='contained'
             color='primary'
             className={classes.submit}
-            disabled={!isFormValidated}
+            // disabled={!isFormValidated}
           >
             {text.login}
           </Button>
-          <Grid container>
+          {/* <Grid container>
             <Grid item xs>
               <Link href='/forgetPassword'>
                 {text.forgot}
               </Link>
             </Grid>
-          </Grid>
+          </Grid> */}
           <Grid container>
             <Grid item xs></Grid>
             <Grid item>
@@ -170,7 +177,8 @@ const LoginComponent = (props) => {
 }
 
 const mapState = (state) => ({
-  inputData: Util.get(state, `${FEATURE_AUTH}.${FORM_LOGIN}.data`)
+  inputData: Util.get(state, `${FEATURE_AUTH}.${FORM_LOGIN}.data`),
+  authData: Util.get(state, `${FEATURE_AUTH}.auth`)
 })
 
 const mapDispatch = () => {

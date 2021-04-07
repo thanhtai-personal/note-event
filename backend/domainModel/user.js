@@ -37,6 +37,9 @@ User.init({
   },
   'updatedBy': {
     type: DataTypes.UUID
+  },
+  'roleId': {
+    type: DataTypes.UUID
   }
 }, {
   modelName: 'user',

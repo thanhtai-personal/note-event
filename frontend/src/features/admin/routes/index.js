@@ -15,16 +15,7 @@ const adminRoutes = [
     hocs: [],
     setUpStore: setUpFeature,
     unsetFeature: unsetFeature,
-  },
-  {
-    key: 'default',
-    path: '/',
-    isExact: true,
-    component: DashboardContainer,
-    hocs: [],
-    setUpStore: setUpFeature,
-    unsetFeature: unsetFeature,
-  },
+  }
 ]
 
 export default adminRoutes

@@ -3,18 +3,13 @@ module.exports = async (pool, isEnd = false) => {
   const createRoleTableQuery = `CREATE TABLE IF NOT EXISTS "role"
   (
       id uuid NOT NULL,
-      "userId" uuid,
       name text COLLATE pg_catalog."default" NOT NULL,
       "createdAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       "updatedAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       "updatedBy" uuid,
       "createdBy" uuid,
       "isActive" boolean DEFAULT true,
-      CONSTRAINT role_pkey PRIMARY KEY (id),
-      CONSTRAINT fkey_role_user FOREIGN KEY ("userId")
-        REFERENCES "user" (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+      CONSTRAINT role_pkey PRIMARY KEY (id)
   )`
   const createPermissionTableQuery = `CREATE TABLE IF NOT EXISTS "permission"
   (

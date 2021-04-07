@@ -103,13 +103,15 @@ const authReducer = (state = initalState, { type, payload }) => {
         }
       }
     case makeSagasActionType(LOGIN).SUCCESS:
-      window.localStorage.setItem('token', payload.token)
+      const { token, ...nested } = payload
+      window.localStorage.setItem('token', token)
       return {
         ...state,
         [FORM_LOGIN]: {
           ...state[FORM_LOGIN],
           loading: false
-        }
+        },
+        auth: nested,
       }
     case makeSagasActionType(LOGIN).FAILED:
       return {

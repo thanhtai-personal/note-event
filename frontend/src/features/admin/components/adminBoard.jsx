@@ -9,6 +9,7 @@ import TableGrid from 'root/templates/tables/temp2'
 import { searchUser } from './../actions'
 import utils from 'root/utils';
 import { DASH_BOARD_REDUCER } from 'root/actions/types';
+import { People as PeopleIcon } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,7 +61,12 @@ const AdminBoard = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar open={open} handleDrawerOpen={handleDrawerOpen}/>
-      <LeftSideBar open={open} handleDrawerClose={handleDrawerClose}/>
+      <LeftSideBar open={open} handleDrawerClose={handleDrawerClose}
+        primaryMenu={[
+          { text: 'Inbox', icon: <PeopleIcon />, key: 'inbox' },
+        ]}
+        secondMenu={[]}
+      />
       <main className={classes.content}>
         <div className={classes.toolbar}/>
         <div className={classes.section}>
