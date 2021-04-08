@@ -1,7 +1,33 @@
+const { Op } = require('sequelize')
+const { adminRoles } = require('./constants')
 
-const searchUser = (userService) => async (dataReq) => {
+const checkAdmin = async (roleService, authData) => {
   try {
-    const users = await userService.findAll()
+    const role = await roleService.findOne({
+      where: {
+        id: authData.roleId || ''
+      }
+    })
+    return adminRoles.includes((role.name || '').toLowerCase())
+  } catch (error) {
+    throw (error)
+  }
+}
+
+const searchUser = (userService, accountService, roleService) => async (dataReq) => {
+  if (!await checkAdmin(roleService, dataReq.authData)) {
+    throw {
+      message: 'not admin'
+    }
+  }
+  try {
+    const users = await userService.findAll({
+      where: {
+        username: {
+          [Op.not]: 'superadmin'
+        }
+      }
+    })
     return users
   } catch (error) {
     throw error
@@ -9,24 +35,47 @@ const searchUser = (userService) => async (dataReq) => {
 }
 
 const searchRole = (roleService) => async (dataReq) => {
+  if (!await checkAdmin(roleService, dataReq.authData)) {
+    throw {
+      message: 'not admin'
+    }
+  }
   try {
-    const users = await roleService.findAll()
-    return users
+    const roles = await roleService.findAll(
+      {
+        where: {
+          name: {
+            [Op.not]: 'superadmin'
+          }
+        }
+      }
+    )
+    return roles
   } catch (error) {
     throw error
   }
 }
 
-const searchPermission = (permissionService) => async (dataReq) => {
+const searchPermission = (permissionService, roleService) => async (dataReq) => {
+  if (!await checkAdmin(roleService, dataReq.authData)) {
+    throw {
+      message: 'not admin'
+    }
+  }
   try {
-    const users = await permissionService.findAll()
-    return users
+    const permissions = await permissionService.findAll()
+    return permissions
   } catch (error) {
     throw error
   }
 }
 
-const addPermissionToRole = (rolePermissionService) => async (dataReq) => {
+const addPermissionToRole = (roleService, rolePermissionService) => async (dataReq) => {
+  if (!await checkAdmin(roleService, dataReq.authData)) {
+    throw {
+      message: 'not admin'
+    }
+  }
   try {
     const users = await rolePermissionService.create(dataReq)
     return users
@@ -39,10 +88,10 @@ const addPermissionToRole = (rolePermissionService) => async (dataReq) => {
 const authService = (userService, googleAccountService
     , roleService, permissionService, rolePermissionService
   ) => ({
-  searchUser: searchUser(userService, googleAccountService),
+  searchUser: searchUser(userService, googleAccountService, roleService),
   searchRole: searchRole(roleService),
-  searchPermission: searchPermission(permissionService),
-  addPermissionToRole: addPermissionToRole(rolePermissionService)
+  searchPermission: searchPermission(permissionService, roleService),
+  addPermissionToRole: addPermissionToRole(rolePermissionService, roleService)
 })
 
 module.exports = authService

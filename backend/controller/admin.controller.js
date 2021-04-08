@@ -3,6 +3,7 @@ const AdminService = require('../applicationService/admin.service')
 const roleService = require('../domainService/role.service')
 const permissionService = require('../domainService/permission.service')
 const rolePermissionService = require('../domainService/rolePermission.service')
+const accountService = require('../domainService/googleAccount.service')
 const userService = require('../domainService/user.service')
 const {
   SEARCH_USER,
@@ -10,12 +11,13 @@ const {
   SEARCH_PERMISSION
 } = require('./routePaths')
 
-const adminService = AdminService(userService, roleService, permissionService, rolePermissionService)
+const adminService = AdminService(userService, accountService, roleService, permissionService, rolePermissionService)
 
 const searchUser = async (req, res) => {
   try {
     const dataReq = {
-      ...req.body
+      ...req.body,
+      authData: req.authData
     }
     const users = await adminService.searchUser(dataReq)
     res.status(200).send(users)
@@ -27,7 +29,8 @@ const searchUser = async (req, res) => {
 const searchPermission = async (req, res) => {
   try {
     const dataReq = {
-      ...req.body
+      ...req.body,
+      authData: req.authData
     }
     const permissions = await adminService.searchPermission(dataReq)
     res.status(200).send(permissions)
@@ -39,7 +42,8 @@ const searchPermission = async (req, res) => {
 const searchRole = async (req, res) => {
   try {
     const dataReq = {
-      ...req.body
+      ...req.body,
+      authData: req.authData
     }
     const roles = await adminService.searchRole(dataReq)
     res.status(200).send(roles)

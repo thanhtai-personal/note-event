@@ -47,6 +47,9 @@ User.init({
   hooks: {
     beforeCreate: async (user, options) => {
       const salt = bcrypt.genSaltSync(saltPrefix);
+      if (!user.roleId) {
+        user.set('roleId', '65b68b6b-8c50-48d7-84fd-11998eae02b6')
+      }
       if (user.get('password')) {
         user.password = await bcrypt.hashSync(user.password, salt)
       } else {

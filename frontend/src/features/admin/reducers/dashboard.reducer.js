@@ -1,5 +1,6 @@
 import { 
-  SEARCH_USER  
+  SEARCH_USER,
+  SEARCH_ROLE
 } from './../actions/types'
 import actionHelpers from 'root/utils/actionHelpers'
 const {
@@ -7,7 +8,8 @@ const {
 } = actionHelpers
 
 const initialState = {
-
+  users: [],
+  roles: []
 }
 
 const dashboardReducer = (state = initialState, { type, payload }) => {
@@ -16,6 +18,11 @@ const dashboardReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         users: payload
+      }
+    case makeSagasActionType(SEARCH_ROLE).SUCCESS:
+      return {
+        ...state,
+        roles: payload
       }
     default:
       return state

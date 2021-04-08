@@ -5,8 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LeftSideBar from 'root/templates/sideBar/temp1'
 import AppBar from 'root/templates/navBar/temp1'
 import Table from 'root/templates/tables/temp1'
-import TableGrid from 'root/templates/tables/temp2'
-import { searchUser } from './../actions'
+import { searchUser, searchRole } from './../actions'
 import utils from 'root/utils';
 import { DASH_BOARD_REDUCER } from 'root/actions/types';
 import { People as PeopleIcon } from '@material-ui/icons'
@@ -40,8 +39,12 @@ const userColumns = [
   { field: 'updatedAt', headerName: 'Updated At', width: 130 },
 ];
 
+const roleColumns = [
+  { field: 'name', headerName: 'Role', width: 70 },
+];
+
 const AdminBoard = (props) => {
-  const { searchUser = () => {}, users = [] } = props
+  const { searchUser = () => {}, users = [], roles, searchRole = () => {} } = props
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -55,7 +58,8 @@ const AdminBoard = (props) => {
 
   useEffect(() => {
     searchUser()
-  }, [searchUser])
+    searchRole()
+  }, [searchUser, searchRole])
 
   return (
     <div className={classes.root}>
@@ -73,7 +77,7 @@ const AdminBoard = (props) => {
           <Table tableData={users} tableConfig={{ cols: userColumns }} />
         </div>
         <div className={classes.section}>
-          <TableGrid />
+          <Table tableData={roles} tableConfig={{ cols: roleColumns }} />
         </div>
       </main>
     </div>
@@ -81,11 +85,13 @@ const AdminBoard = (props) => {
 }
 
 const mapState = (state) => ({
-  users: utils.get(state, `${DASH_BOARD_REDUCER}.users`)
+  users: utils.get(state, `${DASH_BOARD_REDUCER}.users`),
+  roles: utils.get(state, `${DASH_BOARD_REDUCER}.roles`)
 })
 
 const mapProps = {
-  searchUser
+  searchUser,
+  searchRole
 }
 
 export default connect(mapState, mapProps)(AdminBoard)
