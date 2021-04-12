@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LeftSideBar from 'root/templates/sideBar/temp1'
 import AppBar from 'root/templates/navBar/temp1'
@@ -33,20 +34,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const userColumns = [
-  { field: 'googleId', headerName: 'G-ID', width: 70 },
-  { field: 'username', headerName: 'User name', width: 130 },
-  { field: 'createdAt', headerName: 'Created At', width: 130 },
-  { field: 'updatedAt', headerName: 'Updated At', width: 130 },
+  { field: 'googleId', headerName: 'G-ID', isEditable: false },
+  { field: 'username', headerName: 'User name', isEditable: false},
+  { field: 'createdAt', headerName: 'Created At', isEditable: false },
+  { field: 'role', headerName: 'Role', isEditable: true },
+  { field: 'updatedAt', headerName: 'Updated At', isEditable: false },
 ];
 
 const roleColumns = [
-  { field: 'name', headerName: 'Role', width: 70 },
+  { field: 'name', headerName: 'Role', isEditable: true },
 ];
 
+const text = {
+  users: 'Users',
+  roles: 'Roles'
+}
+
 const AdminBoard = (props) => {
-  const { searchUser = () => {}, users = [], roles, searchRole = () => {} } = props
+  const { searchUser = () => { }, users = [], roles = [], searchRole = () => { } } = props
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [listUsers, setListUsers] = React.useState(users);
+  const [listRoles, setListRoles] = React.useState(roles);
 
   const handleDrawerOpen = useCallback(() => {
     setOpen(true);
@@ -61,10 +70,25 @@ const AdminBoard = (props) => {
     searchRole()
   }, [searchUser, searchRole])
 
+  useEffect(() => {
+    const usersToList = (users || []).map((u) => {
+      const createdAt = new Date(u.createdAt)
+      const updatedAt = new Date(u.updatedAt)
+      return {
+        ...u,
+        role: ((roles || []).find((r) => r.id === u.roleId) || {}).name,
+        createdAt: `${createdAt.toLocaleString()}`,
+        updatedAt: `${updatedAt.toLocaleString()}`
+      }
+    })
+    setListUsers(usersToList)
+    setListRoles(roles)
+  }, [users, roles])
+
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar open={open} handleDrawerOpen={handleDrawerOpen}/>
+      <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
       <LeftSideBar open={open} handleDrawerClose={handleDrawerClose}
         primaryMenu={[
           { text: 'Inbox', icon: <PeopleIcon />, key: 'inbox' },
@@ -72,12 +96,18 @@ const AdminBoard = (props) => {
         secondMenu={[]}
       />
       <main className={classes.content}>
-        <div className={classes.toolbar}/>
+        <div className={classes.toolbar} />
         <div className={classes.section}>
-          <Table tableData={users} tableConfig={{ cols: userColumns }} />
-        </div>
-        <div className={classes.section}>
-          <Table tableData={roles} tableConfig={{ cols: roleColumns }} />
+          <Grid container spacing={2}>
+            <Grid item xs={9}>
+              <Table text={{ title: text.users }} tableData={listUsers}
+                tableConfig={{ cols: userColumns, editMode: true  }} />
+            </Grid>
+            <Grid item xs={3}>
+              <Table text={{ title: text.roles }} tableData={listRoles}
+                tableConfig={{ cols: roleColumns, editMode: true }} />
+            </Grid>
+          </Grid>
         </div>
       </main>
     </div>

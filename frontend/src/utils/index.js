@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import actionHelpers from './actionHelpers'
+import renderHelper from'./renderHelper'
 import { CircularProgress } from '@material-ui/core'
 import {
   componentToModal,
@@ -64,6 +65,7 @@ const get = (object, path) => {
 
 const utils = {
   ...actionHelpers
+  , ...renderHelper
   , makeSingleton
   , get
 }

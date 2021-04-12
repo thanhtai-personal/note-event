@@ -1,23 +1,23 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { Typography } from '@material-ui/core';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper'
+import { Typography } from '@material-ui/core'
+import WithActionRow from './withActionsRow'
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
   },
   title: {
     marginTop: '1em',
     marginBottom: '2em',
   }
-});
+})
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -38,7 +38,7 @@ const columns = [
     valueGetter: (params) =>
       `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
   },
-];
+]
 
 const rows = [
   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
@@ -50,21 +50,21 @@ const rows = [
   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+]
 
 export default function BasicTable(props) {
-  const { tableConfig = {}, tableData = rows,
+  const { tableConfig = { }, tableData = rows,
     text = {
       title: 'USER TABLE'
     }
   } = props
-  const { cols = columns } = tableConfig
-  const classes = useStyles();
+  const { cols = columns, editMode } = tableConfig
+  const classes = useStyles()
 
   return (
     <TableContainer component={Paper}>
       <Typography className={classes.title} align={'center'}>{text.title}</Typography>
-      <Table className={classes.table} aria-label="simple table">
+      <Table className={classes.table} aria-label='simple table'>
         <TableHead>
           <TableRow>
              {cols.map((col, index) => (
@@ -74,16 +74,24 @@ export default function BasicTable(props) {
         </TableHead>
         <TableBody>
           {tableData.map((row, rowIndex) => (
-            <TableRow key={row.id || row.key}>
+            editMode ? (<WithActionRow
+              key={`${row.id || row.key}-${rowIndex}`}
+              rowData={row}
+              cols={cols}
+              rowIndex={rowIndex}
+            />)
+            : (<TableRow key={`${row.id || row.key}-${rowIndex}`}>
               {cols.map((col, index) => (
                 <TableCell key={`${row.id || row.key}-${rowIndex}-${col.field}-${index}`}>
-                  {row[col.field]}
+                  {col.makeCustomCell
+                    && typeof col.makeCustomCell === 'function'
+                    ? col.makeCustomCell(row[col.field]) : row[col.field]}
                 </TableCell>
               ))}
-            </TableRow>
+            </TableRow>)
           ))}
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  )
 }

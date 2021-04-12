@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { makeStyles, Modal
+import { makeStyles, Modal, Input
   , Dialog, DialogActions
   , DialogContent, Button, DialogTitle } from '@material-ui/core'
 import { isElementInViewport } from 'root/utils'
@@ -194,4 +194,16 @@ export const componentToDialog = (ComposedComponent) => {
     )
   }
   return DialogComponent
+}
+
+export const makeEditableField = (colConfig, colData) => {
+  const { componentType, onUpdate } = colConfig
+  switch(componentType) {
+    default:
+      return <Input style={{ width: 'auto', minWidth: '20px' }} defaultValue={colData} onChange={onUpdate}/>
+  }
+}
+
+export default {
+  makeEditableField
 }
