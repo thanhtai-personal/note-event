@@ -8,7 +8,9 @@ const userService = require('../domainService/user.service')
 const {
   SEARCH_USER,
   SEARCH_ROLE,
-  SEARCH_PERMISSION
+  SEARCH_PERMISSION,
+  UPDATE_USER,
+  ADD_OR_UPDATE_ROLE
 } = require('./routePaths')
 
 const adminService = AdminService(userService, accountService, roleService, permissionService, rolePermissionService)
@@ -52,6 +54,32 @@ const searchRole = async (req, res) => {
   }
 }
 
+const updateUserInfo = async (req, res) => {
+  try {
+    const dataReq = {
+      ...req.body,
+      authData: req.authData
+    }
+    const user = await adminService.updateUser(dataReq)
+    res.status(200).send(user)
+  } catch (error) {
+      res.status(500).send(error)
+  }
+}
+
+const addOrUpdateRole = async (req, res) => {
+  try {
+    const dataReq = {
+      ...req.body,
+      authData: req.authData
+    }
+    const role = await adminService.createOrUpdateRole(dataReq)
+    res.status(200).send(roles)
+  } catch (error) {
+      res.status(500).send(error)
+  }
+}
+
 module.exports =  [
   {
     controllerExecution: searchUser,
@@ -66,6 +94,16 @@ module.exports =  [
   {
     controllerExecution: searchRole,
     path: SEARCH_ROLE,
+    method: routeType.POST
+  },
+  {
+    controllerExecution: updateUserInfo,
+    path: UPDATE_USER,
+    method: routeType.POST
+  },
+  {
+    controllerExecution: addOrUpdateRole,
+    path: ADD_OR_UPDATE_ROLE,
     method: routeType.POST
   }
 ]

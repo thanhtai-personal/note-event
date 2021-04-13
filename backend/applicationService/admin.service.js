@@ -84,14 +84,68 @@ const addPermissionToRole = (roleService, rolePermissionService) => async (dataR
   }
 }
 
+const updateUser = (roleService, userService) => async (dataReq) => {
+  if (!await checkAdmin(roleService, dataReq.authData)) {
+    throw {
+      message: 'not admin'
+    }
+  }
+  try {
+    const { authData, googleId, ...nestedData } = dataReq
+    const user = await userService.update({
+      updatedBy: authData.id,
+      ...nestedData
+    }, {
+      where: {
+        id: dataReq.id
+      }
+    })
+    return user
+  } catch (error) {
+    throw error
+  }
+}
+
+const createOrUpdateRole = (roleService) => async (dataReq) => {
+  if (!await checkAdmin(roleService, dataReq.authData)) {
+    throw {
+      message: 'not admin'
+    }
+  }
+  try {
+    const role = roleService.findOne({
+      id: dataReq.id
+    })
+    if (role) {
+      const role = await roleService.create(dataReq)
+      return role
+    } else {
+      const role = await roleService.update({
+        name: dataReq.name
+      }, {
+        where: {
+          id: dataReq.id
+        }
+      })
+      return role
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 // to apply dependency injection
 const authService = (userService, googleAccountService
-    , roleService, permissionService, rolePermissionService
-  ) => ({
-  searchUser: searchUser(userService, googleAccountService, roleService),
-  searchRole: searchRole(roleService),
-  searchPermission: searchPermission(permissionService, roleService),
-  addPermissionToRole: addPermissionToRole(rolePermissionService, roleService)
-})
+  , roleService, permissionService, rolePermissionService
+) => {
+  return ({
+    searchUser: searchUser(userService, googleAccountService, roleService),
+    searchRole: searchRole(roleService),
+    searchPermission: searchPermission(permissionService, roleService),
+    addPermissionToRole: addPermissionToRole(rolePermissionService, roleService),
+    updateUser: updateUser(roleService, userService),
+    createOrUpdateRole: createOrUpdateRole(roleService)
+  })
+}
 
 module.exports = authService

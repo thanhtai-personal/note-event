@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LeftSideBar from 'root/templates/sideBar/temp1'
 import AppBar from 'root/templates/navBar/temp1'
 import Table from 'root/templates/tables/temp1'
-import { searchUser, searchRole } from './../actions'
+import { searchUser, searchRole, editUser, deleteUser, editRole, deleteRole } from './../actions'
 import utils from 'root/utils';
 import { DASH_BOARD_REDUCER } from 'root/actions/types';
 import { People as PeopleIcon } from '@material-ui/icons'
@@ -51,7 +51,9 @@ const text = {
 }
 
 const AdminBoard = (props) => {
-  const { searchUser = () => { }, users = [], roles = [], searchRole = () => { } } = props
+  const { searchUser = () => { }, users = [], roles = [], searchRole = () => { }
+    , editUser, deleteUser, editRole, deleteRole
+  } = props
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [listUsers, setListUsers] = React.useState(users);
@@ -64,6 +66,22 @@ const AdminBoard = (props) => {
   const handleDrawerClose = useCallback(() => {
     setOpen(false);
   }, [setOpen])
+
+  const handleEditRole = useCallback(() => {
+    editRole()
+  }, [editRole])
+
+  const handleEditUser = useCallback(() => {
+    editUser()
+  }, [editUser])
+
+  const handleDeleteRole = useCallback(() => {
+    deleteRole()
+  }, [deleteRole])
+
+  const handleDeleteUser = useCallback(() => {
+    deleteUser()
+  }, [deleteUser])
 
   useEffect(() => {
     searchUser()
@@ -101,11 +119,17 @@ const AdminBoard = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={9}>
               <Table text={{ title: text.users }} tableData={listUsers}
-                tableConfig={{ cols: userColumns, editMode: true  }} />
+                tableConfig={{ cols: userColumns, editMode: true  }}
+                onEdit={handleEditUser}
+                onDelete={handleDeleteUser}
+              />
             </Grid>
             <Grid item xs={3}>
               <Table text={{ title: text.roles }} tableData={listRoles}
-                tableConfig={{ cols: roleColumns, editMode: true }} />
+                tableConfig={{ cols: roleColumns, editMode: true }}
+                onEdit={handleEditRole}
+                onDelete={handleDeleteRole}    
+              />
             </Grid>
           </Grid>
         </div>
@@ -121,7 +145,11 @@ const mapState = (state) => ({
 
 const mapProps = {
   searchUser,
-  searchRole
+  searchRole,
+  editUser,
+  deleteUser,
+  editRole,
+  deleteRole
 }
 
 export default connect(mapState, mapProps)(AdminBoard)

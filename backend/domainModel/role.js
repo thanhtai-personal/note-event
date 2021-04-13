@@ -35,6 +35,9 @@ Role.init({
         sequelize.Promise.reject('Cannot create role supper admin')
         throw new Error('cannot register role super admin')
       }
+      if (!uuidValidate(role.id)) {
+        role.id = uuidv4()
+      }
     },
     beforeUpdate: async (role, options) => {
       if ((role.get('name') || '').toLowerCase() === 'superadmin') {

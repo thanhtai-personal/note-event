@@ -56,7 +56,8 @@ export default function BasicTable(props) {
   const { tableConfig = { }, tableData = rows,
     text = {
       title: 'USER TABLE'
-    }
+    },
+    onEdit = () => {}, onDelete = () => {}
   } = props
   const { cols = columns, editMode } = tableConfig
   const classes = useStyles()
@@ -79,6 +80,8 @@ export default function BasicTable(props) {
               rowData={row}
               cols={cols}
               rowIndex={rowIndex}
+              onEdit={onEdit}
+              onDelete={onDelete}
             />)
             : (<TableRow key={`${row.id || row.key}-${rowIndex}`}>
               {cols.map((col, index) => (

@@ -8,7 +8,11 @@ import {
 
 import {
   SEARCH_USER,
-  SEARCH_ROLE
+  SEARCH_ROLE,
+  EDIT_ROLE,
+  DELETE_ROLE,
+  EDIT_USER,
+  DELETE_USER
 } from './../actions/types'
 import { adminApisName, adminApis } from './../apis'
 import apiExecutor from 'root/api'
