@@ -7,49 +7,49 @@ import {
   DELETE_USER
 } from './types'
 
-export const searchUser = (payload) => {
+export const searchUser = (data) => {
   return {
     type: SEARCH_USER,
-    payload
+    data
   }
 }
 
-export const searchRole = (payload) => {
+export const searchRole = (data) => {
   return {
     type: SEARCH_ROLE,
-    payload
+    data
   }
 }
 
 
-export const editUser = (payload) => {
+export const editUser = (data) => {
   return {
     type: EDIT_USER,
-    payload
+    data
   }
 }
 
 
-export const deleteUser = (payload) => {
+export const deleteUser = (data) => {
   return {
     type: DELETE_USER,
-    payload
+    data
   }
 }
 
 
-export const editRole = (payload) => {
+export const editRole = (data) => {
   return {
     type: EDIT_ROLE,
-    payload
+    data
   }
 }
 
 
-export const deleteRole = (payload) => {
+export const deleteRole = (data) => {
   return {
     type: DELETE_ROLE,
-    payload
+    data
   }
 }
 

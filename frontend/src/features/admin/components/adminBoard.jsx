@@ -79,8 +79,8 @@ const AdminBoard = (props) => {
     deleteRole()
   }, [deleteRole])
 
-  const handleDeleteUser = useCallback(() => {
-    deleteUser()
+  const handleDeleteUser = useCallback((user) => {
+    deleteUser(user.id)
   }, [deleteUser])
 
   useEffect(() => {
