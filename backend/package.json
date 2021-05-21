@@ -21,8 +21,8 @@
     "setup": "npm-run-all -p create-dev-tables start",
     "setupdev2": "npm-run-all -p create-dev2-tables start",
     "startWithConfig": "env-cmd -f ./.env nodemon src/app.js",
-    "crawler": "node crawler/index.js",
-    "cheerio": "node crawler/cheerio/index.js"
+    "crawler": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict applicationService/crawler/index.js",
+    "cheerio": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict applicationService/crawler/cheerio/index.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -46,7 +46,7 @@
     "puppeteer": "^9.1.1",
     "sequelize": "^6.6.2",
     "superagent": "^6.1.0",
-    "swagger-ui": "^2.2.10",
+    "swagger-ui": "^3.49.0",
     "swagger-ui-dist": "^3.48.0",
     "uuid": "^8.3.2",
     "validator": "^13.6.0"
