@@ -15,7 +15,7 @@ const getFilterMaxPage = (filterBody) => {
     })
     return Math.max(...pageNumbers)
   } catch (error) {
-    throw (error)
+    console.log('error', error)
   }
 }
 
@@ -34,7 +34,7 @@ const getNovals = (htmlBody) => {
     })
     return novals
   } catch (error) {
-    throw (error)
+    console.log('error', error)
   }
 }
 
@@ -54,7 +54,7 @@ const getNovalsSummaryInfo = async () => {
     }
     return novals
   } catch (error) {
-    throw error
+    console.log('error', error)
   }
 }
 
@@ -119,7 +119,7 @@ const getNovalsDetail = async (novals) => {
       novalRes.push(noval)
     }
   } catch (error) {
-    throw (error)
+    console.log('error', error)
   }
 }
 
