@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const got = require('got');
 const URLS = require('./urls');
 const REGS = require('./regs');
-const { PAGE_PARAM, RETRY_TIME } = require('./constants');
+const { PAGE_PARAM, RETRY_TIME, DELAY_TIME } = require('./constants');
 let countError = 0
 const getFilterMaxPage = (filterBody) => {
   try {
@@ -82,7 +82,7 @@ const getNovalChapter = async (originUrl, chapNumber, retryTime = 0) => {
         setTimeout(resolve, delay);
       });
     }
-    await makeDelayTime(1000)
+    await makeDelayTime(DELAY_TIME)
     if (retryTime < RETRY_TIME) {
       return getNovalChapter(originUrl, chapNumber, retryTime + 1)
     } else {
