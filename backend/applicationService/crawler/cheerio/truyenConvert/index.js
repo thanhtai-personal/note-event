@@ -2,8 +2,8 @@ const cheerio = require('cheerio');
 const got = require('got');
 const URLS = require('./urls');
 const REGS = require('./regs');
-const { PAGE_PARAM } = require('./constants');
-
+const { PAGE_PARAM, RETRY_TIME } = require('./constants');
+let countError = 0
 const getFilterMaxPage = (filterBody) => {
   try {
     let pageNumbers = [];
@@ -46,7 +46,7 @@ const getNovalsSummaryInfo = async () => {
     const maxPageFilter = getFilterMaxPage(filterBody);
     let novals = []
     // for (let i = minPageFilter; i <= maxPageFilter; i++) {
-    for (let i = minPageFilter; i <= 2; i++) { // test 5 page
+    for (let i = minPageFilter; i <= 5; i++) { // test 5 page
       const filterPageURL = URLS.filterWithPaging.replace(PAGE_PARAM, `${i}`)
       const response = await got(filterPageURL);
       const filterPageBody = cheerio.load(response.body);
@@ -58,7 +58,7 @@ const getNovalsSummaryInfo = async () => {
   }
 }
 
-const getNovalChapters = async (originUrl, chapNumber) => {
+const getNovalChapters = async (originUrl, chapNumber, retryTime = 0) => {
   try {
     let chapter = {}
     const chapterURL = `${originUrl}chuong-${chapNumber}`
@@ -74,12 +74,24 @@ const getNovalChapters = async (originUrl, chapNumber) => {
     
     const contentElem = filterBody('div#js-read__content').html()
     chapter.content = contentElem.replace(REGS.adsTag, '').replace(REGS.scriptTag, '').replace(REGS.alertTag, '<br>')
-    console.log('content', chapter.content)
     return chapter
   } catch (error) {
-    return {
-      url: `${originUrl}chuong-${chapNumber}`,
-      content: 'get content Error!!!'
+    const makeDelayTime = (delay) => {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, delay);
+      });
+    }
+    await makeDelayTime(1000)
+    if (retryTime < RETRY_TIME) {
+      return getNovalChapters(originUrl, chapNumber, retryTime + 1)
+    } else {
+      countError++
+      console.log('failed crawl number: ', countError)
+      console.log(`${originUrl}chuong-${chapNumber}`)
+      return {
+        url: `${originUrl}chuong-${chapNumber}`,
+        content: 'get content Error!!!'
+      }
     }
   }
 }
