@@ -45,8 +45,8 @@ const getNovalsSummaryInfo = async () => {
     const minPageFilter = 1;
     const maxPageFilter = getFilterMaxPage(filterBody);
     let novals = []
-    for (let i = minPageFilter; i <= maxPageFilter; i++) {
-    // for (let i = minPageFilter; i <= 2; i++) { // test 5 page
+    // for (let i = minPageFilter; i <= maxPageFilter; i++) {
+    for (let i = minPageFilter; i <= 2; i++) { // test 5 page
       const filterPageURL = URLS.filterWithPaging.replace(PAGE_PARAM, `${i}`)
       const response = await got(filterPageURL);
       const filterPageBody = cheerio.load(response.body);
@@ -73,10 +73,10 @@ const getNovalChapters = async (originUrl, chapNumber) => {
     })
     
     const contentElem = filterBody('div#js-read__content').html()
-    chapter.content = contentElem
+    chapter.content = contentElem.replace(REGS.adsTag, '').replace(REGS.scriptTag, '').replace(REGS.alertTag, '<br>')
+    console.log('content', chapter.content)
     return chapter
   } catch (error) {
-    console.log('error', error)
     return {
       url: `${originUrl}chuong-${chapNumber}`,
       content: 'get content Error!!!'
