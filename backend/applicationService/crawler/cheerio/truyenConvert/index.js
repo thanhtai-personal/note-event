@@ -46,7 +46,7 @@ const getNovalsSummaryInfo = async () => {
     const maxPageFilter = getFilterMaxPage(filterBody);
     let novals = []
     // for (let i = minPageFilter; i <= maxPageFilter; i++) {
-    for (let i = minPageFilter; i <= 5; i++) { // test 5 page
+    for (let i = minPageFilter; i <= 1; i++) { // test 5 page
       const filterPageURL = URLS.filterWithPaging.replace(PAGE_PARAM, `${i}`)
       const response = await got(filterPageURL);
       const filterPageBody = cheerio.load(response.body);
