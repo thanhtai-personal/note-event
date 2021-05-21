@@ -58,7 +58,7 @@ const getNovalsSummaryInfo = async () => {
   }
 }
 
-const getNovalChapters = async (originUrl, chapNumber, retryTime = 0) => {
+const getNovalChapter = async (originUrl, chapNumber, retryTime = 0) => {
   try {
     let chapter = {}
     const chapterURL = `${originUrl}chuong-${chapNumber}`
@@ -74,6 +74,7 @@ const getNovalChapters = async (originUrl, chapNumber, retryTime = 0) => {
     
     const contentElem = filterBody('div#js-read__content').html()
     chapter.content = contentElem.replace(REGS.adsTag, '').replace(REGS.scriptTag, '').replace(REGS.alertTag, '<br>')
+    chapter.isCrawledSuccess = true
     return chapter
   } catch (error) {
     const makeDelayTime = (delay) => {
@@ -83,14 +84,14 @@ const getNovalChapters = async (originUrl, chapNumber, retryTime = 0) => {
     }
     await makeDelayTime(1000)
     if (retryTime < RETRY_TIME) {
-      return getNovalChapters(originUrl, chapNumber, retryTime + 1)
+      return getNovalChapter(originUrl, chapNumber, retryTime + 1)
     } else {
       countError++
       console.log('failed crawl number: ', countError)
       console.log(`${originUrl}chuong-${chapNumber}`)
       return {
         url: `${originUrl}chuong-${chapNumber}`,
-        content: 'get content Error!!!'
+        isCrawledSuccess: false
       }
     }
   }
@@ -113,7 +114,7 @@ const getNovalsDetail = async (novals) => {
       })
       let chapters = {}
       for (let i = 1; i <= noval.chapNumber; i++) {
-        chapters[`${i}`] = getNovalChapters(noval.url, i)
+        chapters[`${i}`] = getNovalChapter(noval.url, i)
       }
       noval.chapters = chapters
       novalRes.push(noval)
