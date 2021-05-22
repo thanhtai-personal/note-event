@@ -1,9 +1,14 @@
 const crawlTruyenConvert = require('./truyenConvert')
 
 const excuteCherrio = async () => {
-  let novals = await crawlTruyenConvert.getNovalsSummaryInfo()
-  novals = await crawlTruyenConvert.getNovalsDetail(novals)
-  console.log('------------FINISH!!!--------------')
+  try {
+    let novals = await crawlTruyenConvert.getNovalsSummaryInfo()
+    novals = await crawlTruyenConvert.getNovalsDetail(novals)
+    console.log('------------FINISH!!!--------------')
+  } catch (error) {
+    console.log('------------CHERRIO FAILED ACTION!!!--------------')
+    throw error
+  }
 }
 
 module.exports = {

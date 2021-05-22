@@ -22,6 +22,7 @@
     "setupdev2": "npm-run-all -p create-dev2-tables start",
     "startWithConfig": "env-cmd -f ./.env nodemon src/app.js",
     "crawler": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict applicationService/crawler/index.js",
+    "mac:crawler": "node applicationService/crawler/index.js",
     "cheerio": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict applicationService/crawler/cheerio/index.js"
   },
   "dependencies": {
