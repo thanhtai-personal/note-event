@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const authController = require('./controller/authenticate.controller')
 const eventNoteController = require('./controller/eventNote.controller')
 const adminController = require('./controller/admin.controller')
+const novalManageController = require('./controller/novalManage.controller')
 const envConfig = require('./env')
 const { useAuth } = require('./middlewares')
 const cors = require('cors')
@@ -22,7 +23,7 @@ const middleWares = [
 ]
 middleWares.forEach((middleWare) => app.use(middleWare))
 
-const controllerToBeCompined = [authController, eventNoteController, adminController]
+const controllerToBeCompined = [authController, eventNoteController, adminController, novalManageController]
 controllerToBeCompined.forEach((controller) => conbineController(getApp, controller))
 
 // Start the server

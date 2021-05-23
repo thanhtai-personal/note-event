@@ -8,6 +8,30 @@ pool.on('connect', () => {
 })
 
 /**
+ * create database
+ */
+// const createDatabase = (databaseName, isEnd) => {
+  // console.log(`drop database ${databaseName}`)
+//   const dropDatabaseQuery = `ALTER TABLE postgres DROP DATABASE "${databaseName}";`
+//   const dropDatabaseQueryWithForce = `DROP DATABASE "${databaseName}" WITH (FORCE);`
+//   const createDatabaseQuery = `ALTER TABLE postgres CREATE DATABASE "${databaseName}";`
+//   try {
+//     await pool.query(dropDatabaseQuery)
+//     console.log('dropDatabaseQuery success')
+//     isEnd && pool.end()
+//   } catch (error) {
+//     try {
+//       console.log('dropDatabaseQuery failed, retry with force')
+//       await pool.query(dropDatabaseQueryWithForce)
+//       console.log('dropDatabaseQueryWithForce success')
+//     } catch (error) {
+//       console.log('dropDatabaseQueryWithForce failed')
+//     }
+//     isEnd && pool.end()
+//   }
+// }
+
+/**
  * Create User Table
  */
 const createUserTable = async (isEnd = false) => {
@@ -217,9 +241,9 @@ const createReferenceKey = async (isEnd = false) => {
     ON DELETE NO ACTION`
   try {
     await pool.query(createReferenceKeyQueryResource)
-    console.log('querry success')
     await pool.query(createReferenceKeyQueryGoogleAccount)
     await pool.query(createReferenceKeyQueryEventNote)
+    console.log('querry success')
     isEnd && pool.end()
   } catch (error) {
     console.log('query error', error)
@@ -254,6 +278,7 @@ const dropReferenceKey = async (isEnd = false) => {
  */
 module.exports = {
   createAllTables: async () => {
+    // await createDatabase('event-note')
     await createUserTable()
     await createResourceTable()
     await createGoogleAccountTable()

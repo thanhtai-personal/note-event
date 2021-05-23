@@ -7,15 +7,18 @@ module.exports = async (pool, isEnd) => {
       url text,
       "group" text,
       "shortDescrition" text,
+      "intro" text,
       "imageUrl" text,
       "imageAltName" text,
       "isDelete" boolean,
       "createdAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       "updatedAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+      "updatedBy" uuid,
+      "createdBy" uuid,
       CONSTRAINT noval_pkey PRIMARY KEY (id)
   );`
 
-  const chapterAccountCreateQuery = `CREATE TABLE IF NOT EXISTS noval
+  const chapterCreateQuery = `CREATE TABLE IF NOT EXISTS chapter
   (
       id uuid NOT NULL,
       "novalId" uuid NOT NULL,
@@ -26,6 +29,8 @@ module.exports = async (pool, isEnd) => {
       "createdAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       "updatedAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
       CONSTRAINT chapter_pkey PRIMARY KEY (id),
+      "updatedBy" uuid,
+      "createdBy" uuid,
       CONSTRAINT fkey_chapter_noval FOREIGN KEY ("novalId")
       REFERENCES "noval" (id) MATCH SIMPLE
       ON UPDATE NO ACTION
@@ -33,7 +38,7 @@ module.exports = async (pool, isEnd) => {
   );`
   try {
     await pool.query(novalCreateQuery)
-    await pool.query(chapterAccountCreateQuery)
+    await pool.query(chapterCreateQuery)
     console.log('querry success')
     isEnd && pool.end()
   } catch (error) {

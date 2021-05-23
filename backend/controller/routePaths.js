@@ -13,5 +13,10 @@ module.exports = {
   SEARCH_ROLE: '/role/search',
   SEARCH_PERMISSION: '/permission/search',
   UPDATE_USER: '/user/update',
-  ADD_OR_UPDATE_ROLE: '/role/update'
+  ADD_OR_UPDATE_ROLE: '/role/update',
+  //novals
+  GET_NOVAL: 'noval/get/:id',
+  SEARCH_NOVALS: 'noval/search',
+  ADD_NOVAL: 'noval/add',
+  UPDATE_NOVAL: 'noval/update'
 }
