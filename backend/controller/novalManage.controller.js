@@ -14,6 +14,7 @@ const novalManageService = NovalManageService(novalService, chapterService)
 const getNoval = async (req, res) => {
   try {
     const reqData = {
+      novalId: req.novalId
     }
     const responseData = await novalManageService.getNovalById(reqData)
     res.status(200).send(responseData)
@@ -25,6 +26,7 @@ const getNoval = async (req, res) => {
 const searchNovals = async (req, res) => {
   try {
     const reqData = {
+      novalId: req.novalId
     }
     const responseData = await novalManageService.searchNovals(reqData)
     res.status(200).send(responseData)
@@ -36,6 +38,7 @@ const searchNovals = async (req, res) => {
 const addNoval = async (req, res) => {
   try {
     const reqData = {
+      ...req
     }
     const responseData = await novalManageService.addNoval(reqData)
     res.status(200).send(responseData)
@@ -47,6 +50,7 @@ const addNoval = async (req, res) => {
 const updateNoval = async (req, res) => {
   try {
     const reqData = {
+      ...req
     }
     const responseData = await novalManageService.updateNoval(reqData)
     res.status(200).send(responseData)
