@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -68,7 +68,23 @@ export default function LeftSideBar(props) {
       { text: 'Send email', icon: <InboxIcon />, key: 'Send_email' },
       { text: 'Drafts', icon: <InboxIcon />, key: 'Drafts' }
     ],
+    onClickItem,
   } = props
+
+  const renderMenuItem = useCallback((item, index) => {
+
+    const handleClickItem = () => {
+      onClickItem && typeof onClickItem === 'function' && onClickItem(item)
+    }
+
+    return (
+      <ListItem button key={`${item.key}-${index}`} onClick={handleClickItem}>
+        <ListItemIcon>{item.icon}</ListItemIcon>
+        <ListItemText primary={item.text} />
+      </ListItem>
+    )
+  }, [onClickItem])
+
   return (
     <Drawer
       variant="permanent"
@@ -91,21 +107,11 @@ export default function LeftSideBar(props) {
       </div>
       <Divider />
       <List>
-        {primaryMenu.map((item, index) => (
-          <ListItem button key={`${item.key}-${index}`}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
+        {primaryMenu.map((item, index) => renderMenuItem(item, index))}
       </List>
       <Divider />
       <List>
-        {secondMenu.map((item, index) => (
-          <ListItem button key={`${item.key}-${index}`}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
+        {secondMenu.map((item, index) => renderMenuItem(item, index))}
       </List>
     </Drawer>
   );

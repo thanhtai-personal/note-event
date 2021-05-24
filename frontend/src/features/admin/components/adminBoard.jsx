@@ -9,7 +9,8 @@ import Table from 'root/templates/tables/temp1'
 import { searchUser, searchRole, editUser, deleteUser, editRole, deleteRole } from './../actions'
 import utils from 'root/utils';
 import { DASH_BOARD_REDUCER } from 'root/actions/types';
-import { People as PeopleIcon } from '@material-ui/icons'
+import { People as PeopleIcon, MenuBook as MenuBookIcon } from '@material-ui/icons';
+import { Table as NeuTable } from 'ui-neumorphism'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +59,7 @@ const AdminBoard = (props) => {
   const [open, setOpen] = React.useState(false);
   const [listUsers, setListUsers] = React.useState(users);
   const [listRoles, setListRoles] = React.useState(roles);
+  const [activeMenu, setActiveMenu] = React.useState('user');
 
   const handleDrawerOpen = useCallback(() => {
     setOpen(true);
@@ -83,6 +85,48 @@ const AdminBoard = (props) => {
     deleteUser(user.id)
   }, [deleteUser])
 
+  const createItem = (name, calories, fat, carbs, protein, iron) => {
+    return { name, calories, fat, carbs, protein, iron }
+  }
+
+  const mainSections = {
+    'user': (
+      <Grid container spacing={2}>
+            <Grid item xs={9}>
+              <Table text={{ title: text.users }} tableData={listUsers}
+                tableConfig={{ cols: userColumns, editMode: true  }}
+                onEdit={handleEditUser}
+                onDelete={handleDeleteUser}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Table text={{ title: text.roles }} tableData={listRoles}
+                tableConfig={{ cols: roleColumns, editMode: true }}
+                onEdit={handleEditRole}
+                onDelete={handleDeleteRole}    
+              />
+            </Grid>
+          </Grid>
+    ),
+    'noval': (
+      <NeuTable
+        headers={[
+          { text: 'Dessert (100g serving)', align: 'left', value: 'name' },
+          { text: 'Calories', align: 'right', value: 'calories' },
+          { text: 'Fat (g)', align: 'right', value: 'fat' },
+          { text: 'Carbs (g)', align: 'right', value: 'carbs' },
+          { text: 'Protein (g)', align: 'right', value: 'protein' },
+          { text: 'Iron (%)', align: 'right', value: 'iron' }
+        ]}
+        items={[
+          createItem('Frozen yoghurt', 159, 6.0, 24, 4.0, '1%'),
+          createItem('Ice cream sandwich', 237, 9.0, 37, 4.3, '1%'),
+          createItem('Eclair', 262, 16.0, 24, 6.0, '7%'),
+        ]}
+      />
+    )
+  }
+
   useEffect(() => {
     searchUser()
     searchRole()
@@ -103,35 +147,30 @@ const AdminBoard = (props) => {
     setListRoles(roles)
   }, [users, roles])
 
+  const handleClickItem = useCallback((item) => {
+    setActiveMenu(item.key)
+  }, [setActiveMenu])
+
+  const renderMainSection = useCallback(() => {
+    return mainSections[activeMenu]
+  }, [activeMenu])
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
       <LeftSideBar open={open} handleDrawerClose={handleDrawerClose}
         primaryMenu={[
-          { text: 'Inbox', icon: <PeopleIcon />, key: 'inbox' },
+          { text: 'User', icon: <PeopleIcon />, key: 'user', onClickItem: handleClickItem },
         ]}
-        secondMenu={[]}
+        secondMenu={[
+          { text: 'Novals', icon: <MenuBookIcon />, key: 'novals', onClickItem: handleClickItem },
+        ]}
       />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <div className={classes.section}>
-          <Grid container spacing={2}>
-            <Grid item xs={9}>
-              <Table text={{ title: text.users }} tableData={listUsers}
-                tableConfig={{ cols: userColumns, editMode: true  }}
-                onEdit={handleEditUser}
-                onDelete={handleDeleteUser}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <Table text={{ title: text.roles }} tableData={listRoles}
-                tableConfig={{ cols: roleColumns, editMode: true }}
-                onEdit={handleEditRole}
-                onDelete={handleDeleteRole}    
-              />
-            </Grid>
-          </Grid>
+          {renderMainSection()}
         </div>
       </main>
     </div>
