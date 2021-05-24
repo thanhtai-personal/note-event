@@ -116,7 +116,7 @@ const createOrUpdateRole = (roleService) => async (dataReq) => {
     const role = roleService.findOne({
       id: dataReq.id
     })
-    if (role) {
+    if (!role) {
       const role = await roleService.create(dataReq)
       return role
     } else {
