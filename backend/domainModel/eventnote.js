@@ -34,4 +34,4 @@ EventNote.init({
   }
 }, { sequelize, modelName: 'eventNote', tableName: 'eventnote' })
 
-module.exports =  EventNote
+module.exports = EventNote

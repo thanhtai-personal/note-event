@@ -303,7 +303,7 @@ module.exports = {
    * migrate
    */
   migrateData: async () => {
-    await migrate.excute(pool)
+    await migrate.execute(pool)
   }
 }
 pool.on('remove', () => {

@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const truyenConvert = require('./truyencv')
 
-const excute = async () => {
+const execute = async () => {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   page.setViewport({ width: 1280, height: 720 });
@@ -16,6 +16,6 @@ const getNovalsChapters = async (novals) => {
 }
 
 module.exports = {
-  excute,
+  execute,
   getNovalsChapters
 }

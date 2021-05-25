@@ -29,6 +29,12 @@ Noval.init({
   'intro': {
     type: DataTypes.TEXT
   },
+  'chapNumber': {
+    type: DataTypes.NUMBER
+  },
+  'isBlockedScrap': {
+    type: DataTypes.BOOLEAN
+  },
   'createdAt': {
     type: DataTypes.TIME
   },

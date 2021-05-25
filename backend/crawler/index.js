@@ -1,9 +1,9 @@
 const cheerioCrawler = require('./cheerio');
-const puppeteerCrawler = require('./puppeteer');
+// const puppeteerCrawler = require('./puppeteer');
 
-const excuteCrawler = async () => {
+const executeCrawler = async () => {
   try {
-    await cheerioCrawler.excute()
+    return await cheerioCrawler.execute()
   } catch (error) {
     if (error.novals) {
       try {
@@ -13,7 +13,7 @@ const excuteCrawler = async () => {
       }
     } else {
       try {
-        // await puppeteerCrawler.excute()
+        // await puppeteerCrawler.execute()
       } catch (error) {
         console.log('error', error)
       }
@@ -21,8 +21,6 @@ const excuteCrawler = async () => {
   }
 }
 
-excuteCrawler() //for test
-
 module.exports = {
-  excuteCrawler
+  executeCrawler
 }

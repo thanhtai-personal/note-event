@@ -33,12 +33,14 @@ const addNoval = (novalService, chapterService) => async (dataReq) => {
     const { chapters, ...novalData } = dataReq
     const noval = await novalService.create(novalData)
     let savedChapters = []
-    for (chapter of chapters) {
-      const c =await chapterService.create({
-        ...chapter,
-        novalId: noval.id
-      })
-      savedChapters.push(c)
+    if (!noval.isBlockedScrap) {
+      for (chapter of chapters) {
+        const c = await chapterService.create({
+          ...chapter,
+          novalId: noval.id
+        })
+        savedChapters.push(c)
+      }
     }
     return { noval, chapters: savedChapters }
   } catch (error) {

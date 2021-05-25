@@ -119,7 +119,7 @@ const getNovalsDetail = async (novals) => {
       console.log('==process noval', nov.url)
       let noval = { ...nov }
       if (blockScrapPages.includes(noval.url)) {
-        noval.blockedScrap = true
+        noval.isBlockedScrap = true
         novalRes.push(noval)
         console.log('==blocked scrap noval', nov.url)
         continue
@@ -128,7 +128,7 @@ const getNovalsDetail = async (novals) => {
       try {
         response = await got(nov.url);
       } catch (error) {
-        noval.blockedScrap = true
+        noval.isBlockedScrap = true
         novalRes.push(noval)
         console.log('==failed get noval (may blocked)', nov.url)
         continue
@@ -150,6 +150,7 @@ const getNovalsDetail = async (novals) => {
       novalRes.push(noval)
       console.log('==process noval success', nov.url)
     }
+    return novalRes
   } catch (error) {
     console.log('==process noval failed', nov.url)
     throw { error, novals }

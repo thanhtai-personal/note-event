@@ -20,6 +20,9 @@ Chapter.init({
   'content': {
     type: DataTypes.TEXT
   },
+  'isCrawledSuccess': {
+    type: DataTypes.BOOLEAN
+  },
   'createdAt': {
     type: DataTypes.TIME
   },
@@ -37,4 +40,4 @@ Chapter.init({
   }
 }, { sequelize, modelName: 'Chapter', tableName: 'chapter' })
 
-module.exports =  Chapter
+module.exports = Chapter

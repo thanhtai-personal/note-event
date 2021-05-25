@@ -1,6 +1,6 @@
 const crawlTruyenConvert = require('./truyenConvert')
 
-const excuteCherrio = async () => {
+const executeCherrio = async () => {
   try {
     let novals = await crawlTruyenConvert.getNovalsSummaryInfo()
     novals = await crawlTruyenConvert.getNovalsDetail(novals)
@@ -13,5 +13,5 @@ const excuteCherrio = async () => {
 }
 
 module.exports = {
-  excute: excuteCherrio
+  execute: executeCherrio
 }
