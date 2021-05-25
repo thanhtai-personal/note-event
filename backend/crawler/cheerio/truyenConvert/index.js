@@ -99,7 +99,7 @@ const getNovalChapter = async (originUrl, chapNumber, retryTime = 0) => {
     await makeDelayTime(DELAY_TIME)
     if (retryTime < RETRY_TIME) {
       console.log('====process noval chapter failed', originUrl, chapNumber)
-      return getNovalChapter(originUrl, chapNumber, retryTime + 1)
+      return await getNovalChapter(originUrl, chapNumber, retryTime + 1)
     } else {
       countError++
       console.log('--retry get chapter ', countError)
@@ -144,7 +144,7 @@ const getNovalsDetail = async (novals) => {
       })
       let chapters = {}
       for (let i = 1; i <= noval.chapNumber; i++) {
-        chapters[`${i}`] = getNovalChapter(noval.url, i)
+        chapters[`${i}`] = await getNovalChapter(noval.url, i)
       }
       noval.chapters = chapters
       novalRes.push(noval)

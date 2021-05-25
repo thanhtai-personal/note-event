@@ -16,7 +16,7 @@ const execute = async () => {
   for (noval of novals) {
     try {
       console.log('----insert noval', noval.url)
-      novalManageService.addNoval(noval)
+      await novalManageService.addNoval(noval)
       console.log('----insert noval success', noval.url)
     } catch (error) {
       console.log('----insert noval failed', noval.url)
