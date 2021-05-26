@@ -6,6 +6,7 @@ const authController = require('./controller/authenticate.controller')
 const eventNoteController = require('./controller/eventNote.controller')
 const adminController = require('./controller/admin.controller')
 const novalManageController = require('./controller/novalManage.controller')
+const crawlerController = require('./controller/crawler.controller')
 const envConfig = require('./env')
 const { useAuth } = require('./middlewares')
 const cors = require('cors')
@@ -23,7 +24,7 @@ const middleWares = [
 ]
 middleWares.forEach((middleWare) => app.use(middleWare))
 
-const controllerToBeCompined = [authController, eventNoteController, adminController, novalManageController]
+const controllerToBeCompined = [authController, eventNoteController, adminController, novalManageController, crawlerController]
 controllerToBeCompined.forEach((controller) => conbineController(getApp, controller))
 
 // Start the server
