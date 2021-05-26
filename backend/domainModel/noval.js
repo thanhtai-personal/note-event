@@ -1,7 +1,8 @@
 const { DataTypes, Model } = require('sequelize')
 const { sequelize } = require('./../sequelize')
+const { v4: uuidv4, validate: uuidValidate } = require('uuid')
 
-class Noval extends Model {}
+class Noval extends Model { }
 
 Noval.init({
   id: {
@@ -50,6 +51,21 @@ Noval.init({
   'updatedBy': {
     type: DataTypes.UUID
   }
-}, { sequelize, modelName: 'Noval', tableName: 'noval' })
+}, {
+  sequelize, modelName: 'Noval', tableName: 'noval',
+  hooks: {
+    beforeCreate: async (noval, options) => {
+      if (!uuidValidate(noval.id)) {
+        noval.id = uuidv4()
+        if (!uuidValidate(noval.createdBy)) {
+          noval.createdBy = noval.id
+        }
+        if (!uuidValidate(noval.updatedBy)) {
+          noval.updatedBy = noval.id
+        }
+      }
+    }
+  },
+})
 
-module.exports =  Noval
+module.exports = Noval

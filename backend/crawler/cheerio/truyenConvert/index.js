@@ -33,11 +33,9 @@ const getNovals = (htmlBody) => {
         name: h4.children[0].attribs.title,
         url: h4.children[0].attribs.href,
         group: mediaBody.children[3].children[0].data,
-        shortDes: mediaBody.children[5].children[0].data,
-        thumbImage: {
-          src: mediaLeft.children[1].children[1].attribs.src,
-          altName: mediaLeft.children[1].children[1].attribs.alt
-        }
+        shortDescription: mediaBody.children[5].children[0].data,
+        imageUrl: mediaLeft.children[1].children[1].attribs.src,
+        imageAltName: mediaLeft.children[1].children[1].attribs.alt
       }
       novals.push(noval)
     })
@@ -136,15 +134,16 @@ const getNovalsDetail = async (novals) => {
       const filterBody = cheerio.load(response.body);
       const fullDesEle = filterBody('div#nav-intro div.row div.col-8 div.mb-4 div.content p')
       fullDesEle.each((index, elem) => {
-        noval.fullDes = elem.children[0].data
+        noval.intro = elem.children[0].data
       })
       const chapNumber = filterBody('a#nav-tab-chap span.counter')
       chapNumber.each((index, elem) => {
         noval.chapNumber = parseInt(elem.children[0].data || 0)
       })
-      let chapters = {}
-      for (let i = 1; i <= noval.chapNumber; i++) {
-        chapters[`${i}`] = await getNovalChapter(noval.url, i)
+      let chapters = []
+      // for (let i = 1; i <= noval.chapNumber; i++) {
+      for (let i = 1; i <= 5; i++) { // test 5 chap
+        chapters[i-1] = await getNovalChapter(noval.url, i)
       }
       noval.chapters = chapters
       novalRes.push(noval)

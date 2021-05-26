@@ -1,7 +1,8 @@
 const { DataTypes, Model } = require('sequelize')
 const { sequelize } = require('./../sequelize')
+const { v4: uuidv4, validate: uuidValidate } = require('uuid')
 
-class Chapter extends Model {}
+class Chapter extends Model { }
 
 Chapter.init({
   id: {
@@ -38,6 +39,21 @@ Chapter.init({
   'updatedBy': {
     type: DataTypes.UUID
   }
-}, { sequelize, modelName: 'Chapter', tableName: 'chapter' })
+}, {
+  sequelize, modelName: 'Chapter', tableName: 'chapter',
+  hooks: {
+    beforeCreate: async (chapter, options) => {
+      if (!uuidValidate(chapter.id)) {
+        chapter.id = uuidv4()
+        if (!uuidValidate(chapter.createdBy)) {
+          chapter.createdBy = chapter.id
+        }
+        if (!uuidValidate(chapter.updatedBy)) {
+          chapter.updatedBy = chapter.id
+        }
+      }
+    }
+  },
+})
 
 module.exports = Chapter

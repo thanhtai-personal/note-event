@@ -3,6 +3,9 @@ module.exports =  async (pool, isEnd = false) => {
   const migrateQuery = `
     ALTER TABLE noval ADD COLUMN IF NOT EXISTS "isBlockedScrap" boolean DEFAULT false;
     ALTER TABLE noval ADD COLUMN IF NOT EXISTS "chapNumber" integer;
+    ALTER TABLE noval ADD COLUMN IF NOT EXISTS "shortDescription" text;
+    ALTER TABLE noval ADD COLUMN IF NOT EXISTS "isActive" boolean DEFAULT true;
+    ALTER TABLE chapter ADD COLUMN IF NOT EXISTS "isActive" boolean DEFAULT true;
     ALTER TABLE chapter ADD COLUMN IF NOT EXISTS "isCrawledSuccess" boolean DEFAULT false;
   `
   try {
