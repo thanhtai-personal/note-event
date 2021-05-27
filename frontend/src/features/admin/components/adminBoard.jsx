@@ -1,194 +1,158 @@
-import React, { useEffect, useCallback } from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import LeftSideBar from 'root/templates/sideBar/temp1'
-import AppBar from 'root/templates/navBar/temp1'
-import Table from 'root/templates/tables/temp1'
-import { searchUser, searchRole, editUser, deleteUser, editRole, deleteRole } from './../actions'
-import utils from 'root/utils';
-import { DASH_BOARD_REDUCER } from 'root/actions/types';
-import { People as PeopleIcon, MenuBook as MenuBookIcon } from '@material-ui/icons';
-import { Table as NeuTable } from 'ui-neumorphism'
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
+import Container from '@material-ui/core/Container';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import { MainListItems, SecondaryListItems } from './materialTemplate/listItems';
+import MaterialDashboard from './materialTemplate/dashboard'
+import Novals from './novals'
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
   toolbar: {
+    paddingRight: 24, // keep right padding when drawer closed
+  },
+  toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
+    padding: '0 8px',
     ...theme.mixins.toolbar,
   },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: 36,
+  },
+  menuButtonHidden: {
+    display: 'none',
+  },
+  title: {
+    flexGrow: 1,
+  },
+  drawerPaper: {
+    position: 'relative',
+    whiteSpace: 'nowrap',
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerPaperClose: {
+    overflowX: 'hidden',
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    width: theme.spacing(7),
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9),
+    },
+  },
+  appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    height: '100vh',
+    overflow: 'auto',
   },
-  section: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(3)
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   }
 }));
 
-const userColumns = [
-  { field: 'googleId', headerName: 'G-ID', isEditable: false },
-  { field: 'username', headerName: 'User name', isEditable: false},
-  { field: 'createdAt', headerName: 'Created At', isEditable: false },
-  { field: 'role', headerName: 'Role', isEditable: true },
-  { field: 'updatedAt', headerName: 'Updated At', isEditable: false },
-];
-
-const roleColumns = [
-  { field: 'name', headerName: 'Role', isEditable: true },
-];
-
-const text = {
-  users: 'Users',
-  roles: 'Roles'
-}
-
-const AdminBoard = (props) => {
-  const { searchUser = () => { }, users = [], roles = [], searchRole = () => { }
-    , editUser, deleteUser, editRole, deleteRole
-  } = props
+export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [listUsers, setListUsers] = React.useState(users);
-  const [listRoles, setListRoles] = React.useState(roles);
-  const [activeMenu, setActiveMenu] = React.useState('user');
-
-  const handleDrawerOpen = useCallback(() => {
+  const [open, setOpen] = React.useState(true);
+  const [activeMenu, setActiveMenu] = useState('dashboard')
+  const handleDrawerOpen = () => {
     setOpen(true);
-  }, [setOpen])
-
+  };
   const handleDrawerClose = useCallback(() => {
     setOpen(false);
-  }, [setOpen])
+  }, [])
 
-  const handleEditRole = useCallback(() => {
-    editRole()
-  }, [editRole])
-
-  const handleEditUser = useCallback(() => {
-    editUser()
-  }, [editUser])
-
-  const handleDeleteRole = useCallback(() => {
-    deleteRole()
-  }, [deleteRole])
-
-  const handleDeleteUser = useCallback((user) => {
-    deleteUser(user.id)
-  }, [deleteUser])
-
-  const createItem = (name, calories, fat, carbs, protein, iron) => {
-    return { name, calories, fat, carbs, protein, iron }
-  }
-
-  const mainSections = {
-    'user': (
-      <Grid container spacing={2}>
-            <Grid item xs={9}>
-              <Table text={{ title: text.users }} tableData={listUsers}
-                tableConfig={{ cols: userColumns, editMode: true  }}
-                onEdit={handleEditUser}
-                onDelete={handleDeleteUser}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <Table text={{ title: text.roles }} tableData={listRoles}
-                tableConfig={{ cols: roleColumns, editMode: true }}
-                onEdit={handleEditRole}
-                onDelete={handleDeleteRole}    
-              />
-            </Grid>
-          </Grid>
-    ),
-    'noval': (
-      <NeuTable
-        headers={[
-          { text: 'Dessert (100g serving)', align: 'left', value: 'name' },
-          { text: 'Calories', align: 'right', value: 'calories' },
-          { text: 'Fat (g)', align: 'right', value: 'fat' },
-          { text: 'Carbs (g)', align: 'right', value: 'carbs' },
-          { text: 'Protein (g)', align: 'right', value: 'protein' },
-          { text: 'Iron (%)', align: 'right', value: 'iron' }
-        ]}
-        items={[
-          createItem('Frozen yoghurt', 159, 6.0, 24, 4.0, '1%'),
-          createItem('Ice cream sandwich', 237, 9.0, 37, 4.3, '1%'),
-          createItem('Eclair', 262, 16.0, 24, 6.0, '7%'),
-        ]}
-      />
-    )
-  }
-
-  useEffect(() => {
-    searchUser()
-    searchRole()
-  }, [searchUser, searchRole])
-
-  useEffect(() => {
-    const usersToList = (users || []).map((u) => {
-      const createdAt = new Date(u.createdAt)
-      const updatedAt = new Date(u.updatedAt)
-      return {
-        ...u,
-        role: ((roles || []).find((r) => r.id === u.roleId) || {}).name,
-        createdAt: `${createdAt.toLocaleString()}`,
-        updatedAt: `${updatedAt.toLocaleString()}`
-      }
-    })
-    setListUsers(usersToList)
-    setListRoles(roles)
-  }, [users, roles])
-
-  const handleClickItem = useCallback((item) => {
-    setActiveMenu(item.key)
+  const handleActiveMenu = useCallback((key) => {
+    setActiveMenu(key)
   }, [setActiveMenu])
-
-  const renderMainSection = useCallback(() => {
-    return mainSections[activeMenu]
-  }, [activeMenu])
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
-      <LeftSideBar open={open} handleDrawerClose={handleDrawerClose}
-        primaryMenu={[
-          { text: 'User', icon: <PeopleIcon />, key: 'user', onClickItem: handleClickItem },
-        ]}
-        secondMenu={[
-          { text: 'Novals', icon: <MenuBookIcon />, key: 'novals', onClickItem: handleClickItem },
-        ]}
-      />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <div className={classes.section}>
-          {renderMainSection()}
+      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+            Dashboard
+          </Typography>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
         </div>
+        <Divider />
+        <List>{<MainListItems activeMenu={activeMenu} setActiveMenu={handleActiveMenu}/>}</List>
+        <Divider />
+        <List>{<SecondaryListItems />}</List>
+      </Drawer>
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          {activeMenu === 'dashboard' && <MaterialDashboard />}
+          {activeMenu === 'novals' && <Novals />}
+        </Container>
       </main>
     </div>
   );
 }
-
-const mapState = (state) => ({
-  users: utils.get(state, `${DASH_BOARD_REDUCER}.users`),
-  roles: utils.get(state, `${DASH_BOARD_REDUCER}.roles`)
-})
-
-const mapProps = {
-  searchUser,
-  searchRole,
-  editUser,
-  deleteUser,
-  editRole,
-  deleteRole
-}
-
-export default connect(mapState, mapProps)(AdminBoard)
