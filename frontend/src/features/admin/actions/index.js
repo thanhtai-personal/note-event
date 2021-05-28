@@ -12,56 +12,56 @@ import {
 export const searchUser = (data) => {
   return {
     type: SEARCH_USER,
-    data
+    payload: data
   }
 }
 
 export const searchRole = (data) => {
   return {
     type: SEARCH_ROLE,
-    data
+    payload: data
   }
 }
 
 export const editUser = (data) => {
   return {
     type: EDIT_USER,
-    data
+    payload: data
   }
 }
 
 export const deleteUser = (data) => {
   return {
     type: DELETE_USER,
-    data
+    payload: data
   }
 }
 
 export const editRole = (data) => {
   return {
     type: EDIT_ROLE,
-    data
+    payload: data
   }
 }
 
 export const deleteRole = (data) => {
   return {
     type: DELETE_ROLE,
-    data
+    payload: data
   }
 }
 
 export const getNovals = (data) => {
   return {
     type: GET_NOVALS,
-    data
+    payload: { page: data }
   }
 }
 
 export const crawlAll = (data) => {
   return {
     type: CRAWL_ALL,
-    data
+    payload: data
   }
 }
 

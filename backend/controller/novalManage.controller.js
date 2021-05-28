@@ -26,7 +26,7 @@ const getNoval = async (req, res) => {
 const searchNovals = async (req, res) => {
   try {
     const reqData = {
-      novalId: req.novalId
+      ...req.body
     }
     const responseData = await novalManageService.searchNovals(reqData)
     res.status(200).send(responseData)
