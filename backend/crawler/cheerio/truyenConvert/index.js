@@ -72,7 +72,7 @@ const getNovalChapter = async (originUrl, chapNumber, retryTime = 0) => {
   try {
     console.log('====process noval chapter', originUrl, chapNumber)
     let chapter = {}
-    const chapterURL = `${originUrl}chuong-${chapNumber}`
+    const chapterURL = chapNumber < 0 ? originUrl : `${originUrl}chuong-${chapNumber}`
     chapter.url = chapterURL
 
     const response = await got(chapterURL);
@@ -158,5 +158,7 @@ const getNovalsDetail = async (novals) => {
 
 module.exports = {
   getNovalsSummaryInfo,
-  getNovalsDetail
+  getNovalsDetail,
+  getNovalChapter,
+  getNovalDetail: () => {}
 }

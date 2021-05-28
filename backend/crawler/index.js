@@ -1,5 +1,8 @@
 const cheerioCrawler = require('./cheerio');
 // const puppeteerCrawler = require('./puppeteer');
+const crawlChapter = require('./cheerio/chapter')
+const crawlerSummary = require('./cheerio/newchapter')
+const crawlNoval = require('./cheerio/noval')
 
 const executeCrawler = async () => {
   try {
@@ -22,5 +25,8 @@ const executeCrawler = async () => {
 }
 
 module.exports = {
-  executeCrawler
+  executeCrawler,
+  crawlChapter,
+  crawlerSummary,
+  crawlNoval
 }
