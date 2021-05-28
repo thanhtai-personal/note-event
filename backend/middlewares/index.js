@@ -1,5 +1,5 @@
-const { LOGIN, REGISTER } = require('./../controller/routePaths')
-const publicRoute = [LOGIN, REGISTER]
+const { LOGIN, REGISTER, SEARCH_NOVALS } = require('./../controller/routePaths')
+const publicRoute = [LOGIN, REGISTER, SEARCH_NOVALS]
 const AuthenService = require('./../applicationService/authenticate.service')
 const userService = require('./../domainService/user.service')
 const clientService = require('./../domainService/client.service')

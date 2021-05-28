@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 const getHeaders = () => {
   return [
+    { text: 'No.', align: 'left', value: 'index' },
     { text: 'Name', align: 'left', value: 'name' },
     { text: 'Chapters', align: 'right', value: 'chapNumber' },
     { text: 'Group', align: 'right', value: 'group' },
@@ -24,16 +25,23 @@ const getHeaders = () => {
   ]
 }
 
-const getItem = (headers, item) => {
+const getItem = (headers, item, index) => {
   let rsItem = {}
   headers.forEach((header) => {
-    rsItem[header.value] = item[header.value]
+    switch (item.value) {
+      case 'index':
+        rsItem[header.value] = index
+        break
+      default:
+        rsItem[header.value] = item[header.value]
+        break;
+    }
   })
   return rsItem
 }
 
 const getItems = (headers, items) => {
-  return items.map((item) => getItem(headers, item))
+  return items.map((item, index) => getItem(headers, item, index))
 }
 
 const NovalsComponent = (props) => {
@@ -58,7 +66,7 @@ const NovalsComponent = (props) => {
 
   return (
     <>
-      <TableActions crawlAll={crawlAll} crawlAllLoading={crawlAllLoading} />
+      <TableActions crawlAll={crawlAll} crawlAllLoading={crawlAllLoading} disabledCrawlerAll={(novals || []).length > 0} />
       <Table inset items={items} headers={headers} className={classes.novalTable} />
     </>
   )

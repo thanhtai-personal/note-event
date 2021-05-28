@@ -32,15 +32,18 @@ const getNovals = (htmlBody) => {
       let noval = {
         name: h4.children[0].attribs.title,
         url: h4.children[0].attribs.href,
+        chapNumber: parseInt(mediaBody.children[7].children[0].children[1].data),
         group: mediaBody.children[3].children[0].data,
         shortDescription: mediaBody.children[5].children[0].data,
         imageUrl: mediaLeft.children[1].children[1].attribs.src,
         imageAltName: mediaLeft.children[1].children[1].attribs.alt
       }
+      console.log('get noval success!', noval.name)
       novals.push(noval)
     })
     return novals
   } catch (error) {
+    console.log('get failed!')
     throw { error, htmlBody }
   }
 }
@@ -54,7 +57,8 @@ const getNovalsSummaryInfo = async () => {
     const maxPageFilter = getFilterMaxPage(filterBody);
     let novals = []
     // for (let i = minPageFilter; i <= maxPageFilter; i++) {
-    for (let i = minPageFilter; i <= 1; i++) { // test 1 page
+    for (let i = minPageFilter; i <= 50; i++) { // test 50 pages
+      console.log('get in page: ', i)
       const filterPageURL = URLS.filterWithPaging.replace(PAGE_PARAM, `${i}`)
       const response = await got(filterPageURL);
       const filterPageBody = cheerio.load(response.body);

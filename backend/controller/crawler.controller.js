@@ -6,7 +6,8 @@ const {
   CRAWL_FULL_SITE,
   CRAWL_CHAPTER,
   CRAWL_NOVAL,
-  CRAWL_ALL_NEW_CHAPTER
+  CRAWL_ALL_NEW_CHAPTER,
+  CRAWL_SUMMARY
 } = require('./routePaths')
 
 const crawlerService = CrawlerService(novalService, chapterService)
@@ -59,6 +60,18 @@ const crawlAllNewChapter = async (req, res) => {
   }
 }
 
+const crawlerSummary = async (req, res) => {
+  try {
+    const reqData = {
+      ...req
+    }
+    const responseData = await crawlerService.crawlerSummary(reqData)
+    res.status(200).send(responseData)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+}
+
 module.exports =  [
   {
     controllerExecution: crawlFullSite,
@@ -78,6 +91,11 @@ module.exports =  [
   {
     controllerExecution: crawlAllNewChapter,
     path: CRAWL_ALL_NEW_CHAPTER,
+    method: routeType.POST
+  },
+  {
+    controllerExecution: crawlerSummary,
+    path: CRAWL_SUMMARY,
     method: routeType.POST
   },
 ]

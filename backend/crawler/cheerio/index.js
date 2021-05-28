@@ -12,6 +12,18 @@ const executeCherrio = async () => {
   }
 }
 
+const executeSummaryOnly = async () => {
+  try {
+    let novals = await crawlTruyenConvert.getNovalsSummaryInfo()
+    console.log('------------FINISH!!!--------------')
+    return novals
+  } catch (error) {
+    console.log('------------CHERRIO FAILED ACTION!!!--------------')
+    throw error
+  }
+}
+
 module.exports = {
-  execute: executeCherrio
+  execute: executeCherrio,
+  executeSummaryOnly
 }

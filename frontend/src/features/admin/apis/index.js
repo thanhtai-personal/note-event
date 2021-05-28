@@ -36,6 +36,6 @@ export const adminApis = {
   },
   [adminApisName.crawlAll]: {
     method: 'post',
-    path: '/crawl/full-site',
+    path: '/crawl/summary-site',
   },
 }

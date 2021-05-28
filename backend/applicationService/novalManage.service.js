@@ -1,6 +1,10 @@
 const getNovals = (novalService) => async (dataReq) => {
   try {
-    const novals = await novalService.findAll()
+    const { page = 1, limit = 20 } = dataReq
+    const novals = await novalService.findAll({
+      limit,
+      offset: (page - 1) * limit
+    })
     return novals
   } catch (error) {
     throw error
@@ -30,7 +34,7 @@ const getNovalById = (novalService, chapterService) => async (dataReq) => {
 
 const addNoval = (novalService, chapterService) => async (dataReq) => {
   try {
-    let { chapters, ...novalData } = dataReq
+    let { chapters = [], ...novalData } = dataReq
     const noval = await novalService.create(novalData)
     let savedChapters = []
     if (!noval.isBlockedScrap) {
@@ -89,7 +93,7 @@ const novalManageService = (novalService, chapterService) => ({
   getNovalById: getNovalById(novalService, chapterService),
   addNoval: addNoval(novalService, chapterService),
   updateNoval: updateNoval(novalService, chapterService),
-  searchNovals: searchNovals(novalService)
+  searchNovals: searchNovals(novalService),
 })
 
 module.exports = novalManageService

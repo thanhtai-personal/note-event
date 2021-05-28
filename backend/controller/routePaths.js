@@ -23,5 +23,6 @@ module.exports = {
   CRAWL_FULL_SITE: '/crawl/full-site',
   CRAWL_CHAPTER: '/crawl/chapter',
   CRAWL_NOVAL: '/crawl/noval',
-  CRAWL_ALL_NEW_CHAPTER: '/crawl/all-chapter'
+  CRAWL_ALL_NEW_CHAPTER: '/crawl/all-chapter',
+  CRAWL_SUMMARY: '/crawl/summary-site'
 }

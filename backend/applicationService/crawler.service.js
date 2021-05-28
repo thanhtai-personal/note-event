@@ -40,6 +40,36 @@ const crawlFullSite = (novalService, chapterService, useShell = true) => async (
   }
 }
 
+const crawlerSummary = (novalService, useShell = true) => async (dataReq) => {
+  try {
+    if (useShell) {
+      shell.exec('npm run crawlsummary')
+    } else {
+      let novals = []
+      const { site = '' } = dataReq
+      try {
+        novals = await crawler.crawlerSummary(site)
+      } catch (error) {
+        console.log('crawler failed', error)
+      }
+
+      for (noval of novals) {
+        try {
+          console.log('----insert noval', noval.url)
+          noval = await novalService.create(novalData)
+          console.log('----insert noval success', noval.url)
+        } catch (error) {
+          console.log('----insert noval failed', noval.url)
+          continue
+        }
+      }
+      return novals
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 const crawlNoval = (novalService, chapterService, useShell = false) => async (dataReq) => {
   try {
     if (useShell) {
@@ -137,7 +167,8 @@ const crawlerService = (novalService, chapterService) => ({
   crawlFullSite: crawlFullSite(novalService, chapterService),
   crawlNoval: crawlNoval(novalService, chapterService),
   crawlChapter: crawlChapter(novalService, chapterService),
-  crawlAllNewChapter: crawlAllNewChapter(novalService, chapterService)
+  crawlAllNewChapter: crawlAllNewChapter(novalService, chapterService),
+  crawlerSummary: crawlerSummary(novalService)
 })
 
 module.exports = crawlerService

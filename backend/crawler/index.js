@@ -1,7 +1,7 @@
 const cheerioCrawler = require('./cheerio');
 // const puppeteerCrawler = require('./puppeteer');
 const crawlChapter = require('./cheerio/chapter')
-const crawlerSummary = require('./cheerio/newchapter')
+const crawlerNewChapter = require('./cheerio/newchapter')
 const crawlNoval = require('./cheerio/noval')
 
 const executeCrawler = async () => {
@@ -24,9 +24,18 @@ const executeCrawler = async () => {
   }
 }
 
+const crawlerSummary = async () => {
+  try {
+    return await cheerioCrawler.executeSummaryOnly()
+  } catch (error) {
+    console.log('error', error)
+  }
+}
+
 module.exports = {
   executeCrawler,
   crawlChapter,
   crawlerSummary,
+  crawlerNewChapter,
   crawlNoval
 }

@@ -22,6 +22,7 @@
     "setupdev2": "npm-run-all -p create-dev2-tables start",
     "startWithConfig": "env-cmd -f ./.env nodemon src/app.js",
     "crawler": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.js",
+    "crawlsummary": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.summary.js",
     "mac:crawler": "node crawler/npmexecute.js",
     "cheerio": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/cheerio/index.js",
     "crawl:noval": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.noval.js",
