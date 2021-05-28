@@ -1,6 +1,8 @@
 export const adminApisName = {
   getUsers: 'getUser',
   getRoles: 'getRoles',
+  getNovals: 'getNovals',
+  crawlAll: 'crawlAll'
 }
 
 export const adminApis = {
@@ -27,5 +29,13 @@ export const adminApis = {
   [adminApisName.deleteUser]: {
     method: 'post',
     path: '/user/update',
-  }
+  },
+  [adminApisName.getNovals]: {
+    method: 'post',
+    path: '/noval/search',
+  },
+  [adminApisName.crawlAll]: {
+    method: 'post',
+    path: '/crawl/full-site',
+  },
 }

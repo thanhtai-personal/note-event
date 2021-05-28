@@ -23,7 +23,10 @@
     "startWithConfig": "env-cmd -f ./.env nodemon src/app.js",
     "crawler": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.js",
     "mac:crawler": "node crawler/npmexecute.js",
-    "cheerio": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/cheerio/index.js"
+    "cheerio": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/cheerio/index.js",
+    "crawl:noval": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.noval.js",
+    "crawl:chapter": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.chapter.js",
+    "crawl:allnewchapter": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.newchapter.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -46,6 +49,7 @@
     "pg": "^8.6.0",
     "puppeteer": "^9.1.1",
     "sequelize": "^6.6.2",
+    "shelljs": "^0.8.4",
     "superagent": "^6.1.0",
     "swagger-ui": "^3.49.0",
     "swagger-ui-dist": "^3.48.0",

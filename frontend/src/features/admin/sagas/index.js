@@ -12,95 +12,44 @@ import {
   EDIT_ROLE,
   DELETE_ROLE,
   EDIT_USER,
-  DELETE_USER
+  DELETE_USER,
+  GET_NOVALS,
+  CRAWL_ALL
 } from './../actions/types'
 import { adminApisName, adminApis } from './../apis'
 import apiExecutor from 'root/api'
 
-function* searchUser(action = {}) {
-  try {
-    const { method, path } = adminApis[adminApisName.getUsers]
-    const responseData = yield apiExecutor[method](path, action.payload || {}, {
-      headers: {
-        token: window.localStorage.getItem('token')
-      }
-    }).then(response => response)
-    yield put({ type: Utils.makeSagasActionType(SEARCH_USER).SUCCESS, payload: responseData?.data || {} })
-  } catch (error) {
-    yield put({ type: Utils.makeSagasActionType(SEARCH_USER).FAILED, payload: error || {} })
+const defaultAdminSagasAction = (apiName, headers, actionType) => {
+  return function* (action = {}) {
+    try {
+      const { method, path } = adminApis[apiName]
+      const responseData = yield apiExecutor[method](path, action.payload || {}, {
+        headers: headers || {
+          token: window.localStorage.getItem('token')
+        }
+      }).then(response => response)
+      yield put({ type: Utils.makeSagasActionType(actionType).SUCCESS, payload: responseData?.data || {} })
+    } catch (error) {
+      yield put({ type: Utils.makeSagasActionType(actionType).FAILED, payload: error || {} })
+    }
   }
 }
 
+const searchUser = defaultAdminSagasAction(adminApisName.getUsers, null, SEARCH_USER)
 
-function* searchRole(action = {}) {
-  try {
-    const { method, path } = adminApis[adminApisName.getRoles]
-    const responseData = yield apiExecutor[method](path, action.payload || {}, {
-      headers: {
-        token: window.localStorage.getItem('token')
-      }
-    }).then(response => response)
-    yield put({ type: Utils.makeSagasActionType(SEARCH_ROLE).SUCCESS, payload: responseData?.data || {} })
-  } catch (error) {
-    yield put({ type: Utils.makeSagasActionType(SEARCH_ROLE).FAILED, payload: error || {} })
-  }
-}
+const searchRole = defaultAdminSagasAction(adminApisName.getRoles, null, SEARCH_ROLE)
 
-function* deleteUser (action = {}) {
-  try {
-    const { method, path } = adminApis[adminApisName.deleteUser]
-    const responseData = yield apiExecutor[method](path, action.payload || {}, {
-      headers: {
-        token: window.localStorage.getItem('token')
-      }
-    }).then(response => response)
-    yield put({ type: Utils.makeSagasActionType(DELETE_USER).SUCCESS, payload: responseData?.data || {} })
-  } catch (error) {
-    yield put({ type: Utils.makeSagasActionType(DELETE_USER).FAILED, payload: error || {} })
-  }
-}
+const deleteUser = defaultAdminSagasAction(adminApisName.deleteUser, null, DELETE_USER)
 
-function* deleteRole(action = {}) {
-  try {
-    const { method, path } = adminApis[adminApisName.deleteRole]
-    const responseData = yield apiExecutor[method](path, action.payload || {}, {
-      headers: {
-        token: window.localStorage.getItem('token')
-      }
-    }).then(response => response)
-    yield put({ type: Utils.makeSagasActionType(DELETE_ROLE).SUCCESS, payload: responseData?.data || {} })
-  } catch (error) {
-    yield put({ type: Utils.makeSagasActionType(DELETE_ROLE).FAILED, payload: error || {} })
-  }
-}
+const deleteRole = defaultAdminSagasAction(adminApisName.deleteRole, null, DELETE_ROLE)
 
-function* editUser(action = {}) {
-  try {
-    const { method, path } = adminApis[adminApisName.editUser]
-    const responseData = yield apiExecutor[method](path, action.payload || {}, {
-      headers: {
-        token: window.localStorage.getItem('token')
-      }
-    }).then(response => response)
-    yield put({ type: Utils.makeSagasActionType(EDIT_USER).SUCCESS, payload: responseData?.data || {} })
-  } catch (error) {
-    yield put({ type: Utils.makeSagasActionType(EDIT_USER).FAILED, payload: error || {} })
-  }
-}
+const editUser = defaultAdminSagasAction(adminApisName.editUser, null, EDIT_USER)
 
-function* editRole(action = {}) {
-  try {
-    const { method, path } = adminApis[adminApisName.editRole]
-    const responseData = yield apiExecutor[method](path, action.payload || {}, {
-      headers: {
-        token: window.localStorage.getItem('token')
-      }
-    }).then(response => response)
-    yield put({ type: Utils.makeSagasActionType(EDIT_ROLE).SUCCESS, payload: responseData?.data || {} })
-  } catch (error) {
-    yield put({ type: Utils.makeSagasActionType(EDIT_ROLE).FAILED, payload: error || {} })
-  }
-}
+const editRole = defaultAdminSagasAction(adminApisName.editRole, null, EDIT_ROLE)
+
+const getNovals = defaultAdminSagasAction(adminApisName.getNovals, null, GET_NOVALS)
+
+const crawlAll = defaultAdminSagasAction(adminApisName.crawlAll, null, CRAWL_ALL)
 
 export default function* adminWatchers() {
   yield all([
@@ -110,5 +59,7 @@ export default function* adminWatchers() {
     takeLatest(EDIT_USER, editUser),
     takeLatest(EDIT_ROLE, editRole),
     takeLatest(DELETE_ROLE, deleteRole),
+    takeLatest(GET_NOVALS, getNovals),
+    takeLatest(CRAWL_ALL, crawlAll),
   ])
 }

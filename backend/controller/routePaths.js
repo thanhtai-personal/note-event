@@ -15,13 +15,13 @@ module.exports = {
   UPDATE_USER: '/user/update',
   ADD_OR_UPDATE_ROLE: '/role/update',
   //novals
-  GET_NOVAL: 'noval/get/:id',
-  SEARCH_NOVALS: 'noval/search',
-  ADD_NOVAL: 'noval/add',
-  UPDATE_NOVAL: 'noval/update',
+  GET_NOVAL: '/noval/get/:id',
+  SEARCH_NOVALS: '/noval/search',
+  ADD_NOVAL: '/noval/add',
+  UPDATE_NOVAL: '/noval/update',
   //crawler
-  CRAWL_FULL_SITE: 'crawl/full-site',
-  CRAWL_CHAPTER: 'crawl/chapter',
-  CRAWL_NOVAL: 'crawl/noval',
-  CRAWL_ALL_NEW_CHAPTER: 'crawl/all-chapter'
+  CRAWL_FULL_SITE: '/crawl/full-site',
+  CRAWL_CHAPTER: '/crawl/chapter',
+  CRAWL_NOVAL: '/crawl/noval',
+  CRAWL_ALL_NEW_CHAPTER: '/crawl/all-chapter'
 }

@@ -1,5 +1,11 @@
 import React, { useCallback, useState } from 'react';
+import { connect } from 'react-redux';
 import clsx from 'clsx';
+import utils from 'root/utils';
+import { DASH_BOARD_REDUCER } from 'root/actions/types';
+import { searchUser, searchRole, editUser
+  , deleteUser, editRole, deleteRole
+  , getNovals, crawlAll } from './../actions'
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -90,7 +96,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Dashboard() {
+function AdminBoard (props) {
+  const { crawlAllLoading, novals, getNovals, crawlAll } = props
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [activeMenu, setActiveMenu] = useState('novals')
@@ -142,7 +149,7 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{<MainListItems activeMenu={activeMenu} setActiveMenu={handleActiveMenu}/>}</List>
+        <List>{<MainListItems activeMenu={activeMenu} setActiveMenu={handleActiveMenu} />}</List>
         <Divider />
         <List>{<SecondaryListItems />}</List>
       </Drawer>
@@ -150,9 +157,29 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           {activeMenu === 'dashboard' && <MaterialDashboard />}
-          {activeMenu === 'novals' && <Novals />}
+          {activeMenu === 'novals' && <Novals
+            novals={novals}
+            getNovals={getNovals}
+            crawlAll={crawlAll}
+            crawlAllLoading={crawlAllLoading}
+          />}
         </Container>
       </main>
     </div>
   );
 }
+
+const mapState = (state) => ( { ...utils.get(state, DASH_BOARD_REDUCER) })
+
+const mapProps = {
+  searchUser,
+  searchRole,
+  editUser,
+  deleteUser,
+  editRole,
+  deleteRole,
+  getNovals,
+  crawlAll
+}
+
+export default connect(mapState, mapProps)(AdminBoard)

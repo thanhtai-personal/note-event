@@ -1,55 +1,72 @@
 const crawler = require('./../crawler')
+var shell = require('shelljs');
 
-const crawlFullSite = (novalService, chapterService) => async (dataReq) => {
+const crawlFullSite = (novalService, chapterService, useShell = true) => async (dataReq) => {
   try {
-    let novals = []
-    const { site = '' } = dataReq
-    try {
-      novals = await crawler.executeCrawler(site)
-    } catch (error) {
-      console.log('crawler failed', error)
-    }
-
-    for (noval of novals) {
+    if (useShell) {
+      shell.exec('npm run crawler')
+    } else {
+      let novals = []
+      const { site = '' } = dataReq
       try {
-        console.log('----insert noval', noval.url)
-        let { chapters, ...novalData } = noval
-        noval = await novalService.create(novalData)
-        if (!noval.isBlockedScrap) {
-          for (chapter of chapters) {
-            await chapterService.create({
-              ...chapter,
-              novalId: noval.id
-            })
-          }
-        }
-        console.log('----insert noval success', noval.url)
+        novals = await crawler.executeCrawler(site)
       } catch (error) {
-        console.log('----insert noval failed', noval.url)
-        continue
+        console.log('crawler failed', error)
       }
+
+      for (noval of novals) {
+        try {
+          console.log('----insert noval', noval.url)
+          let { chapters, ...novalData } = noval
+          noval = await novalService.create(novalData)
+          if (!noval.isBlockedScrap) {
+            for (chapter of chapters) {
+              await chapterService.create({
+                ...chapter,
+                novalId: noval.id
+              })
+            }
+          }
+          console.log('----insert noval success', noval.url)
+        } catch (error) {
+          console.log('----insert noval failed', noval.url)
+          continue
+        }
+      }
+      return novals
     }
-    return novals
   } catch (error) {
     throw error
   }
 }
 
-const crawlNoval = (novalService, chapterService) => async (dataReq) => {
+const crawlNoval = (novalService, chapterService, useShell = false) => async (dataReq) => {
   try {
-    let noval = crawler.crawlNoval(dataReq.url)
-    console.log('----insert noval', noval.url)
-    let { chapters, ...novalData } = noval
-    noval = await novalService.create(novalData)
-    if (!noval.isBlockedScrap) {
-      for (chapter of chapters) {
-        await chapterService.create({
-          ...chapter,
-          novalId: noval.id
-        })
+    if (useShell) {
+      try {
+        shell.exec(`set crawl-url=${dataReq.url} && npm run crawl:noval`)
+      } catch (error) {
+        try {
+          shell.exec(`crawl-url=${dataReq.url} npm run crawl:noval`)
+        } catch (error) {
+          throw(error)
+        }
       }
+    } else {
+      let noval = crawler.crawlNoval(dataReq.url)
+      console.log('----insert noval', noval.url)
+      let { chapters, ...novalData } = noval
+      noval = await novalService.create(novalData)
+      if (!noval.isBlockedScrap) {
+        for (chapter of chapters) {
+          await chapterService.create({
+            ...chapter,
+            novalId: noval.id
+          })
+        }
+      }
+      console.log('----insert noval success', noval.url)
     }
-    console.log('----insert noval success', noval.url)
   } catch (error) {
     throw error
   }
@@ -57,33 +74,57 @@ const crawlNoval = (novalService, chapterService) => async (dataReq) => {
 
 const crawlChapter = (chapterService) => async (dataReq) => {
   try {
-    let chapter = crawler.crawlChapter(dataReq.url)
-    await chapterService.create({
-      ...chapter,
-      novalId: dataReq.novalId
-    })
+    if (useShell) {
+      try {
+        shell.exec(`set crawl-url=${dataReq.url} && npm run crawl:chapter`)
+      } catch (error) {
+        try {
+          shell.exec(`crawl-url=${dataReq.url} npm run crawl:chapter`)
+        } catch (error) {
+          throw(error)
+        }
+      }
+    } else {
+      let chapter = crawler.crawlChapter(dataReq.url)
+      await chapterService.create({
+        ...chapter,
+        novalId: dataReq.novalId
+      })
+    }
   } catch (error) {
     throw error
   }
 }
 
-const crawlAllNewChapter = (novalService, chapterService) => async (dataReq) => {
+const crawlAllNewChapter = (novalService, chapterService, useShell = false) => async (dataReq) => {
   try {
-    const novals = crawler.crawlerSummary(dataReq.siteUrl)
-    for (noval of novals) {
-      const currentNoval = await novalService.findOne({
-        where: {
-          name: noval.name
+    if (useShell) {
+      try {
+        shell.exec(`set crawl-url=${dataReq.siteUrl} && npm run crawl:allnewchapter`)
+      } catch (error) {
+        try {
+          shell.exec(`crawl-url=${dataReq.siteUrl} npm run crawl:allnewchapter`)
+        } catch (error) {
+          throw(error)
         }
-      })
-      if (currentNoval) {
-        if (noval.chapNumber > currentNoval.chapNumber) {
-          for (let i = currentNoval.chapNumber; i <= noval.chapNumber; i++) {
-            await crawlChapter(novalService, chapterService)({ url: noval.chapters[i-1].url })
+      }
+    } else {
+      const novals = crawler.crawlerSummary(dataReq.siteUrl)
+      for (noval of novals) {
+        const currentNoval = await novalService.findOne({
+          where: {
+            name: noval.name
           }
+        })
+        if (currentNoval) {
+          if (noval.chapNumber > currentNoval.chapNumber) {
+            for (let i = currentNoval.chapNumber; i <= noval.chapNumber; i++) {
+              await crawlChapter(novalService, chapterService)({ url: noval.chapters[i-1].url })
+            }
+          }
+        } else {
+          await crawlNoval(novalService, chapterService)({ ...noval })
         }
-      } else {
-        await crawlNoval(novalService, chapterService)({ ...noval })
       }
     }
   } catch (error) {

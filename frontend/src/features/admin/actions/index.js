@@ -4,7 +4,9 @@ import {
   EDIT_ROLE,
   DELETE_ROLE,
   EDIT_USER,
-  DELETE_USER
+  DELETE_USER,
+  GET_NOVALS,
+  CRAWL_ALL
 } from './types'
 
 export const searchUser = (data) => {
@@ -21,14 +23,12 @@ export const searchRole = (data) => {
   }
 }
 
-
 export const editUser = (data) => {
   return {
     type: EDIT_USER,
     data
   }
 }
-
 
 export const deleteUser = (data) => {
   return {
@@ -37,7 +37,6 @@ export const deleteUser = (data) => {
   }
 }
 
-
 export const editRole = (data) => {
   return {
     type: EDIT_ROLE,
@@ -45,10 +44,23 @@ export const editRole = (data) => {
   }
 }
 
-
 export const deleteRole = (data) => {
   return {
     type: DELETE_ROLE,
+    data
+  }
+}
+
+export const getNovals = (data) => {
+  return {
+    type: GET_NOVALS,
+    data
+  }
+}
+
+export const crawlAll = (data) => {
+  return {
+    type: CRAWL_ALL,
     data
   }
 }

@@ -77,7 +77,7 @@ const updateNoval = (novalService, chapterService) => async (dataReq) => {
 
 const searchNovals = (novalService) => async (dataReq) => {
   try {
-    return getNovals(dataReq)
+    return getNovals(novalService)(dataReq)
   } catch (error) {
     throw error
   }
