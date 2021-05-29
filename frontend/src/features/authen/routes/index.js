@@ -25,16 +25,7 @@ const defaultRoutes = [
     hocs: [],
     setUpStore: setUpFeature,
     unsetFeature: unsetFeature,
-  },
-  {
-    key: 'default',
-    path: '/',
-    isExact: true,
-    component: LoginContainer,
-    hocs: [],
-    setUpStore: setUpFeature,
-    unsetFeature: unsetFeature,
-  },
+  }
 ]
 
 export default defaultRoutes

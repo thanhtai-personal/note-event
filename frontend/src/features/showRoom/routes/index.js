@@ -1,4 +1,4 @@
-import DashboardContainer from '../containers/admin'
+import ShowRoomContainer from '../containers/showRoom'
 import setUpFeature from '../setup'
 import unsetFeature from '../unset'
 
@@ -8,10 +8,19 @@ const adminRoutes = [
    * Mean is data of route(reducer, api, sagas) in store will be loaded from building time.
    */
   {
-    key: 'homeAdmin',
-    path: '/admin',
+    key: 'showRoom',
+    path: '/',
     isExact: true,
-    component: DashboardContainer,
+    component: ShowRoomContainer,
+    hocs: [],
+    setUpStore: setUpFeature,
+    unsetFeature: unsetFeature,
+  },
+  {
+    key: 'showRoom',
+    path: '/products',
+    isExact: true,
+    component: ShowRoomContainer,
     hocs: [],
     setUpStore: setUpFeature,
     unsetFeature: unsetFeature,

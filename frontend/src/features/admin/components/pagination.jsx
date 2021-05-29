@@ -25,7 +25,7 @@ const Pagination = (props) => {
 
   const handlePrev = useCallback(() => {
     if (currentPage - 1 < startPage) {
-      setStartPage && typeof setStartPage === 'function' && setStartPage(endPage - 5 > 1 ? endPage - 5 : 1)
+      setStartPage && typeof setStartPage === 'function' && setStartPage(startPage - 5 > 1 ? startPage - 5 : 1)
       setEndPage && typeof setEndPage === 'function' && setEndPage(endPage - 5 > 5 ? endPage - 5 : 5)
     }
     getData && typeof getData === 'function' && getData(currentPage > 1 ? currentPage - 1 : currentPage)

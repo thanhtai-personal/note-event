@@ -46,7 +46,7 @@ const TableActions = (props) => {
       <Grid item xs={3}>
       </Grid>
       <Grid item xs={2}>
-        <Button onClick={handleCrawlAll} disabled={crawlAllLoading || disabledCrawlerAll} depressed color='var(--primary)' style={{ float: 'right' }}>Crawl Site</Button>
+        <Button onClick={handleCrawlAll} disabled={crawlAllLoading || disabledCrawlerAll} depressed color='var(--secondary)' style={{ float: 'right' }}>Crawl Site</Button>
       </Grid>
     </Grid>
   )

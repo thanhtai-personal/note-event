@@ -1,18 +1,18 @@
 import StoreSingleton from 'root/store/instant'
-import dashboardReducer from './reducers/dashboard.reducer'
-import adminSagas from './sagas'
-import { FEATURE_ADMIN, DASH_BOARD_REDUCER } from 'root/actions/types'
+import showRoomReducer from './reducers/showRoom.reducer'
+import showRoomSagas from './sagas'
+import { FEATURE_SHOW_ROOM, SHOW_ROOM_REDUCER } from 'root/actions/types'
 
 const setupFeature = () => {
   const store = StoreSingleton.getInstance().store
   let mapObject = store.sagasManager.getSagasMap()
-  if (!Object.keys(mapObject).includes(FEATURE_ADMIN)) {
-    store.reducerManager.add(DASH_BOARD_REDUCER, dashboardReducer)
-    store.sagasManager.add(FEATURE_ADMIN, adminSagas)
+  if (!Object.keys(mapObject).includes(FEATURE_SHOW_ROOM)) {
+    store.reducerManager.add(SHOW_ROOM_REDUCER, showRoomReducer)
+    store.sagasManager.add(FEATURE_SHOW_ROOM, showRoomSagas)
     store.updateReducer()
     store.updateSagas()
   }
-  console.log('++++++++++++END SETUP ADMIN+++++++++++++', store.getState())
+  console.log('++++++++++++END SETUP SHOW ROOM+++++++++++++', store.getState())
 }
 
 export default setupFeature

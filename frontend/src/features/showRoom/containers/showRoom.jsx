@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import LoadingComponent from 'root/components/loading'
 
-const DashboardComponent = React.lazy(() => import('../components/adminBoard'))
+const ShowRoomComponent = React.lazy(() => import('../components/showRoom'))
 
 const DashboardContainer = (props) => {
   const { setup, unset, ...nested } = props
@@ -13,7 +13,7 @@ const DashboardContainer = (props) => {
   }, [])
   return (
     <Suspense fallback={<LoadingComponent />}>
-      <DashboardComponent {...nested} />
+      <ShowRoomComponent {...nested} />
     </Suspense>
   )
 }

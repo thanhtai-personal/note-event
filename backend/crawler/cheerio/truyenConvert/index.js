@@ -25,22 +25,28 @@ const getFilterMaxPage = (filterBody) => {
 const getNovals = (htmlBody) => {
   try {
     const novals = []
-    htmlBody('div.media').each((i, media) => {
-      const mediaLeft = media.children[1]
-      const mediaBody = media.children[3]
-      const h4 = mediaBody.children[1] || {}
-      let noval = {
-        name: h4.children[0].attribs.title,
-        url: h4.children[0].attribs.href,
-        chapNumber: parseInt(mediaBody.children[7].children[0].children[1].data),
-        group: mediaBody.children[3].children[0].data,
-        shortDescription: mediaBody.children[5].children[0].data,
-        imageUrl: mediaLeft.children[1].children[1].attribs.src,
-        imageAltName: mediaLeft.children[1].children[1].attribs.alt
+    const listMedias = htmlBody('div.media').each((i, media) => media)
+    for (media of listMedias) {
+      try {
+        const mediaLeft = media.children[1]
+        const mediaBody = media.children[3]
+        const h4 = mediaBody.children[1] || {}
+        let noval = {
+          name: h4.children[0].attribs.title,
+          url: h4.children[0].attribs.href,
+          chapNumber: parseInt(mediaBody.children[7].children[0].children[1].data),
+          group: mediaBody.children[3].children[0].data,
+          shortDescription: mediaBody.children[5].children[0].data,
+          imageUrl: mediaLeft.children[1].children[1].attribs.src,
+          imageAltName: mediaLeft.children[1].children[1].attribs.alt
+        }
+        console.log('get noval success!', noval.name)
+        novals.push(noval)
+      } catch (error) {
+        console.log('get noval error:', media)
+        continue
       }
-      console.log('get noval success!', noval.name)
-      novals.push(noval)
-    })
+    }
     return novals
   } catch (error) {
     console.log('get failed!')
@@ -56,19 +62,34 @@ const getNovalsSummaryInfo = async () => {
     const minPageFilter = 1;
     const maxPageFilter = getFilterMaxPage(filterBody);
     let novals = []
-    // for (let i = minPageFilter; i <= maxPageFilter; i++) {
-    for (let i = minPageFilter; i <= 50; i++) { // test 50 pages
+    for (let i = minPageFilter; i <= maxPageFilter; i++) {
       console.log('get in page: ', i)
-      const filterPageURL = URLS.filterWithPaging.replace(PAGE_PARAM, `${i}`)
-      const response = await got(filterPageURL);
-      const filterPageBody = cheerio.load(response.body);
-      novals = novals.concat(getNovals(filterPageBody) || [])
+      let retry = 0
+      const getPageData = async () => {
+        try {
+          const filterPageURL = URLS.filterWithPaging.replace(PAGE_PARAM, `${i}`)
+          const response = await got(filterPageURL);
+          const filterPageBody = cheerio.load(response.body);
+          novals = novals.concat(getNovals(filterPageBody) || [])
+        } catch (error) {
+          if (retry < 3) {
+            retry++
+            console.log('retry get page data - ', retry)
+            await getPageData()
+          }
+          throw (error)
+        }
+      }
+      try {
+        await getPageData()
+      } catch (error) {
+        continue
+      }
     }
     console.log('=GET NOVALS SUMMARY INFO SUCCESS')
     return novals
   } catch (error) {
     console.log('=GET NOVALS SUMMARY FAILED')
-    throw { error }
   }
 }
 
@@ -145,9 +166,8 @@ const getNovalsDetail = async (novals) => {
         noval.chapNumber = parseInt(elem.children[0].data || 0)
       })
       let chapters = []
-      // for (let i = 1; i <= noval.chapNumber; i++) {
-      for (let i = 1; i <= 5; i++) { // test 5 chap
-        chapters[i-1] = await getNovalChapter(noval.url, i)
+      for (let i = 1; i <= noval.chapNumber; i++) {
+        chapters[i - 1] = await getNovalChapter(noval.url, i)
       }
       noval.chapters = chapters
       novalRes.push(noval)
@@ -164,5 +184,5 @@ module.exports = {
   getNovalsSummaryInfo,
   getNovalsDetail,
   getNovalChapter,
-  getNovalDetail: () => {}
+  getNovalDetail: () => { }
 }

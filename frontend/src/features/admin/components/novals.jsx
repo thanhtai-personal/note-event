@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import 'ui-neumorphism/dist/index.css'
 import { Table } from 'ui-neumorphism'
 import { makeStyles } from '@material-ui/core/styles';
-
+import { overrideThemeVariables } from 'ui-neumorphism'
 import TableActions from './tableActions'
 import Pagination from './pagination'
 
@@ -43,7 +43,7 @@ const getItem = (headers, item, index) => {
 
 const getItems = (headers, items, page) => {
   return items.map((item, index) => {
-    return getItem(headers, item, ((page - 1) * 5) + index)
+    return getItem(headers, item, ((page - 1) * 20) + index)
   })
 }
 
@@ -64,6 +64,11 @@ const NovalsComponent = (props) => {
   }, [novals, page])
 
   useEffect(() => {
+    overrideThemeVariables({
+      '--light-bg': '#b9d7d2',
+      '--light-bg-dark-shadow': '#c8e7e3',
+      '--light-bg-light-shadow': '#a0bab6'
+    })
     getNovals(1)
     //eslint-disable-next-line
   }, [])
