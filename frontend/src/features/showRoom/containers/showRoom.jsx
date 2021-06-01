@@ -3,7 +3,7 @@ import LoadingComponent from 'root/components/loading'
 
 const ShowRoomComponent = React.lazy(() => import('../components/showRoom'))
 
-const DashboardContainer = (props) => {
+const ShowRoomContainer = (props) => {
   const { setup, unset, ...nested } = props
   useEffect(() => {
     setup()
@@ -18,4 +18,4 @@ const DashboardContainer = (props) => {
   )
 }
 
-export default DashboardContainer
+export default ShowRoomContainer

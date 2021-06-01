@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize')
 const { sequelize } = require('./../sequelize')
 const { v4: uuidv4, validate: uuidValidate } = require('uuid')
+const Utils = require('./../utils')
 
 class Noval extends Model { }
 
@@ -50,6 +51,9 @@ Noval.init({
   },
   'updatedBy': {
     type: DataTypes.UUID
+  },
+  'searchText': {
+    type: DataTypes.TEXT
   }
 }, {
   sequelize, modelName: 'Noval', tableName: 'noval',
@@ -63,6 +67,8 @@ Noval.init({
         if (!uuidValidate(noval.updatedBy)) {
           noval.updatedBy = noval.id
         }
+        noval.searchText = Utils.nonAccentVietnamese(`${noval.name}-${noval.group}-${
+          noval.shortDescription}-${noval.intro}`)
       }
     }
   },

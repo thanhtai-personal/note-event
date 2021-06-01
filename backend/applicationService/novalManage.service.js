@@ -1,9 +1,20 @@
+const Sequelize = require('sequelize');
+const { Op } = Sequelize
+const Utils = require('./../utils')
+
 const getNovals = (novalService) => async (dataReq) => {
   try {
-    const { page = 1, limit = 20 } = dataReq
-    const novals = await novalService.findAll({
+    const { page = 1, limit = 20, searchText } = dataReq
+    let _searchText = Utils.nonAccentVietnamese(searchText)
+    _searchText = Utils.removeSpecialChar(_searchText)
+    let novals = await novalService.findAll({
       limit,
-      offset: (page - 1) * limit
+      offset: (page - 1) * limit,
+      where: {
+        searchText: {
+          [Op.like]: `%${_searchText}%`
+        }
+      }
     })
     return novals
   } catch (error) {

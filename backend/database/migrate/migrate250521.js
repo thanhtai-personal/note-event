@@ -7,6 +7,7 @@ module.exports =  async (pool, isEnd = false) => {
     ALTER TABLE noval ADD COLUMN IF NOT EXISTS "isActive" boolean DEFAULT true;
     ALTER TABLE chapter ADD COLUMN IF NOT EXISTS "isActive" boolean DEFAULT true;
     ALTER TABLE chapter ADD COLUMN IF NOT EXISTS "isCrawledSuccess" boolean DEFAULT false;
+    ALTER TABLE noval ADD COLUMN IF NOT EXISTS "searchText" text;
   `
   try {
     await pool.query(migrateQuery)

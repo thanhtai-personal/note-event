@@ -8,7 +8,7 @@ const adminRoutes = [
    * Mean is data of route(reducer, api, sagas) in store will be loaded from building time.
    */
   {
-    key: 'showRoom',
+    key: 'default',
     path: '/',
     isExact: true,
     component: ShowRoomContainer,

@@ -6,6 +6,6 @@ import {
 export const getNovals = (data) => {
   return {
     type: GET_NOVALS,
-    payload: { page: data }
+    payload: data
   }
 }
