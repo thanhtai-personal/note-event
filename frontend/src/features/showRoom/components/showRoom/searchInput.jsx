@@ -11,16 +11,15 @@ const keyBoard = {
 
 const SearchInput = (props) => {
   
-  const { getNovals } = props
-  const searchInputRef = useRef(null)
+  const { getNovals, searchInputRef } = props
 
   const handleBlurSearchText = useCallback((e, data) => {
-    getNovals({ searchText: searchInputRef.current.state.value })
+    getNovals({ searchText: searchInputRef.current.state.value, limit: 24, page: 1 })
   }, [getNovals])
 
   const handleKeyDown = useCallback((e) => {
     if (e.key === keyBoard.ENTER) {
-      getNovals({ searchText: searchInputRef.current.state.value })
+      getNovals({ searchText: searchInputRef.current.state.value, limit: 24, page: 1  })
     }
   }, [getNovals])
   

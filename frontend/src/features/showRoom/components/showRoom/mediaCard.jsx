@@ -14,7 +14,6 @@ const MediaCard = (props) => {
   const { data } = props
 
   const handleClickCard = useCallback(() => {
-    console.log('click', data.url)
     window.open(data.url, '_blank')
   }, [data.url])
 

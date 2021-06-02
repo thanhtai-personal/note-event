@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import utils from 'root/utils';
 import { SHOW_ROOM_REDUCER } from 'root/actions/types';
@@ -8,11 +8,12 @@ import { Grid } from '@material-ui/core'
 import { overrideThemeVariables } from 'ui-neumorphism'
 import SearchInput from './searchInput'
 import MediaCard from './mediaCard'
+import './body.css'
 
 const ShowRoom = (props) => {
 
   const { getNovals, novals = [{ test: 'test' }] } = props
-
+  const searchInputRef = useRef(null)
   useEffect(() => {
     getNovals({ popular: true, limit: 24 })
   }, [getNovals])
@@ -28,7 +29,7 @@ const ShowRoom = (props) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'center' }}>
-        <SearchInput getNovals={getNovals} />
+        <SearchInput searchInputRef={searchInputRef} getNovals={getNovals} />
       </Grid>
       <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'center' }}>
         <Grid container spacing={2}>
