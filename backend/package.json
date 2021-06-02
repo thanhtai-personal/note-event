@@ -14,8 +14,11 @@
   "scripts": {
     "test": "mocha --exit test/*.test.js",
     "create-dev-tables": "node ./database/dbConnection createAllTables",
+    "create-prod-tables": "node ./database/dbConnectionPrd createAllTables",
     "drop-dev-tables": "node ./database/dbConnection dropAllTables",
+    "drop-prod-tables": "node ./database/dbConnectionPrd dropAllTables",
     "migrate-tables": "node ./database/dbConnection migrateData",
+    "migrate-prod-tables": "node ./database/dbConnectionPrd migrateData",
     "start": "nodemon --watch index",
     "debug": "nodemon --inspect index.js",
     "setup": "npm-run-all -p create-dev-tables start",
