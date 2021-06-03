@@ -11,6 +11,7 @@ if (process.env.NODE_ENV === 'production') {
     {
         port: config.port,
         host: config.host,
+        dialect: 'postgres',
         logging: console.log,
         define: {
             timestamps: false
