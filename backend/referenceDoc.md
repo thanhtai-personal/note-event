@@ -36,4 +36,7 @@ deploy
 https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04
 postgres: https://phoenixnap.com/kb/how-to-install-postgresql-on-ubuntu
 
+use screen: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-screen-on-an-ubuntu-cloud-server
 
+
+deploy full video: https://www.learnwithjason.dev/blog/deploy-nodejs-ssl-digitalocean/
