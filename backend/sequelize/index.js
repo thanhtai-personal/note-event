@@ -12,6 +12,7 @@ if (process.env.NODE_ENV === 'production') {
         port: config.port,
         host: config.host,
         dialect: 'postgres',
+        dialectOptions: { ssl: { rejectUnauthorized: false } },
         logging: console.log,
         define: {
             timestamps: false
@@ -19,14 +20,18 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
+const testConnect = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
+
+// testConnect()
+
 module.exports = {
-  testConnect: async () => {
-    try {
-      await sequelize.authenticate();
-      console.log('Connection has been established successfully.');
-    } catch (error) {
-      console.error('Unable to connect to the database:', error);
-    }
-  },
+  testConnect,
   sequelize
 }
