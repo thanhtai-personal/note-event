@@ -1,7 +1,22 @@
 const dbConfig = require('../env')
 const { Sequelize } = require('sequelize')
 
-const sequelize = new Sequelize(dbConfig.database_url)
+let sequelize = new Sequelize(dbConfig.database_url)
+
+if (process.env.NODE_ENV === 'production') {
+  const config = dbConfig.prodDbConfig
+  sequelize = new Sequelize(config.database,
+    config.user,
+    config.password,
+    {
+        port: config.port,
+        host: config.host,
+        logging: console.log,
+        define: {
+            timestamps: false
+        }    
+    })
+}
 
 module.exports = {
   testConnect: async () => {

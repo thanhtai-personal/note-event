@@ -2,9 +2,9 @@
 
 const { Pool } = require('pg')
 
-const env = require('./../../product.env')
+const env = require('./../../env')
 
-const databaseConfig = { connectionString: env.database_url
+const databaseConfig = { ...env.prodDbConfig
   , ssl: { rejectUnauthorized: false }};
 const pool = new Pool(databaseConfig);
 

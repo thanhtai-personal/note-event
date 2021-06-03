@@ -32,4 +32,8 @@ https://stackoverflow.com/questions/4421633/who-is-listening-on-a-given-tcp-port
 - Web scraping
 https://www.scrapingbee.com/blog/web-scraping-javascript/
 
+deploy
+https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04
+postgres: https://phoenixnap.com/kb/how-to-install-postgresql-on-ubuntu
+
 

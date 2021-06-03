@@ -11,4 +11,11 @@ module.exports =  {
   host: process.env.HOST_URL,
   jwtKey: process.env.JWT_KEY,
   saltPrefix: parseInt(process.env.SALT_PREFIX),
+  prodDbConfig: {
+    host: process.env.host,
+    password: process.env.dbPassword,
+    port: process.env.dbPort,
+    database: process.env.dbName,
+    user: process.env.dbUser
+  }
 }
