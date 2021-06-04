@@ -15,7 +15,7 @@ const app = express();
 const getApp = () => app
 var corsOptions = {
   host: 'note-event-etlef.ondigitalocean.app',
-  origin: 'https://tttgalaxy.co.uk',
+  origin: ['https://tttgalaxy.co.uk', 'http://localhost:3000'],
   optionsSuccessStatus: 200
 }
 const middleWares = [
