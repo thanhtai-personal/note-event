@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 var corsOptions = {
   host: 'note-event-etlef.ondigitalocean.app',
-  origin: clientOrigin,
+  origin: 'https://tttgalaxy.co.uk',
   optionsSuccessStatus: 200
 }
 const middleWares = [

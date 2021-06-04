@@ -45,7 +45,7 @@ export default {
     'Accept': 'application/json',
     'Access-Control-Allow-Host': 'note-event-etlef.ondigitalocean.app',
     'Access-Control-Allow-Origin': 'https://tttgalaxy.co.uk',
-  
+    'Access-Control-Allow-Headers': 'Content-Type, Accept' 
   },
  
   // `params` are the URL parameters to be sent with the request
