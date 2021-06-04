@@ -41,9 +41,13 @@ export default {
  
   // `headers` are custom headers to be sent
   headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Access-Control-Allow-Origin': ['https://note-event-etlef.ondigitalocean.app/'],
+    Host: 'note-event-etlef.ondigitalocean.app',
+    'Access-Control-Allow-Host': 'note-event-etlef.ondigitalocean.app',
+    'Access-Control-Allow-Host': 'note-event-etlef.ondigitalocean.app',
+    'Access-Control-Allow-Origin': 'https://tttgalaxy.co.uk',
+    'Access-Control-Request-Method': 'POST, GET',
+    'Access-Control-Request-Headers': 'Authorization, Content-Type'
+  
   },
  
   // `params` are the URL parameters to be sent with the request

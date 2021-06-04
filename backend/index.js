@@ -14,7 +14,8 @@ const cors = require('cors')
 const app = express();
 const getApp = () => app
 var corsOptions = {
-  origin: ['https://tttgalaxy.co.uk'],
+  host: 'tttgalaxy.co.uk',
+  origin: 'https://note-event-etlef.ondigitalocean.app',
   optionsSuccessStatus: 200
 }
 const middleWares = [
