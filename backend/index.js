@@ -13,13 +13,16 @@ const cors = require('cors')
 
 const app = express();
 const getApp = () => app
-
+var corsOptions = {
+  origin: 'tttgalaxy.co.uk',
+  optionsSuccessStatus: 200
+}
 const middleWares = [
   express.urlencoded({ extended: true }),
   express.json(),
   // bodyParser.urlencoded({ extended: true }),
   cookieParser(),
-  cors(),
+  cors(corsOptions),
   useAuth
 ]
 middleWares.forEach((middleWare) => app.use(middleWare))
