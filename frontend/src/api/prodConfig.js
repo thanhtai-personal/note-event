@@ -41,12 +41,9 @@ export default {
  
   // `headers` are custom headers to be sent
   headers: {
-    Host: 'note-event-etlef.ondigitalocean.app',
     'Access-Control-Allow-Host': 'note-event-etlef.ondigitalocean.app',
     'Access-Control-Allow-Host': 'note-event-etlef.ondigitalocean.app',
     'Access-Control-Allow-Origin': 'https://tttgalaxy.co.uk',
-    'Access-Control-Request-Method': 'POST, GET',
-    'Access-Control-Request-Headers': 'Authorization, Content-Type'
   
   },
  
