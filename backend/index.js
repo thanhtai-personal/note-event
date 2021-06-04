@@ -14,7 +14,7 @@ const cors = require('cors')
 const app = express();
 const getApp = () => app
 var corsOptions = {
-  origin: 'tttgalaxy.co.uk',
+  origin: ['https://tttgalaxy.co.uk'],
   optionsSuccessStatus: 200
 }
 const middleWares = [
