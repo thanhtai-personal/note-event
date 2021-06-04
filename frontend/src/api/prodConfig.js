@@ -43,8 +43,7 @@ export default {
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+    'Access-Control-Allow-Origin': ['https://note-event-etlef.ondigitalocean.app/'],
   },
  
   // `params` are the URL parameters to be sent with the request
