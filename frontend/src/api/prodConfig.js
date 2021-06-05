@@ -42,6 +42,7 @@ export default {
   // `headers` are custom headers to be sent
   headers: {
     'origin': 'https://tttgalaxy.co.uk',
+    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Access-Control-Request-Headers': 'Content-Type, Accept',
