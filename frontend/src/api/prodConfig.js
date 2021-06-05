@@ -43,8 +43,8 @@ export default {
   headers: {
     'Access-Control-Allow-Host': 'note-event-etlef.ondigitalocean.app',
     'Access-Control-Allow-Origin': 'https://tttgalaxy.co.uk',
-    // 'Content-Type': 'application/json',
-    // 'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
     // 'Access-Control-Allow-Headers': 'Content-Type, Accept' 
   },
  
