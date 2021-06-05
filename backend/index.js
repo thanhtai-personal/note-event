@@ -18,8 +18,8 @@ if (process.env.NODE_ENV === 'production') {
   clientOrigin = 'https://tttgalaxy.co.uk'
 }
 var corsOptions = {
-  host: 'note-event-etlef.ondigitalocean.app',
-  origin: 'https://tttgalaxy.co.uk',
+  host: 'tttgalaxy.co.uk',
+  origin: 'https://note-event-etlef.ondigitalocean.app',
   optionsSuccessStatus: 200
 }
 const middleWares = [
