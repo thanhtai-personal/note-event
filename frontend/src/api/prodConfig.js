@@ -42,7 +42,7 @@ export default {
   // `headers` are custom headers to be sent
   headers: {
     'Access-Control-Allow-Host': 'note-event-etlef.ondigitalocean.app',
-    'Access-Control-Allow-Origin': 'https://tttgalaxy.co.uk',
+    'Access-Control-Allow-Origin': 'https://note-event-etlef.ondigitalocean.app,https://tttgalaxy.co.uk',
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     // 'Access-Control-Allow-Headers': 'Content-Type, Accept' 

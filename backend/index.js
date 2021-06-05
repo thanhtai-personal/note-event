@@ -13,13 +13,9 @@ const cors = require('cors')
 
 const app = express();
 const getApp = () => app
-let clientOrigin = 'http://localhost:3000'
-if (process.env.NODE_ENV === 'production') {
-  clientOrigin = 'https://tttgalaxy.co.uk'
-}
 var corsOptions = {
   host: 'tttgalaxy.co.uk',
-  origin: 'https://note-event-etlef.ondigitalocean.app',
+  origin: 'https://note-event-etlef.ondigitalocean.app,https://tttgalaxy.co.uk',
   optionsSuccessStatus: 200
 }
 const middleWares = [
