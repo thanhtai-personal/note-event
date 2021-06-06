@@ -14,21 +14,14 @@ const cors = require('cors')
 const app = express();
 const getApp = () => app
 var whitelist = ['https://tttgalaxy.co.uk', 'http://localhost']
-var corsOptionsDelegate = function (req, callback) {
-  var corsOptions;
-  if (whitelist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false } // disable CORS for this request
-  }
-  callback(null, corsOptions) // callback expects two parameters: error and options
-}
 const middleWares = [
   express.urlencoded({ extended: true }),
   express.json(),
   // bodyParser.urlencoded({ extended: true }),
   cookieParser(),
-  cors(corsOptionsDelegate),
+  cors({
+    origin: whitelist
+  }),
   useAuth
 ]
 middleWares.forEach((middleWare) => app.use(middleWare))
