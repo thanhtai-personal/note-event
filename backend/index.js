@@ -9,19 +9,23 @@ const novalManageController = require('./controller/novalManage.controller')
 const crawlerController = require('./controller/crawler.controller')
 const envConfig = require('./env')
 const { useAuth } = require('./middlewares')
-const cors = require('cors')
+// const cors = require('cors')
 
 const app = express();
 const getApp = () => app
+const customCors = () => {
+  
+}
 var whitelist = ['https://tttgalaxy.co.uk', 'http://localhost']
 const middleWares = [
   express.urlencoded({ extended: true }),
   express.json(),
   // bodyParser.urlencoded({ extended: true }),
   cookieParser(),
-  cors({
-    origin: whitelist
-  }),
+  // cors({
+  //   origin: whitelist
+  // }),
+  customCors,
   useAuth
 ]
 middleWares.forEach((middleWare) => app.use(middleWare))

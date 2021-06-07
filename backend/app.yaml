@@ -12,3 +12,12 @@
 # limitations under the License.
 
 runtime: nodejs10
+name: note-event
+static_sites:
+- name: site
+  github:
+    repo: https://github.com/thanhtai-personal/note-event
+    branch: deploy
+  cors:
+   allow_origins:
+   - exact: https://tttgalaxy.co.uk
