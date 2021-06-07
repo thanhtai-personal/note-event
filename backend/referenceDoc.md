@@ -40,3 +40,5 @@ use screen: https://www.digitalocean.com/community/tutorials/how-to-install-and-
 
 
 deploy full video: https://www.learnwithjason.dev/blog/deploy-nodejs-ssl-digitalocean/
+
+Access to XMLHttpRequest at 'https://note-event-etlef.ondigitalocean.app/noval/search' from origin 'https://tttgalaxy.co.uk' has been blocked by CORS policy: Request header field token is not allowed by Access-Control-Allow-Headers in preflight response. -- digital ocean not allow to setup cors
