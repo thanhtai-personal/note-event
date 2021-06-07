@@ -13,15 +13,17 @@ const { useAuth } = require('./middlewares')
 
 const app = express();
 const getApp = () => app
-var whitelist = ['https://tttgalaxy.co.uk', 'http://localhost:3000']
+// var whitelist = ['https://tttgalaxy.co.uk', 'http://localhost:3000']
 const middleWares = [
   express.urlencoded({ extended: true }),
   express.json(),
   // bodyParser.urlencoded({ extended: true }),
   cookieParser(),
-  cors({
-    origin: whitelist
-  }),
+  cors(
+  //   {
+  //   origin: whitelist
+  // }
+  ),
   useAuth
 ]
 middleWares.forEach((middleWare) => app.use(middleWare))
