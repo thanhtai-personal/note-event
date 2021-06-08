@@ -41,7 +41,7 @@ export default {
  
   // `headers` are custom headers to be sent
   headers: {
-    // 'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   },
