@@ -41,6 +41,7 @@ export default {
  
   // `headers` are custom headers to be sent
   headers: {
+    'Referrer': 'no-referrer-when-downgrade',
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     'Accept': 'application/json',
