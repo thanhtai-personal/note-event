@@ -1,5 +1,5 @@
 const functions = require("firebase-functions");
-const getApp = require("./../../../app")
+const getApp = require("./backend/app")
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //

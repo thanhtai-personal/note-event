@@ -20,12 +20,12 @@
     "baseUrl": "./",
     "paths": {
       "root/*": ["frontend/src/*"],
-      "controller/*": ["backend/controller/*"],
-      "model/*": ["backend/domainModel/*"],
-      "modelService/*": ["backend/domainService/*"],
-      "database/*": ["backend/database/*"],
-      "service/*": ["backend/applicationService/*"],
-      "sequelize/*": ["backend/sequelize/*"],
+      "controller/*": ["deployment/firebase/functions/backend/controller/*"],
+      "model/*": ["deployment/firebase/functions/backend/domainModel/*"],
+      "modelService/*": ["deployment/firebase/functions/backend/domainService/*"],
+      "database/*": ["deployment/firebase/functions/backend/database/*"],
+      "service/*": ["deployment/firebase/functions/backend/applicationService/*"],
+      "sequelize/*": ["deployment/firebase/functions/backend/sequelize/*"],
     },
     "plugins": [
       {
