@@ -7,8 +7,8 @@
       "**/node_modules/**"
     ],
     "rewrite": [{
-      "soure": "/api",
-      "function": "noteEvent"
+      "soure": "**",
+      "function": "api"
     }]
   }
 }

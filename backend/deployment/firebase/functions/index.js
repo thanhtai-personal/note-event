@@ -3,4 +3,4 @@ const getApp = require("./../../../app")
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-exports.noteEvent = functions.https.onRequest(getApp);
+exports.api = functions.https.onRequest(getApp);
