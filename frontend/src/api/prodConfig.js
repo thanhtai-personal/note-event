@@ -43,7 +43,8 @@ export default {
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'Access-Control-Allow-Credentials': true
   },
  
   // `params` are the URL parameters to be sent with the request
