@@ -32,7 +32,7 @@
     "crawl:noval": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.noval.js",
     "crawl:chapter": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.chapter.js",
     "crawl:allnewchapter": "set NODE_TLS_REJECT_UNAUTHORIZED=0&& set rejectUnauthorized=false&& node --unhandled-rejections=strict crawler/npmexecute.newchapter.js",
-    "firebase": "cd deployment/firebase && firebase serve --only function,hosting && cd ../../"
+    "firebase": "cd deployment/firebase && NODE_ENV=production firebase serve --only functions,hosting"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",

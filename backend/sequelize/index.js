@@ -1,9 +1,9 @@
 const dbConfig = require('../env')
 const { Sequelize } = require('sequelize')
 
-let sequelize = new Sequelize(dbConfig.database_url)
+let sequelize
 
-if (process.env.NODE_ENV === 'production') {
+if ((process.env.NODE_ENV || 'development').trim() === 'production') {
   const config = dbConfig.prodDbConfig
   sequelize = new Sequelize(config.database,
     config.user,
@@ -18,6 +18,8 @@ if (process.env.NODE_ENV === 'production') {
             timestamps: false
         }    
     })
+} else {
+  sequelize = new Sequelize(dbConfig.database_url)
 }
 
 const testConnect = async () => {
