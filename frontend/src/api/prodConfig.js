@@ -41,11 +41,11 @@ export default {
  
   // `headers` are custom headers to be sent
   headers: {
-    'Referrer': 'no-referrer-when-downgrade',
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Access-Control-Allow-Credentials': true
+    'Access-Control-Allow-Credentials': true,
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
   },
  
   // `params` are the URL parameters to be sent with the request
