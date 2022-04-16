@@ -1,1 +1,0 @@
-Tầng chứa các logic xữ lý cho các model: create, update, delete, ... model
